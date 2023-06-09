@@ -4,9 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -26,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
@@ -34,14 +37,16 @@ import androidx.compose.ui.text.font.FontWeight
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
+import com.example.homehive.ui.theme.HomeHiveTheme
 
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyApp2()
+            HomeHiveTheme {
+                MyAppNavHost()
+            }
         }
     }
 }
@@ -150,6 +155,34 @@ fun MyApp() {
     )
 }
 
+@Composable
+fun OvenBox(onClick: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center,
+    ) {
+        Surface(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxSize()
+                .padding(8.dp)
+                .clickable(onClick = onClick),
+            shape = RoundedCornerShape(4.dp),
+            color = MaterialTheme.colorScheme.primary
+        ) {
+            Text(
+                text = "OVEN",
+                style = MaterialTheme.typography.bodyLarge,
+                color = Color.White,
+                modifier = Modifier.padding(16.dp)
+            )
+        }
+    }
+}
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview
@@ -231,6 +264,10 @@ fun MyApp2() {
                         )
                     }
                 }
+                OvenBox(onClick = {
+                    // Handle OvenBox click event here
+                    // For example, you can navigate to another screen or perform some action
+                })
             }
         },
         content = { innerPadding ->
@@ -252,6 +289,7 @@ fun MyApp2() {
         }
     )
 }
+
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
