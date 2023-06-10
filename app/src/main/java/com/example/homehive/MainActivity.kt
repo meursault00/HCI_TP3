@@ -7,13 +7,19 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -52,109 +58,6 @@ class MainActivity : ComponentActivity() {
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-@Preview
-fun MyApp() {
-    Scaffold(
-        containerColor = Color(0xFF203831),
-        topBar = {
-            TopAppBar(
-
-                colors = TopAppBarDefaults.smallTopAppBarColors(
-                    containerColor = Color(0xFF203831) // Set the background color
-                ),
-                title = {
-                    Box(
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .background(Color(0xFF294D42))
-                            .shadow(30.dp)
-                            .clip(MaterialTheme.shapes.medium),
-                        contentAlignment = Alignment.CenterStart
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            IconButton(
-                                onClick = { /* Handle menu button click */ },
-                                modifier = Modifier.padding(end = 8.dp)
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Menu,
-                                    contentDescription = "Menu",
-                                    tint = Color(0xFFEECC66)
-                                )
-                            }
-                            Text(
-                                text = "HomeHive",
-                                fontSize = 30.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color(0xFFEECC66)
-                            )
-                        }
-                    }
-                },
-                actions = {
-                    Box(
-                    modifier = Modifier
-                        .padding(4.dp)
-                        .background(color = Color(0xFF497065), shape = CircleShape)
-                        .clip(CircleShape),
-                    contentAlignment = androidx.compose.ui.Alignment.Center
-                ) {
-                    IconButton(
-                        onClick = {
-                        }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Filled.Add,
-                            contentDescription = "Add",
-                            tint = Color(0xFFAFC1BB)
-                        )
-                    }
-                }
-
-                    Box(
-                        modifier = Modifier
-                            .padding(4.dp)
-                            .background(color = Color(0xFF497065), shape = CircleShape)
-                            .clip(CircleShape),
-                        contentAlignment = androidx.compose.ui.Alignment.Center
-                    ) {
-                        IconButton(
-                            onClick = {
-                            }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Filled.Star,
-                                contentDescription = "Add",
-                                tint = Color(0xFFAFC1BB)
-                            )
-                        }
-                    }
-                }
-
-            )
-        },
-        content = { innerPadding ->
-            LazyColumn(
-                contentPadding = innerPadding,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                val list = (0..75).map { it.toString() }
-                items(count = list.size) {
-                    Text(
-                        text = list[it],
-                        style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
-                    )
-                }
-            }
-        }
-    )
-}
-
 @Composable
 fun OvenBox(onClick: () -> Unit) {
     Box(
@@ -165,9 +68,7 @@ fun OvenBox(onClick: () -> Unit) {
     ) {
         Surface(
             modifier = Modifier
-                .padding(16.dp)
-                .fillMaxSize()
-                .padding(8.dp)
+                .padding(vertical = 40.dp, horizontal = 16.dp)
                 .clickable(onClick = onClick),
             shape = RoundedCornerShape(4.dp),
             color = MaterialTheme.colorScheme.primary
@@ -223,6 +124,7 @@ fun MyApp2() {
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFFEECC66)
                     )
+
                 }
             }
             Row(
@@ -264,26 +166,27 @@ fun MyApp2() {
                         )
                     }
                 }
-                OvenBox(onClick = {
-                    // Handle OvenBox click event here
-                    // For example, you can navigate to another screen or perform some action
-                })
             }
         },
         content = { innerPadding ->
-            LazyColumn(
-                contentPadding = innerPadding,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+            Box(
+                modifier = Modifier
+                    .padding(innerPadding)
+                //si descomento el scroll se rompe el preview -> ver si funca en emulador
+//                    .verticalScroll(rememberScrollState())
             ) {
-                val list = (0..75).map { it.toString() }
-                items(count = list.size) {
-                    Text(
-                        text = list[it],
-                        style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
-                    )
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(3),
+                    modifier = Modifier.padding(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    val list = (0..75).map { it.toString() }
+                    items(count = list.size) {
+                        OvenBox(onClick = {
+                            // Handle OvenBox click event here
+                            // For example, you can navigate to another screen or perform some action
+                        })
+                    }
                 }
             }
         }
