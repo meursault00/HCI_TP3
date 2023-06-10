@@ -15,7 +15,8 @@ import com.example.homehive.ui.theme.HomeHiveTheme
 
 @Composable
 fun HomeScreen(
-    onNavigateToOtherScreen: (id:Int) -> Unit
+    onNavigateToOtherScreen: (id: Int) -> Unit,
+    onNavigateToMyApp2: () -> Unit
 ) {
     Surface {
         Column(
@@ -23,9 +24,9 @@ fun HomeScreen(
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxSize()
         ) {
-            Button(onClick = { onNavigateToOtherScreen(1234) }) {
+            Button(onClick = { onNavigateToMyApp2() }) {
                 Text(
-                    text = stringResource(R.string.goto_other_screen),
+                    text = stringResource(R.string.goto_myapp2_screen),
                     fontSize = 30.sp
                 )
             }
@@ -33,10 +34,14 @@ fun HomeScreen(
     }
 }
 
+
 @Preview(showSystemUi = true, locale = "es")
 @Composable
 fun HomeScreenPreview() {
     HomeHiveTheme {
-        HomeScreen(onNavigateToOtherScreen = {})
+        HomeScreen(
+            onNavigateToOtherScreen = {},
+            onNavigateToMyApp2 = {}
+        )
     }
 }

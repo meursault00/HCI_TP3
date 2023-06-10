@@ -21,17 +21,24 @@ fun MyAppNavHost(
     NavHost(
         navController = navController,
         startDestination = startDestination,
-        modifier = modifier) {
+        modifier = modifier
+    ) {
         composable("home") {
             HomeScreen(
-                onNavigateToOtherScreen = { id -> navController.navigate("other/$id")}
+                onNavigateToOtherScreen = { id -> navController.navigate("other/$id") },
+                onNavigateToMyApp2 = { navController.navigate("myApp2") }
             )
+        }
+        composable("myApp2") {
+            MyApp2Screen()
         }
         composable(
             "other/{id}",
             arguments = listOf(navArgument("id") { type = NavType.IntType }),
-            deepLinks = listOf(navDeepLink { uriPattern = "$uri/other?id={id}" },
-                navDeepLink { uriPattern = "$secureUri/other?id={id}" })
+            deepLinks = listOf(
+                navDeepLink { uriPattern = "$uri/other?id={id}" },
+                navDeepLink { uriPattern = "$secureUri/other?id={id}" }
+            )
         ) {
             OtherScreen(it.arguments?.getInt("id"))
         }

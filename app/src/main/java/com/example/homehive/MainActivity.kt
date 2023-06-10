@@ -10,9 +10,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -44,6 +47,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.homehive.ui.theme.HomeHiveTheme
+import com.example.homehive.ui.theme.gris
 
 
 class MainActivity : ComponentActivity() {
@@ -51,7 +55,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             HomeHiveTheme {
-                MyAppNavHost()
+                MyAppNavHost(startDestination = "myApp2")
             }
         }
     }
@@ -68,15 +72,17 @@ fun OvenBox(onClick: () -> Unit) {
     ) {
         Surface(
             modifier = Modifier
-                .padding(vertical = 40.dp, horizontal = 16.dp)
+                .height(200.dp)
+                .width(600.dp)
+                .padding(vertical = 15.dp, horizontal = 15.dp)
                 .clickable(onClick = onClick),
-            shape = RoundedCornerShape(4.dp),
-            color = MaterialTheme.colorScheme.primary
+            shape = RoundedCornerShape(15.dp),
+            color = Color(0xFFF4CF6D)
         ) {
             Text(
                 text = "OVEN",
-                style = MaterialTheme.typography.bodyLarge,
-                color = Color.White,
+                style = MaterialTheme.typography.headlineMedium,
+                color = Color.DarkGray,
                 modifier = Modifier.padding(16.dp)
             )
         }
@@ -172,19 +178,20 @@ fun MyApp2() {
             Box(
                 modifier = Modifier
                     .padding(innerPadding)
-                //si descomento el scroll se rompe el preview -> ver si funca en emulador
+                //si descomento el scroll se rompe todo
 //                    .verticalScroll(rememberScrollState())
             ) {
                 LazyVerticalGrid(
-                    columns = GridCells.Fixed(3),
-                    modifier = Modifier.padding(8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    columns = GridCells.Fixed(2),
+                    modifier = Modifier.padding(vertical = 10.dp, horizontal = 10.dp),
+                    verticalArrangement = Arrangement.spacedBy(5.dp)
                 ) {
                     val list = (0..75).map { it.toString() }
                     items(count = list.size) {
                         OvenBox(onClick = {
                             // Handle OvenBox click event here
                             // For example, you can navigate to another screen or perform some action
+
                         })
                     }
                 }
