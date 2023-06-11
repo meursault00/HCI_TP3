@@ -1,8 +1,10 @@
 package com.example.homehive
 
+import android.media.Image
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -37,18 +39,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.Card
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.homehive.ui.theme.HomeHiveTheme
 import com.example.homehive.ui.theme.gris
-
 import androidx.compose.ui.res.painterResource
 
 
@@ -62,7 +65,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
 
 @Composable
 fun OvenBox(onClick: () -> Unit) {
@@ -79,19 +81,17 @@ fun OvenBox(onClick: () -> Unit) {
                 .padding(vertical = 15.dp, horizontal = 15.dp)
                 .clickable(onClick = onClick),
             shape = RoundedCornerShape(15.dp),
-            color = Color(0xFFF4CF6D)
+            color = Color(0xFFEFE5C5)
         ) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.fireplace),
+                Image(
+                    painter = painterResource(id = R.drawable.fuego),
                     contentDescription = null,
-                    tint = Color(0xFFF1DFAB),
+                    contentScale = ContentScale.Crop,
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(12.dp)
                 )
                 Text(
                     text = "Oven",
@@ -110,6 +110,8 @@ fun OvenBox(onClick: () -> Unit) {
         }
     }
 }
+
+
 
 @Composable
 fun FridgeBox(onClick: () -> Unit) {
@@ -132,26 +134,30 @@ fun FridgeBox(onClick: () -> Unit) {
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.kitchen), // Replace with the desired Compose icon
-                    contentDescription = "Fridge",
-                    tint = Color(0xFFF1DFAB),
+                Image(
+                    painter = painterResource(id = R.drawable.fridge),
+                    contentDescription = null,
+                    contentScale = ContentScale.FillHeight,
                     modifier = Modifier
-                        .fillMaxSize() // Adjust the size of the icon as desired
-                        .padding(12.dp) // Adjust the padding around the icon as desired
+                        .fillMaxSize()
                 )
+
                 Text(
                     text = "Fridge",
                     style = MaterialTheme.typography.headlineMedium,
                     color = Color.DarkGray,
-                    modifier = Modifier.padding(16.dp).align(Alignment.TopCenter)
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .align(Alignment.TopCenter)
                 )
                 Text(
                     text = "Freezer: -6ºC\n" +
                             "Fridge: 0ºC",
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color.DarkGray,
-                    modifier = Modifier.padding(16.dp).align(Alignment.CenterStart)
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .align(Alignment.CenterStart)
                 )
             }
         }
@@ -173,31 +179,33 @@ fun TapBox(onClick: () -> Unit) {
                 .padding(vertical = 15.dp, horizontal = 15.dp)
                 .clickable(onClick = onClick),
             shape = RoundedCornerShape(15.dp),
-            color = Color(0xFFF4CF6D)
+            color = Color(0xFFA0CCCF)
         ) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.faucet), // Replace with the desired Compose icon
-                    contentDescription = "Tap",
-                    tint = Color(0xFFF1DFAB),
+                Image(
+                    painter = painterResource(id = R.drawable.tap),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
                     modifier = Modifier
-                        .fillMaxSize() // Adjust the size of the icon as desired
-                        .padding(12.dp) // Adjust the padding around the icon as desired
                 )
                 Text(
                     text = "Tap",
                     style = MaterialTheme.typography.headlineMedium,
                     color = Color.DarkGray,
-                    modifier = Modifier.padding(16.dp).align(Alignment.TopCenter)
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .align(Alignment.TopCenter)
                 )
                 Text(
                     text = "On",
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color.DarkGray,
-                    modifier = Modifier.padding(16.dp).align(Alignment.CenterStart)
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .align(Alignment.CenterStart)
                 )
             }
         }
@@ -225,25 +233,27 @@ fun CurtainBox(onClick: () -> Unit) {
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.curtains),
+                Image(
+                    painter = painterResource(id = R.drawable.blinds),
                     contentDescription = null,
-                    tint = Color(0xFFF1DFAB),
+                    contentScale = ContentScale.FillBounds,
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(12.dp)
                 )
                 Text(
                     text = "Blinds",
                     style = MaterialTheme.typography.headlineMedium,
                     color = Color.DarkGray,
-                    modifier = Modifier.padding(16.dp).align(Alignment.TopCenter)
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .align(Alignment.TopCenter)
                 )
                 Text(
                     text = "Level: 70%\n",
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color.DarkGray,
-                    modifier = Modifier.padding(16.dp).align(Alignment.CenterStart)
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .align(Alignment.CenterStart)
                 )
             }
         }
@@ -271,26 +281,28 @@ fun SpeakerBox(onClick: () -> Unit) {
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.speaker), // Replace with the desired Compose icon
-                    contentDescription = "Speaker",
-                    tint = Color(0xFFF1DFAB),
+                Image(
+                    painter = painterResource(id = R.drawable.speaker),
+                    contentDescription = null,
+                    contentScale = ContentScale.FillBounds,
                     modifier = Modifier
-                        .fillMaxSize() // Adjust the size of the icon as desired
-                        .padding(12.dp) // Adjust the padding around the icon as desired
                 )
                 Text(
                     text = "Speaker",
                     style = MaterialTheme.typography.headlineMedium,
                     color = Color.DarkGray,
-                    modifier = Modifier.padding(16.dp).align(Alignment.TopCenter)
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .align(Alignment.TopCenter)
                 )
                 Text(
                     text = "Volume: 97\n" +
                             "Paused",
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color.DarkGray,
-                    modifier = Modifier.padding(16.dp).align(Alignment.CenterStart)
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .align(Alignment.CenterStart)
                 )
             }
         }

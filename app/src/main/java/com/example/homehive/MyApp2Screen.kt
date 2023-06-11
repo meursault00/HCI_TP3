@@ -40,7 +40,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun MyApp2Screen() {
-    TestComponent()
+    MyApp2();
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
