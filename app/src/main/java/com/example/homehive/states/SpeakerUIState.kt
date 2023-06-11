@@ -1,4 +1,4 @@
-package com.example.homehive
+package com.example.homehive.states
 
 data class SpeakerUIState(
     val state: String = "stopped",      //stopped, playing, paused

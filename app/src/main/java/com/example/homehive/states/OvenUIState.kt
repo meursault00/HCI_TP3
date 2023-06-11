@@ -1,4 +1,4 @@
-package com.example.homehive
+package com.example.homehive.states
 
 data class OvenUIState(
     val power: Boolean = false,                 // on, off

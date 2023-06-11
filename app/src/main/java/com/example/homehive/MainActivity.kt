@@ -53,6 +53,7 @@ import androidx.compose.ui.unit.sp
 import com.example.homehive.ui.theme.HomeHiveTheme
 import com.example.homehive.ui.theme.gris
 import androidx.compose.ui.res.painterResource
+import androidx.navigation.NavController
 
 
 class MainActivity : ComponentActivity() {
@@ -60,261 +61,19 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             HomeHiveTheme {
-                MyAppNavHost(startDestination = "myApp2")
+                MyAppNavHost(startDestination = "home")
             }
         }
     }
 }
-
-@Composable
-fun OvenBox(onClick: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .clickable(onClick = onClick),
-        contentAlignment = Alignment.Center,
-    ) {
-        Surface(
-            modifier = Modifier
-                .height(200.dp)
-                .width(600.dp)
-                .padding(vertical = 15.dp, horizontal = 15.dp)
-                .clickable(onClick = onClick),
-            shape = RoundedCornerShape(15.dp),
-            color = Color(0xFFEFE5C5)
-        ) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.fuego),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                )
-                Text(
-                    text = "Oven",
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = Color.DarkGray,
-                    modifier = Modifier.padding(16.dp).align(Alignment.TopCenter)
-                )
-                Text(
-                    text = "On\n" +
-                            "Temp: 120ºC",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.DarkGray,
-                    modifier = Modifier.padding(16.dp).align(Alignment.CenterStart)
-                )
-            }
-        }
-    }
-}
-
-
-
-@Composable
-fun FridgeBox(onClick: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .clickable(onClick = onClick),
-        contentAlignment = Alignment.Center,
-    ) {
-        Surface(
-            modifier = Modifier
-                .height(200.dp)
-                .width(600.dp)
-                .padding(vertical = 15.dp, horizontal = 15.dp)
-                .clickable(onClick = onClick),
-            shape = RoundedCornerShape(15.dp),
-            color = Color(0xFFF4CF6D)
-        ) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.fridge),
-                    contentDescription = null,
-                    contentScale = ContentScale.FillHeight,
-                    modifier = Modifier
-                        .fillMaxSize()
-                )
-
-                Text(
-                    text = "Fridge",
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = Color.DarkGray,
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .align(Alignment.TopCenter)
-                )
-                Text(
-                    text = "Freezer: -6ºC\n" +
-                            "Fridge: 0ºC",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.DarkGray,
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .align(Alignment.CenterStart)
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun TapBox(onClick: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .clickable(onClick = onClick),
-        contentAlignment = Alignment.Center,
-    ) {
-        Surface(
-            modifier = Modifier
-                .height(200.dp)
-                .width(600.dp)
-                .padding(vertical = 15.dp, horizontal = 15.dp)
-                .clickable(onClick = onClick),
-            shape = RoundedCornerShape(15.dp),
-            color = Color(0xFFA0CCCF)
-        ) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.tap),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                )
-                Text(
-                    text = "Tap",
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = Color.DarkGray,
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .align(Alignment.TopCenter)
-                )
-                Text(
-                    text = "On",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.DarkGray,
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .align(Alignment.CenterStart)
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun CurtainBox(onClick: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .clickable(onClick = onClick),
-        contentAlignment = Alignment.Center,
-    ) {
-        Surface(
-            modifier = Modifier
-                .height(200.dp)
-                .width(600.dp)
-                .padding(vertical = 15.dp, horizontal = 15.dp)
-                .clickable(onClick = onClick),
-            shape = RoundedCornerShape(15.dp),
-            color = Color(0xFFF4CF6D)
-        ) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.blinds),
-                    contentDescription = null,
-                    contentScale = ContentScale.FillBounds,
-                    modifier = Modifier
-                )
-                Text(
-                    text = "Blinds",
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = Color.DarkGray,
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .align(Alignment.TopCenter)
-                )
-                Text(
-                    text = "Level: 70%\n",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.DarkGray,
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .align(Alignment.CenterStart)
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun SpeakerBox(onClick: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .clickable(onClick = onClick),
-        contentAlignment = Alignment.Center,
-    ) {
-        Surface(
-            modifier = Modifier
-                .height(200.dp)
-                .width(600.dp)
-                .padding(vertical = 15.dp, horizontal = 15.dp)
-                .clickable(onClick = onClick),
-            shape = RoundedCornerShape(15.dp),
-            color = Color(0xFFF4CF6D)
-        ) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.speaker),
-                    contentDescription = null,
-                    contentScale = ContentScale.FillBounds,
-                    modifier = Modifier
-                )
-                Text(
-                    text = "Speaker",
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = Color.DarkGray,
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .align(Alignment.TopCenter)
-                )
-                Text(
-                    text = "Volume: 97\n" +
-                            "Paused",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.DarkGray,
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .align(Alignment.CenterStart)
-                )
-            }
-        }
-    }
-}
-
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-@Preview
-fun MyApp2() {
+fun App(
+    navController: NavController,
+    content: @Composable (navController : NavController) -> Unit
+) {
     Scaffold(
         containerColor = Color(0xFF203831),
         topBar = {
@@ -345,13 +104,16 @@ fun MyApp2() {
                             tint = Color(0xFFEECC66)
                         )
                     }
-                    Text(
-                        text = "HomeHive",
-                        fontSize = 30.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color(0xFFEECC66)
-                    )
-
+                    Box(
+                        modifier = Modifier.clickable { navController.navigate("home") }
+                    ) {
+                        Text(
+                            text = "HomeHive",
+                            fontSize = 30.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFFEECC66)
+                        )
+                    }
                 }
             }
             Row(
@@ -396,55 +158,13 @@ fun MyApp2() {
             }
         },
         content = { innerPadding ->
-            Box(
-                modifier = Modifier
-                    .padding(innerPadding)
-                //si descomento el scroll se rompe todo
-//                    .verticalScroll(rememberScrollState())
-            ) {
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
-                    modifier = Modifier.padding(vertical = 10.dp, horizontal = 10.dp),
-                    verticalArrangement = Arrangement.spacedBy(5.dp)
-                ) {
-                    item {
-                        OvenBox(onClick = {
-                            // Handle OvenBox click event here
-                        })
-                    }
-                    item {
-                        FridgeBox(onClick = {
-                            // Handle FridgeBox click event here
-                        })
-                    }
-                    item {
-                        TapBox(onClick = {
-                            // Handle TapBox click event here
-                        })
-                    }
-                    item {
-                        CurtainBox(onClick = {
-                            // Handle CurtainBox click event here
-                        })
-                    }
-                    item {
-                        SpeakerBox(onClick = {
-                            // Handle SpeakerBox click event here
-                        })
-                    }
-                }
-            }
+            content(navController = navController)
+            innerPadding
         }
     )
 }
 
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+
 
 

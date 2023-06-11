@@ -1,4 +1,4 @@
-package com.example.homehive
+package com.example.homehive.states
 
 // Creo un constructor para el estado, getters y setters son autogenerados
 data class FridgeUIState (
