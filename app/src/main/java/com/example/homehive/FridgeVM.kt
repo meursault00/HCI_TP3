@@ -32,7 +32,7 @@ class FridgeVM : ViewModel() {
     }
 
     // No me acuerdo si era un String o no
-    fun setFreezerTemperature( newMode : String ){
+    fun setMode( newMode : String ){
         _uiState.update{currentState ->
             currentState.copy(mode =  newMode)
         }
