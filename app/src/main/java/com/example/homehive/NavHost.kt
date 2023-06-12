@@ -34,7 +34,7 @@ fun NavHost(
     ) {
         composable("test") {
             App(navController = navController) { navController, innerPadding ->
-                TestScreen(navController = navController, innerPadding = innerPadding, viewModel = viewModel())
+                TestScreen(navController = navController, innerPadding = innerPadding, devicesVM = viewModel())
             }
         }
         composable("routines") {
