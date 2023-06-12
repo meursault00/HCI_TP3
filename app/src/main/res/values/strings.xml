@@ -4,4 +4,8 @@
     <string name="goto_other_screen">Go To Other Screen</string>
     <string name="goto_myapp2_screen">Go To Myapp2</string>
     <string name="received_id">Received id %1$d</string>
+
+    <string name="loading">Loading devices...</string>
+    <string name="load_devices">LOAD DEVICES</string>
+    <string name="dismiss">DISMISS</string>
 </resources>
