@@ -3,6 +3,7 @@ package com.example.homehive
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.*
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -33,7 +34,7 @@ fun NavHost(
     ) {
         composable("test") {
             App(navController = navController) { navController, innerPadding ->
-                TestScreen(navController = navController, innerPadding = innerPadding)
+                TestScreen(navController = navController, innerPadding = innerPadding, viewModel = viewModel())
             }
         }
         composable("routines") {
