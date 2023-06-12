@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -61,18 +62,17 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             HomeHiveTheme {
-                MyAppNavHost(startDestination = "home")
+                NavHost(startDestination = "home")
             }
         }
     }
 }
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun App(
     navController: NavController,
-    content: @Composable (navController : NavController) -> Unit
+    content: @Composable (navController : NavController,  innerPadding : PaddingValues?) -> Unit
 ) {
     Scaffold(
         containerColor = Color(0xFF203831),
@@ -131,7 +131,9 @@ fun App(
                         .clip(CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = {
+                         navController.navigate("test")
+                    }) {
                         Icon(
                             imageVector = Icons.Filled.Add,
                             contentDescription = "Add",
@@ -143,11 +145,13 @@ fun App(
                     modifier = Modifier
                         .padding(4.dp)
                         .background(color = Color(0xFF497065), shape = CircleShape)
-                        .clip(CircleShape)
-                        .shadow(60.dp),
+                        .shadow(60.dp)
+                        .clip(CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = {
+                        navController.navigate("routines")
+                    }) {
                         Icon(
                             imageVector = Icons.Filled.Star,
                             contentDescription = "Star",
@@ -158,8 +162,7 @@ fun App(
             }
         },
         content = { innerPadding ->
-            content(navController = navController)
-            innerPadding
+            content(navController = navController, innerPadding = innerPadding)
         }
     )
 }

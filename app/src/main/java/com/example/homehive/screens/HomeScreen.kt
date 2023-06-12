@@ -2,6 +2,7 @@ package com.example.homehive.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -16,10 +17,10 @@ import com.example.homehive.boxes.SpeakerBox
 import com.example.homehive.boxes.TapBox
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavController, innerPadding: PaddingValues?) {
     Box(
         modifier = Modifier
-            .padding(top = 70.dp)
+            .padding(innerPadding ?: PaddingValues())
     ) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),

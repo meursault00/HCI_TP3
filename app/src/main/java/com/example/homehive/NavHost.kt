@@ -1,8 +1,6 @@
 package com.example.homehive
 
 
-import android.util.Log
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.*
@@ -17,9 +15,10 @@ import com.example.homehive.screens.OvenScreen
 import com.example.homehive.screens.RoutinesScreen
 import com.example.homehive.screens.SpeakerScreen
 import com.example.homehive.screens.TapScreen
+import com.example.homehive.screens.TestScreen
 
 @Composable
-fun MyAppNavHost(
+fun NavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     startDestination: String = "routines"
@@ -32,30 +31,48 @@ fun MyAppNavHost(
         startDestination = startDestination,
         modifier = modifier
     ) {
+        composable("test") {
+            App(navController = navController) { navController, innerPadding ->
+                TestScreen(navController = navController, innerPadding = innerPadding)
+            }
+        }
         composable("routines") {
-
-            App(navController) { RoutinesScreen(navController = navController) }
+            App(navController = navController) { navController, innerPadding ->
+                RoutinesScreen(navController = navController, innerPadding = innerPadding)
+            }
         }
         composable("home") {
-            App(navController) { HomeScreen(navController = navController) }
+            App(navController = navController) { navController, innerPadding ->
+                HomeScreen(navController = navController, innerPadding = innerPadding)
+            }
         }
 //        composable(
 //            "devices/{devicename}/{id}",
 //        ) {}
         composable("devices/fridge/1234") {
-            App(navController) { FridgeScreen(navController = navController)}
+            App(navController = navController) { navController, innerPadding ->
+                FridgeScreen(navController = navController, innerPadding = innerPadding)
+            }
         }
         composable("devices/tap/1234") {
-            App(navController) { TapScreen(navController = navController)}
+            App(navController = navController) { navController, innerPadding ->
+                TapScreen(navController = navController, innerPadding = innerPadding)
+            }
         }
         composable("devices/blinds/1234") {
-            App(navController) { BlindsScreen(navController = navController) }
+            App(navController = navController) { navController, innerPadding ->
+                BlindsScreen(navController = navController, innerPadding = innerPadding)
+            }
         }
         composable("devices/speaker/1234") {
-            App(navController) { SpeakerScreen(navController = navController) }
+            App(navController = navController) { navController, innerPadding ->
+                SpeakerScreen(navController = navController, innerPadding = innerPadding)
+            }
         }
         composable("devices/oven/1234") {
-            App(navController) { OvenScreen(navController = navController)}
+            App(navController = navController) { navController, innerPadding ->
+                OvenScreen(navController = navController, innerPadding = innerPadding)
+            }
         }
         composable(
             "other/{id}",
