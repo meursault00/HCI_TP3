@@ -67,6 +67,7 @@ fun OvenBox(onClick: () -> Unit) {
                         .padding(16.dp)
                         .align(Alignment.TopCenter)
                 )
+
                 Text(
                     text = "On\n" +
                             "Temp: 120ºC",
@@ -74,6 +75,7 @@ fun OvenBox(onClick: () -> Unit) {
                     color = Color.DarkGray,
                     modifier = Modifier.padding(16.dp).align(Alignment.CenterStart)
                 )
+
                 Button(
                     onClick = { isOpen.value = !isOpen.value },
                     elevation = ButtonDefaults.buttonElevation(

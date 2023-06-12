@@ -1,11 +1,14 @@
 package com.example.homehive.screens
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -16,16 +19,17 @@ import com.example.homehive.boxes.OvenBox
 import com.example.homehive.boxes.SpeakerBox
 import com.example.homehive.boxes.TapBox
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(navController: NavController, innerPadding: PaddingValues?) {
     Box(
         modifier = Modifier
             .padding(innerPadding ?: PaddingValues())
     ) {
-        LazyVerticalGrid(
-            columns = GridCells.Adaptive(150.dp),
-            modifier = Modifier.padding(vertical = 10.dp, horizontal = 10.dp),
-            verticalArrangement = Arrangement.spacedBy(5.dp)
+        LazyVerticalStaggeredGrid(
+            columns = StaggeredGridCells.Adaptive(160.dp),
+            contentPadding = PaddingValues(0.dp),
+            modifier = Modifier.padding(3.dp),
         ) {
             item {
                 OvenBox(onClick = {
@@ -45,6 +49,11 @@ fun HomeScreen(navController: NavController, innerPadding: PaddingValues?) {
             item {
                 BlindsBox(onClick = {
                     navController.navigate("devices/blinds/1234")
+                })
+            }
+            item {
+                SpeakerBox(onClick = {
+                    navController.navigate("devices/speaker/1234")
                 })
             }
             item {
