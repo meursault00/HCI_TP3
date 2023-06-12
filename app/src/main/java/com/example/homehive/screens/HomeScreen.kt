@@ -22,7 +22,7 @@ fun HomeScreen(navController: NavController) {
             .padding(top = 70.dp)
     ) {
         LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
+            columns = GridCells.Adaptive(150.dp),
             modifier = Modifier.padding(vertical = 10.dp, horizontal = 10.dp),
             verticalArrangement = Arrangement.spacedBy(5.dp)
         ) {

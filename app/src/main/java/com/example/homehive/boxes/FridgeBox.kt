@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.homehive.R
 
@@ -32,7 +33,7 @@ fun FridgeBox(onClick: () -> Unit) {
         Surface(
             modifier = Modifier
                 .height(200.dp)
-                .width(600.dp)
+                .width(200.dp)
                 .padding(vertical = 15.dp, horizontal = 15.dp)
                 .clickable(onClick = onClick),
             shape = RoundedCornerShape(15.dp),
@@ -52,8 +53,9 @@ fun FridgeBox(onClick: () -> Unit) {
 
                 Text(
                     text = "Fridge",
+                    fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
-                    color = Color.DarkGray,
+                    color = Color(0xFF114225),
                     modifier = Modifier
                         .padding(16.dp)
                         .align(Alignment.TopCenter)
