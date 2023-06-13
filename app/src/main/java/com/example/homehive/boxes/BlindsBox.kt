@@ -46,8 +46,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.example.homehive.R
-import com.example.homehive.screens.CurtainState
-
+enum class CurtainState {
+    CLOSED,
+    CLOSING,
+    OPENING,
+    OPEN,
+}
 @Composable
 fun BlindsBox(onClick: () -> Unit) {
     var isOpen = remember { mutableStateOf(false) }

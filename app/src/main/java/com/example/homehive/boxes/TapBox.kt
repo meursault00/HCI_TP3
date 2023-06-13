@@ -66,7 +66,7 @@ import com.example.homehive.R
 @Composable
 fun TapBox(onClick: () -> Unit) {
 
-    var isOpen = remember { mutableStateOf(true) };
+    var isOpen = remember { mutableStateOf(false) };
     var isOn = remember { mutableStateOf(false) };
 
     var dispenseValue = remember { mutableStateOf("") };
@@ -79,7 +79,7 @@ fun TapBox(onClick: () -> Unit) {
     var dispenseUnitHasError = remember { mutableStateOf(false) };
 
     val height: Dp by animateDpAsState(
-        targetValue = if (isOpen.value) 400.dp else 200.dp,
+        targetValue = if (isOpen.value) 415.dp else 200.dp,
         animationSpec = tween(durationMillis = 100)
     )
 
