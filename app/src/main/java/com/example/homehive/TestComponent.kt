@@ -22,8 +22,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.ui.theme.HomeHiveTheme
 import com.example.homehive.viewmodels.DevicesVM
 
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+//import com.google.accompanist.swiperefresh.SwipeRefresh
+//import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 //
 //@Composable
 //fun TestScreen(
