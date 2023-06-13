@@ -23,8 +23,6 @@ import androidx.navigation.NavController
 import com.example.homehive.MiniDisplay
 import com.example.homehive.R
 import com.example.homehive.viewmodels.DevicesVM
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 //import com.example.homehive.TestComponent
 //
@@ -38,7 +36,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 //
 //    }
 //}
-
+/*
 @Composable
 fun TestScreen(
     navController: NavController,
@@ -109,3 +107,4 @@ fun TestScreen(
         }
     }
 }
+*/

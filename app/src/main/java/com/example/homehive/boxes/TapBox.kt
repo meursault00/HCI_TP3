@@ -13,7 +13,11 @@ import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -26,9 +30,13 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -58,31 +66,35 @@ import com.example.homehive.R
 @Composable
 fun TapBox(onClick: () -> Unit) {
 
-    var isOpen = remember { mutableStateOf(false) };
-    var isOn = remember { mutableStateOf(true) };
-    var tapDispensingValue = remember { mutableStateOf("") };
+    var isOpen = remember { mutableStateOf(true) };
+    var isOn = remember { mutableStateOf(false) };
 
-    val Height: Dp by animateDpAsState(
-        targetValue = if (isOpen.value) 300.dp else 200.dp,
-        animationSpec = tween(durationMillis = 100)
-    )
-    val Width: Dp by animateDpAsState(
+    var dispenseValue = remember { mutableStateOf("") };
+    var dispenseValueError = remember { mutableStateOf("") };
+    var dispenseValueHasError = remember { mutableStateOf(false) };
+
+    val dispenseOptions = setOf("mL", "cL", "dL", "L")
+    var dispenseUnit = remember { mutableStateOf("") };
+    var dispenseUnitError = remember { mutableStateOf("") };
+    var dispenseUnitHasError = remember { mutableStateOf(false) };
+
+    val height: Dp by animateDpAsState(
         targetValue = if (isOpen.value) 400.dp else 200.dp,
         animationSpec = tween(durationMillis = 100)
     )
 
+
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .height(Height)
-            .width(Height)
+            .height(height)
             .clickable(onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
         Surface(
             modifier = Modifier
+                .width(200.dp)
 
-                .padding(vertical = 15.dp, horizontal = 15.dp)
                 .clickable(onClick = onClick),
             shape = RoundedCornerShape(15.dp),
             color = Color(0xFFA0CCCF)
@@ -135,13 +147,13 @@ fun TapBox(onClick: () -> Unit) {
                         .width(200.dp)
                         .align(Alignment.BottomCenter),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xB4EFE5C5)
+                        containerColor = if(isOpen.value)  Color(0xFFEFE5C5) else Color(0xB4EFE5C5)
                     ),
                 ) {
                     Icon(
                         painter = if (isOpen.value) painterResource(id = R.drawable.upicon) else painterResource(id = R.drawable.downicon),
                         contentDescription = null,
-                        tint = Color(0xFFAFA586),
+                        tint =  Color(0xFFAFA586) ,
                         modifier = Modifier
                             .size(60.dp)
                     )
@@ -155,6 +167,7 @@ fun TapBox(onClick: () -> Unit) {
                     )
                 }
                 if(isOpen.value){
+
                     Button(
                         onClick = { toggleTap(isOn) },
                         elevation = ButtonDefaults.buttonElevation(
@@ -166,31 +179,143 @@ fun TapBox(onClick: () -> Unit) {
                             .align(Alignment.TopCenter), // Align the button to the end (top end of the Box)
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color(0xFFEFE5C5),
-                            contentColor = Color(0xFF114223)
+                            contentColor = Color(0xFF1C6135)
                         )
                     ) {
-                        Text(text = if (isOn.value) "Turn On" else "Turn Off",
+                        Text(text = if (isOn.value) "Turn Off" else "Turn On",
                             style = MaterialTheme.typography.bodySmall,
                             color = Color(0xFFAFA586),
 
                         )
                     }
-                    TextField(
-                        value = tapDispensingValue.value,
-                        onValueChange = { tapDispensingValue.value = it },
-                        label = { Text(text = "Dispensing Value") },
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Number,
-                            imeAction = ImeAction.Done
-                        ),
-                        keyboardActions = KeyboardActions(
-                            onDone = { updateTapDispensingValue(tapDispensingValue.value) }
-                        ),
-                        modifier = Modifier
-                            .padding(top = 60.dp)
-                            .align(Alignment.TopCenter), // Align the button to the end (top end of the Box)
 
-                    )
+                    if(!isOn.value){
+                        // FORM
+                        OutlinedTextField(
+
+                            value = dispenseValue.value,
+                            isError = dispenseValueHasError.value,
+                            onValueChange = { newValue ->
+                                // Ensure the value falls within the range of 1 to 100
+                                dispenseValue.value = newValue
+                                dispenseValueHasError.value = false
+                            },
+                            shape = RoundedCornerShape(15.dp),
+                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                                containerColor = Color(0x4DEFE5C5),
+                                focusedBorderColor = Color(0x00D3DEE0),
+                                unfocusedBorderColor = Color(0x00D3DEE0),
+
+                                cursorColor = Color(0xFFD3DEE0),
+                                textColor = Color(0xFFD3DEE0),
+                            ),
+                            label = { Text(text = "Value", color = Color(0xFFD3DEE0)) },
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Number,
+                                imeAction = ImeAction.Done
+                            ),
+                            keyboardActions = KeyboardActions(
+                                // hide keyboard when the user presses the Done button
+
+                            ),
+                            modifier = Modifier
+                                .padding(bottom = 80.dp)
+                                .height(80.dp)
+                                .width(100.dp)
+                                .align(Alignment.Center), // Align the button to the end (top end of the Box)
+                        )
+                        if(dispenseValueHasError.value){
+                            Text(
+                                text = dispenseValueError.value,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = Color.Red,
+                                modifier = Modifier
+                                    .padding(top = 20.dp)
+                                    .align(Alignment.Center)
+                            )
+                        }
+
+                        Row( // ROW DE ELECCION DE LA UNIDAD
+                            modifier = Modifier
+                                .padding(top = 100.dp)
+                                .align(Alignment.Center)
+                        ) {
+                            dispenseOptions.forEach {
+                                Column (
+                                    modifier = Modifier
+                                        .padding(horizontal = 5.dp)
+                                ) {
+
+                                    RadioButton(
+                                        modifier = Modifier
+                                            .size(20.dp)
+                                            .padding(5.dp),
+                                        selected = dispenseUnit.value == it,
+                                        onClick = { dispenseUnit.value = it },
+                                        colors = RadioButtonDefaults.colors(
+                                            selectedColor = Color(0xFFD3DEE0),
+                                            unselectedColor = Color(0xFFAFA997)
+                                        )
+                                    )
+                                    Text(
+                                        text = it,
+                                        fontSize = MaterialTheme.typography.bodySmall.fontSize,
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = Color(0xFFD3DEE0),
+                                        fontWeight = FontWeight.Bold,
+                                    )
+                                    }
+                                }
+                            }
+                        if(dispenseUnitHasError.value){
+                            Text(
+                                text = dispenseUnitError.value,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = Color.Red,
+                                modifier = Modifier
+                                    .padding(top = 150.dp)
+                                    .align(Alignment.Center)
+                            )
+                        }
+                        // VALIDATION
+
+                        Button(
+                            onClick = {
+                                  when{
+                                      dispenseValue.value.isEmpty() -> {
+                                            dispenseValueError.value = "Value is required"
+                                            dispenseValueHasError.value = true
+                                      }
+                                        dispenseUnit.value.isEmpty() -> {
+                                            dispenseUnitError.value = "Unit is required"
+                                            dispenseUnitHasError.value = true
+                                        }
+                                        else -> {
+                                            dispenseUnitHasError.value = false
+                                            dispenseValueHasError.value = false
+                                            submitDispense(dispenseValue, dispenseUnit)
+                                        }
+                                  }
+                            },
+                            elevation = ButtonDefaults.buttonElevation(
+                                defaultElevation = 30.dp,
+                                pressedElevation = 0.0.dp,
+                            ),
+                            modifier = Modifier
+                                .padding(top = 230.dp)
+                                .align(Alignment.Center), // Align the button to the end (top end of the Box)
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFFEFE5C5),
+                                contentColor = Color(0xFF1C6135)
+                            )
+                        ) {
+                            Text(text = "Dispense",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = Color(0xFFAFA586),
+
+                                )
+                        }
+                    }
 
                 }
 
@@ -203,7 +328,13 @@ private fun toggleTap(isOn: MutableState<Boolean>){
     isOn.value = !isOn.value;
 }
 
-private fun updateTapDispensingValue(tapDispensingValue: String){
+private fun updateTapDispensingValue(dispenseValue: MutableState<String> ){
 
-    println(tapDispensingValue)
+    println(dispenseValue.value)
+}
+
+private fun submitDispense(dispenseValue: MutableState<String>, dispenseUnit: MutableState<String>){
+    // HANDLE DISPENSE
+    println(dispenseValue.value)
+    println(dispenseUnit.value)
 }

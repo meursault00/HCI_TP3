@@ -43,7 +43,6 @@ fun OvenBox(onClick: () -> Unit) {
             modifier = Modifier
                 .height(200.dp)
                 .width(200.dp)
-                .padding(vertical = 15.dp, horizontal = 15.dp)
                 .clickable(onClick = onClick),
             shape = RoundedCornerShape(15.dp),
             color = Color(0xFFEFE5C5)

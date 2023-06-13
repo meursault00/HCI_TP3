@@ -56,10 +56,7 @@ fun BlindsBox(onClick: () -> Unit) {
         targetValue = if (isOpen.value) 300.dp else 200.dp,
         animationSpec = tween(durationMillis = 100)
     )
-    val blindsWidth: Dp by animateDpAsState(
-        targetValue = if (isOpen.value) 400.dp else 200.dp,
-        animationSpec = tween(durationMillis = 100)
-    )
+
     val curtainState = remember { mutableStateOf(CurtainState.OPEN) }
     val curtainPosition = remember { mutableStateOf(3) }
 
@@ -67,13 +64,13 @@ fun BlindsBox(onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxSize()
             .height(blindsHeight)
-            .width(blindsWidth)
             .clickable(onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
         Surface(
             modifier = Modifier
-                .padding(vertical = 15.dp, horizontal = 15.dp)
+                .width(200.dp)
+
                 .clickable(onClick = onClick),
             shape = RoundedCornerShape(15.dp),
             color = Color(0xFFF4CF6D)
