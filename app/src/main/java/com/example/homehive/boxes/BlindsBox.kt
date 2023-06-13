@@ -74,7 +74,6 @@ fun BlindsBox(onClick: () -> Unit) {
         Surface(
             modifier = Modifier
                 .width(200.dp)
-
                 .clickable(onClick = onClick),
             shape = RoundedCornerShape(15.dp),
             color = Color(0xFFF4CF6D)

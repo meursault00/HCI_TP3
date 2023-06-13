@@ -69,7 +69,6 @@ fun FridgeBox(onClick: () -> Unit) {
                 .width(200.dp)
                 .clickable(onClick = onClick),
             shape = RoundedCornerShape(15.dp),
-            color = Color(0xFFF4CF6D)
         ) {
             Box(
                 modifier = Modifier.fillMaxSize(),
@@ -87,29 +86,40 @@ fun FridgeBox(onClick: () -> Unit) {
                     text = "Fridge",
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
-                    color = Color(0xFF114225),
+                    color = Color(0xFF2B4E5C),
                     modifier = Modifier
                         .padding(16.dp)
                         .align(Alignment.TopCenter)
                 )
                 if(!isOpen.value){
-                    Text(
-                        text = "${freezerTemp.value}°C",
-                        fontWeight = FontWeight.Bold,
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = Color(0xFF4BACC4),
+                    Column(
                         modifier = Modifier
-                            .padding(start = 10.dp, bottom = 50.dp)
+                            .padding(start = 10.dp, end = 10.dp)
                             .align(Alignment.Center)
-                    )
-                    Text(
-                        text = "${fridgeTemp.value}ºC",
-                        fontWeight = FontWeight.Bold,
-                        style = MaterialTheme.typography.headlineLarge,
-                        color = Color(0xFF216E81),
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                    )
+                    ) {
+                        Text(
+                            text = "${freezerTemp.value}°C",
+                            fontWeight = FontWeight.Bold,
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = Color(0xFF4BACC4),
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+
+                        )
+                        Text(
+                            text = "${fridgeTemp.value}ºC",
+                            fontWeight = FontWeight.Bold,
+                            style = MaterialTheme.typography.headlineLarge,
+                            color = Color(0xFF216E81),
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                        )
+                        Text(
+                            text = "${getFridgeMode(fridgeMode)}",
+                            fontWeight = FontWeight.Bold,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Color(0xFF216E81),
+
+                            )
+                    }
                 }
                 else{
                     Column(
@@ -309,4 +319,12 @@ private fun setFreezerTemp(newFreezerTemp: Int, freezerTemp: MutableState<Int> )
 
 private fun setFridgeMode(newFridgeMode: FridgeMode, fridgeMode: MutableState<FridgeMode> ) {
     fridgeMode.value = newFridgeMode
+}
+
+private fun getFridgeMode(fridgeMode: MutableState<FridgeMode>): String {
+    return when (fridgeMode.value) {
+        FridgeMode.NORMAL -> "Normal"
+        FridgeMode.VACATION -> "Vacation"
+        FridgeMode.PARTY -> "Party"
+    }
 }
