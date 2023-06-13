@@ -15,6 +15,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -25,13 +27,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.R
+import com.example.homehive.viewmodels.OvenVM
 
 
 @Composable
-fun OvenBox(onClick: () -> Unit) {
+fun OvenBox(onClick: () -> Unit, viewModel : OvenVM = viewModel()) {
 
-    var isOpen = remember { mutableStateOf(false) }
+    val uiState by viewModel.uiState.collectAsState()
+
+    var isOn = remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -68,15 +74,16 @@ fun OvenBox(onClick: () -> Unit) {
                 )
 
                 Text(
-                    text = "On\n" +
-                            "Temp: 120ºC",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.DarkGray,
-                    modifier = Modifier.padding(16.dp).align(Alignment.CenterStart)
+                    text = "${uiState.ovenTemperature}ºC",
+                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.headlineLarge,
+                    color = Color(0xFFE3592B),
+                    modifier = Modifier
+                        .align(Alignment.Center)
                 )
 
                 Button(
-                    onClick = { isOpen.value = !isOpen.value },
+                    onClick = { isOn.value = !isOn.value },
                     elevation = ButtonDefaults.buttonElevation(
                         defaultElevation = 30.dp,
                         pressedElevation = 0.0.dp,
@@ -87,16 +94,16 @@ fun OvenBox(onClick: () -> Unit) {
 
 
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if (isOpen.value) Color(0xFFEFE5C5) else Color(0xFFEEE5C9)),
+                        containerColor = if (isOn.value) Color(0xFFEFE5C5) else Color(0xFFEEE5C9)),
                 ) {
                     Text(
-                        text = if (isOpen.value) "OFF" else "ON",
+                        text = if (isOn.value) "ON" else "OFF",
                         style = MaterialTheme.typography.bodyMedium,
                         color = Color.DarkGray,
                         textAlign = TextAlign.Center
                     )
                 }
-                if (!isOpen.value) {
+                if (!isOn.value) {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
