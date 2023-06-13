@@ -43,6 +43,7 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.Card
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -55,6 +56,7 @@ import com.example.homehive.ui.theme.HomeHiveTheme
 import com.example.homehive.ui.theme.gris
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
+import kotlinx.coroutines.launch
 
 
 class MainActivity : ComponentActivity() {
@@ -68,96 +70,66 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun App(
     navController: NavController,
-    content: @Composable (navController : NavController,  innerPadding : PaddingValues?) -> Unit
+    content: @Composable (navController : NavController,  innerPadding : PaddingValues?) -> Unit,
 ) {
+    val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
     Scaffold(
-        containerColor = Color(0xFF203831),
+        scaffoldState = scaffoldState,
+        backgroundColor = Color(0xFF203831),
         topBar = {
-            Box(
-                modifier = Modifier
-                    .padding(top = 22.dp, start = 20.dp)
-                    .background(
-                        color = Color(0xFF294D42),
-                        shape = RoundedCornerShape(32.dp)
-                    )
-                    .padding(
-                        start = 8.dp,
-                        top = 0.dp,
-                        end = 32.dp,
-                        bottom = 4.dp
-                    )
-                    .shadow(20.dp),
-                contentAlignment = Alignment.CenterStart,
-            ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    IconButton(
-                        onClick = { /* Handle menu button click */ },
-                        modifier = Modifier.padding(end = 8.dp, top = 4.dp)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Menu,
-                            contentDescription = "Menu",
-                            tint = Color(0xFFEECC66)
-                        )
-                    }
-                    Box(
-                        modifier = Modifier.clickable { navController.navigate("home") }
-                    ) {
-                        Text(
-                            text = "HomeHive",
-                            fontSize = 30.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color(0xFFEECC66)
-                        )
+            AppBar(
+                navController,
+                onNavigationIconClick = {
+                    scope.launch {
+                        scaffoldState.drawerState.open()
                     }
                 }
-            }
-            Row(
-                modifier = Modifier
-                    .padding(top = 23.dp, end = 20.dp)
-                    .fillMaxWidth()
-                    .shadow(90.dp),
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Box(
-                    modifier = Modifier
-                        .padding(4.dp)
-                        .background(color = Color(0xFF497065), shape = CircleShape)
-                        .clip(CircleShape),
-                    contentAlignment = Alignment.Center
+            )
+        },
+        drawerGesturesEnabled = scaffoldState.drawerState.isOpen,
+        drawerContent = {
+            Box(modifier = Modifier.fillMaxSize()) {
+                Image(
+                    painter = painterResource(id = R.drawable.nav_drawer_bg),
+                    contentDescription = null,
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier.fillMaxSize()
+                )
+                Column(
+                    Modifier.padding(16.dp),
+                    verticalArrangement = Arrangement.SpaceBetween
                 ) {
-                    IconButton(onClick = {
-                         navController.navigate("test")
-                    }) {
-                        Icon(
-                            imageVector = Icons.Filled.Add,
-                            contentDescription = "Add",
-                            tint = Color(0xFFAFC1BB)
-                        )
-                    }
-                }
-                Box(
-                    modifier = Modifier
-                        .padding(4.dp)
-                        .background(color = Color(0xFF497065), shape = CircleShape)
-                        .shadow(60.dp)
-                        .clip(CircleShape),
-                    contentAlignment = Alignment.Center
-                ) {
-                    IconButton(onClick = {
-                        navController.navigate("routines")
-                    }) {
-                        Icon(
-                            imageVector = Icons.Filled.Star,
-                            contentDescription = "Star",
-                            tint = Color(0xFFAFC1BB)
-                        )
-                    }
+                    DrawerHeader()
+                    DrawerBody(
+                        items = listOf(
+                            MenuItem(
+                                id = "home",
+                                title = "Home",
+                                contentDescription = "Go to home screen",
+                                icon = Icons.Default.Home
+                            ),
+                            MenuItem(
+                                id = "settings",
+                                title = "Settings",
+                                contentDescription = "Go to settings screen",
+                                icon = Icons.Default.Settings
+                            ),
+                            MenuItem(
+                                id = "help",
+                                title = "Help",
+                                contentDescription = "Get help",
+                                icon = Icons.Default.Info
+                            ),
+                        ),
+                        onItemClick = {
+                            println("Clicked on ${it.title}")
+                        }
+                    )
                 }
             }
         },
@@ -166,8 +138,3 @@ fun App(
         }
     )
 }
-
-
-
-
-
