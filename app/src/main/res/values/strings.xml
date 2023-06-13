@@ -8,4 +8,6 @@
     <string name="loading">Loading devices...</string>
     <string name="load_devices">LOAD DEVICES</string>
     <string name="dismiss">DISMISS</string>
+    <string name="notification_content">Notification Content</string>
+    <string name="action">Action</string>
 </resources>
