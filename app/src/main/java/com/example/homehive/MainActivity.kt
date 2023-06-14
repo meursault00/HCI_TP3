@@ -115,7 +115,13 @@ fun App(
                                 icon = Icons.Default.Home
                             ),
                             MenuItem(
-                                id = "settings",
+                                id = "routines",
+                                title = "Routines",
+                                contentDescription = "Go to routines screen",
+                                icon = Icons.Default.Check
+                            ),
+                            MenuItem(
+                                id = "devices/tap/1234",
                                 title = "Settings",
                                 contentDescription = "Go to settings screen",
                                 icon = Icons.Default.Settings
@@ -128,6 +134,10 @@ fun App(
                             ),
                         ),
                         onItemClick = {
+                            scope.launch {
+                                scaffoldState.drawerState.close()
+                                navController.navigate("${it.id}")
+                            }
                             println("Clicked on ${it.title}")
                         }
                     )

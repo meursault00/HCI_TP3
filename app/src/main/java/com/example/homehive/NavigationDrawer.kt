@@ -55,7 +55,7 @@ fun DrawerHeader() {
             )
             Column() {
                 Text(text = "Gabor", fontSize = 20.sp)
-                Text(text = "Chris' Home", fontSize = 15.sp)
+                Text(text = "Chris' Home", fontSize = 15.sp, color = Color(0xFF777777))
             }
         }
     }

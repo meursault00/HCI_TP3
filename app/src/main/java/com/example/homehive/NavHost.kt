@@ -17,6 +17,7 @@ import com.example.homehive.screens.RoutinesScreen
 import com.example.homehive.screens.SpeakerScreen
 import com.example.homehive.screens.TapScreen
 import com.example.homehive.screens.TestScreen
+import com.example.homehive.viewmodels.FridgeVM
 
 @Composable
 fun NavHost(

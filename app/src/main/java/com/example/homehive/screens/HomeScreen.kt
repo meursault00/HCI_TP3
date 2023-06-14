@@ -42,19 +42,13 @@ fun HomeScreen(navController: NavController, innerPadding: PaddingValues?) {
                 })
             }
             item {
-                FridgeBox(onClick = {
-                    navController.navigate("devices/fridge/1234")
-                })
+                FridgeBox(onClick = {})
             }
             item {
-                TapBox(onClick = {
-                    navController.navigate("devices/tap/1234")
-                })
+                TapBox(onClick = {})
             }
             item {
-                BlindsBox(onClick = {
-                    navController.navigate("devices/blinds/1234")
-                })
+                BlindsBox(onClick = {})
             }
             item {
                 SpeakerBox(onClick = {
