@@ -1,6 +1,7 @@
 package com.example.homehive.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -108,7 +109,9 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
             shape = RoundedCornerShape(15.dp),
             color = Color(0xFFEFE5C5)
         ) {
-            Row(Modifier.padding(16.dp)) {
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
                 Text(
                     text = "Oven",
                     fontWeight = FontWeight.Bold,
@@ -128,6 +131,7 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                     Text(getButtonLabel(ovenState.value))
                 }
             }
+
             Image(
                 painter = painterResource(id = R.drawable.fuego),
                 contentDescription = null,
@@ -163,7 +167,7 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                         valueRange = 90f..230f,
 
                         colors = SliderDefaults.colors(
-                            thumbColor = Color(0xFFEFE5C5),
+                            thumbColor = Color(0xFF3D1F0F),
                             activeTrackColor = Color(0xFFE3592B),
                             inactiveTrackColor = Color(0xFFEDF5F2).copy(alpha = 0.3f),
                         ),
@@ -186,7 +190,9 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                 .height(45.dp)
                                 .weight(1f),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (grillMode.value == GrillMode.OFF) Color(0xFFEFE5C5) else Color(0x54F3F3F0)
+                                containerColor = if (grillMode.value == GrillMode.OFF) Color(
+                                    0xFFFEB26B
+                                ) else Color(0x54F3F3F0)
                             )
                         ) {
                             Text(
@@ -203,7 +209,9 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                 .height(45.dp)
                                 .weight(1f),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (grillMode.value == GrillMode.ECONOMIC) Color(0xFFEFE5C5) else Color(0x54F3F3F0)
+                                containerColor = if (grillMode.value == GrillMode.ECONOMIC) Color(
+                                    0xFFFEB26B
+                                ) else Color(0x54F3F3F0)
                             )
                         ) {
                             Text(
@@ -220,7 +228,9 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                 .height(45.dp)
                                 .weight(1f),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (grillMode.value == GrillMode.COMPLETE) Color(0xFFEFE5C5) else Color(0x54F3F3F0)
+                                containerColor = if (grillMode.value == GrillMode.COMPLETE) Color(
+                                    0xFFFEB26B
+                                ) else Color(0x54F3F3F0)
                             )
                         ) {
                             Text(
@@ -248,7 +258,9 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                 .height(45.dp)
                                 .weight(1f),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (convectionMode.value == ConvectionMode.OFF) Color(0xFFEFE5C5) else Color(0x54F3F3F0)
+                                containerColor = if (convectionMode.value == ConvectionMode.OFF) Color(
+                                    0xFFFEB26B
+                                ) else Color(0x54F3F3F0)
                             )
                         ) {
                             Text(
@@ -265,7 +277,9 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                 .height(45.dp)
                                 .weight(1f),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (convectionMode.value == ConvectionMode.ECONOMIC) Color(0xFFEFE5C5) else Color(0x54F3F3F0)
+                                containerColor = if (convectionMode.value == ConvectionMode.ECONOMIC) Color(
+                                    0xFFFEB26B
+                                ) else Color(0x54F3F3F0)
                             )
                         ) {
                             Text(
@@ -282,7 +296,9 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                 .height(45.dp)
                                 .weight(1f),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (convectionMode.value == ConvectionMode.CONVENTIONAL) Color(0xFFEFE5C5) else Color(0x54F3F3F0)
+                                containerColor = if (convectionMode.value == ConvectionMode.CONVENTIONAL) Color(
+                                    0xFFFEB26B
+                                ) else Color(0x54F3F3F0)
                             )
                         ) {
                             Text(
@@ -310,7 +326,9 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                 .height(45.dp)
                                 .weight(1f),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (sourceMode.value == SourceMode.CONVENTIONAL) Color(0xFFEFE5C5) else Color(0x54F3F3F0)
+                                containerColor = if (sourceMode.value == SourceMode.CONVENTIONAL) Color(
+                                    0xFFFEB26B
+                                ) else Color(0x54F3F3F0)
                             )
                         ) {
                             Text(
@@ -327,7 +345,9 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                 .height(45.dp)
                                 .weight(1f),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (sourceMode.value == SourceMode.ABOVE) Color(0xFFEFE5C5) else Color(0x54F3F3F0)
+                                containerColor = if (sourceMode.value == SourceMode.ABOVE) Color(
+                                    0xFEFE5C5
+                                ) else Color(0x54F3F3F0)
                             )
                         ) {
                             Text(
@@ -344,7 +364,9 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                 .height(45.dp)
                                 .weight(1f),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (sourceMode.value == SourceMode.BELOW) Color(0xFFEFE5C5) else Color(0x54F3F3F0)
+                                containerColor = if (sourceMode.value == SourceMode.BELOW) Color(
+                                    0xFFFEB26B
+                                ) else Color(0x54F3F3F0)
                             )
                         ) {
                             Text(
@@ -431,7 +453,7 @@ private fun setTemperatureLocal(temperature: Int, ovenTemperature: MutableState<
 }
 
 private fun getButtonLabel(ovenState: Boolean): String {
-    return if (ovenState) "ON" else "OFF"
+    return if (ovenState) "Turn Off" else "Turn On"
 }
 
 private fun setOvenStateLocal(ovenState: MutableState<Boolean>){

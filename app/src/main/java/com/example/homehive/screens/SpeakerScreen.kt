@@ -70,6 +70,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.R
+import com.example.homehive.WindowInfo
+import com.example.homehive.rememberWindowInfo
 import com.example.homehive.viewmodels.SpeakerVM
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -79,267 +81,269 @@ import kotlinx.coroutines.launch
 fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, speakerVM: SpeakerVM = viewModel()) {
 
     val speakerState by speakerVM.uiState.collectAsState();
-
+    val windowInfo = rememberWindowInfo();
     var isPlaying  = speakerState.status == "playing"
+
 
     Box(
         modifier = Modifier
             .padding(innerPadding ?: PaddingValues())
     ) {
-        Surface(
-            color = Color(0xFF000000),
-            modifier = Modifier
-                .padding(15.dp)
-                .height(530.dp)
-                .width(330.dp),
-            shape = RoundedCornerShape(15.dp),
-        ) {
-            Column(Modifier.fillMaxSize()) {
-                Surface(
-                    color = Color(0x0),
-                    modifier = Modifier
-                        .height(300.dp)
-                        .width(330.dp),
-                ) {
-                    Column {
-                        Row(
-                            verticalAlignment = Alignment.Top,
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(start = 20.dp, end = 20.dp, top = 15.dp, bottom = 15.dp)
-                        ) {
-                            Text(
-                                text = "Speaker",
-                                color = Color(0xFFFFFFFF),
-                                style = MaterialTheme.typography.headlineLarge,
-                                fontWeight = FontWeight.Bold,
-                            )
-                            OutlinedButton(
-                                onClick = { speakerVM.stop()},
-                                modifier= Modifier.size(40.dp),  //avoid the oval shape
-                                shape = CircleShape,
-                                border= BorderStroke(1.dp, Color.White),
-                                contentPadding = PaddingValues(0.dp),  //avoid the little icon
-                                colors = ButtonDefaults.outlinedButtonColors(contentColor =  Color.White)
+
+        if(windowInfo.screenWidthInfo is WindowInfo.WindowType.Compact){
+            Surface(
+                color = Color(0xFF000000),
+                modifier = Modifier
+                    .padding(15.dp)
+                    .height(530.dp)
+                    .width(330.dp),
+                shape = RoundedCornerShape(15.dp),
+            ) {
+                Column(Modifier.fillMaxSize()) {
+                    Surface( // PARTE NEGRA
+                        color = Color(0x0),
+                        modifier = Modifier
+                            .height(300.dp)
+                            .width(330.dp),
+                    ) {
+                        Column {
+                            Row(
+                                verticalAlignment = Alignment.Top,
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 20.dp, end = 20.dp, top = 15.dp, bottom = 15.dp)
                             ) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.stop),
-                                    contentDescription = null,
-                                    tint = Color(0xFFFFFFFF),
-                                    modifier = Modifier.size(20.dp)
+                                Text(
+                                    text = "Speaker",
+                                    color = Color(0xFFFFFFFF),
+                                    style = MaterialTheme.typography.headlineLarge,
+                                    fontWeight = FontWeight.Bold,
                                 )
-                            }
-                        }
-
-                        Row (
-                            horizontalArrangement = Arrangement.spacedBy(5.dp),
-                            modifier = Modifier
-                                .padding(start = 5.dp, end = 5.dp, bottom = 5.dp)
-                        ){
-                            Column{ // COLUMNA DE LA PLAYLIST A LA IZQUIERDA
-                                Surface(
-                                    shape = RoundedCornerShape(10.dp),
-                                    color = Color(0xFF121212),
-                                    modifier = Modifier
-                                        .height(300.dp)
-                                        .width(250.dp),
+                                OutlinedButton(
+                                    onClick = { speakerVM.stop()},
+                                    modifier= Modifier.size(40.dp),  //avoid the oval shape
+                                    shape = CircleShape,
+                                    border= BorderStroke(1.dp, Color.White),
+                                    contentPadding = PaddingValues(0.dp),  //avoid the little icon
+                                    colors = ButtonDefaults.outlinedButtonColors(contentColor =  Color.White)
                                 ) {
-
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.stop),
+                                        contentDescription = null,
+                                        tint = Color(0xFFFFFFFF),
+                                        modifier = Modifier.size(20.dp)
+                                    )
                                 }
-
                             }
-                            Column{ // COLUMNA DEL VOLUMEN A LA DERECHA
-                                Surface(
-                                    shape = RoundedCornerShape(10.dp),
-                                    color = Color(0xFF121212),
-                                    modifier = Modifier
-                                        .height(300.dp)
-                                        .width(80.dp),
-                                ) {
-                                    Column(
-                                        verticalArrangement = Arrangement.SpaceBetween,
-                                        horizontalAlignment = Alignment.CenterHorizontally,
-                                    ){
-                                        Row{ // INDICADOR DEL VOLUMEN
-                                            Surface(
-                                                color = Color(0x0),
-                                                modifier = Modifier
-                                                    .height(60.dp)
-                                                    .width(80.dp),
-                                            ){
-                                                Text (
-                                                    modifier = Modifier.padding(top = 20.dp),
-                                                    textAlign = TextAlign.Center,
-                                                    text = "${speakerState.volume}",
-                                                    style = MaterialTheme.typography.headlineLarge,
-                                                    fontWeight = FontWeight.Bold,
-                                                    color = Color(0xFFFFFFFF),
-                                                )
-                                            }
 
-                                        }
-
-                                        Row{ // BARRITAS DEL VOLUMEN
-                                            Surface(
-                                                color = Color(0x0),
-
-                                                modifier = Modifier
-                                                    .height(180.dp)
-                                                    .width(80.dp),
-                                            ){
-                                                VerticalSlider(
-                                                    value = speakerState.volume.toFloat(),
-                                                    onValueChange = { newValue -> speakerVM.setVolume(newValue.toInt()) },
-                                                    modifier = Modifier
-                                                        .alpha(0f)
-                                                        .padding(start= 30.dp ,end = 70.dp)
-                                                        .graphicsLayer {
-                                                            scaleX = 2f // Increase the scale of the thumb horizontally
-                                                            scaleY = 2f // Increase the scale of the thumb vertically
-                                                        },
-                                                    steps = 10,
-                                                    valueRange = 0f..10f,
-                                                )
-                                                VolumeBar(
-                                                    modifier = Modifier
-                                                        .padding(bottom = 42.dp)
-                                                        .fillMaxWidth(),
-                                                    activeBars = speakerState.volume,
-                                                    barCount = 10
-                                                )
-                                            }
-
-                                        }
+                            Row (
+                                horizontalArrangement = Arrangement.spacedBy(5.dp),
+                                modifier = Modifier
+                                    .padding(start = 5.dp, end = 5.dp, bottom = 5.dp)
+                            ){
+                                Column{ // COLUMNA DE LA PLAYLIST A LA IZQUIERDA
+                                    Surface(
+                                        shape = RoundedCornerShape(10.dp),
+                                        color = Color(0xFF121212),
+                                        modifier = Modifier
+                                            .height(300.dp)
+                                            .width(250.dp),
+                                    ) {
 
                                     }
 
+                                }
+                                Column{ // COLUMNA DEL VOLUMEN A LA DERECHA
+                                    Surface(
+                                        shape = RoundedCornerShape(10.dp),
+                                        color = Color(0xFF121212),
+                                        modifier = Modifier
+                                            .height(300.dp)
+                                            .width(80.dp),
+                                    ) {
+                                        Column(
+                                            verticalArrangement = Arrangement.SpaceBetween,
+                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                        ){
+                                            Row{ // INDICADOR DEL VOLUMEN
+                                                Surface(
+                                                    color = Color(0x0),
+                                                    modifier = Modifier
+                                                        .height(60.dp)
+                                                        .width(80.dp),
+                                                ){
+                                                    Text (
+                                                        modifier = Modifier.padding(top = 20.dp),
+                                                        textAlign = TextAlign.Center,
+                                                        text = "${speakerState.volume}",
+                                                        style = MaterialTheme.typography.headlineLarge,
+                                                        fontWeight = FontWeight.Bold,
+                                                        color = Color(0xFFFFFFFF),
+                                                    )
+                                                }
 
+                                            }
 
+                                            Row{ // BARRITAS DEL VOLUMEN
+                                                Surface(
+                                                    color = Color(0x0),
+
+                                                    modifier = Modifier
+                                                        .height(180.dp)
+                                                        .width(80.dp),
+                                                ){
+                                                    VerticalSlider(
+                                                        value = speakerState.volume.toFloat(),
+                                                        onValueChange = { newValue -> speakerVM.setVolume(newValue.toInt()) },
+                                                        modifier = Modifier
+                                                            .alpha(0f)
+                                                            .padding(start= 30.dp ,end = 70.dp)
+                                                            .graphicsLayer {
+                                                                scaleX = 2f // Increase the scale of the thumb horizontally
+                                                                scaleY = 2f // Increase the scale of the thumb vertically
+                                                            },
+                                                        steps = 10,
+                                                        valueRange = 0f..10f,
+                                                    )
+                                                    VolumeBar(
+                                                        modifier = Modifier
+                                                            .padding(bottom = 42.dp)
+                                                            .fillMaxWidth(),
+                                                        activeBars = speakerState.volume,
+                                                        barCount = 10
+                                                    )
+                                                }
+
+                                            }
+
+                                        }
+                                    }
 
                                 }
-
                             }
                         }
+
                     }
 
-                }
-
-                Surface(
-                    shape = RoundedCornerShape(
-                        topStart = 15.dp,
-                        topEnd = 15.dp,
-                        bottomStart = 0.dp,
-                        bottomEnd = 0.dp
-                    ),
-                    color = Color(0xFF7CE17A),
-                    modifier = Modifier
-                        .height(230.dp)
-                        .width(330.dp),
-                ) {
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(12.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally, // Center horizontally
+                    Surface( // PARTE VERDE
+                        shape = RoundedCornerShape(
+                            topStart = 15.dp,
+                            topEnd = 15.dp,
+                            bottomStart = 0.dp,
+                            bottomEnd = 0.dp
+                        ),
+                        color = Color(0xFF7CE17A),
                         modifier = Modifier
-                            .width(100.dp)
-                            .padding(start = 30.dp, end = 30.dp, top = 15.dp, bottom = 15.dp)
-                    ){
-
-                        //Nombre de la cancion
-                        AnimatedTextOverflow(text = "Peso Pluma: Bzrp Music Sessions, Vol. 39")
-
-                        // artista
-                        Text(
-                            text = "BZRP Music Sessions, Vol. 39",
-                            color = Color(0xB9FFFFFF),
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.Bold,
-                        )
-                        // slider de posicion en la cacin
-                        Slider(
-                            value = 0.5f,
-                            enabled = false,
-                            onValueChange = { /*TODO*/ },
-                            colors = SliderDefaults.colors(
-                                thumbColor = Color(0xFFFFFFFF),
-                                activeTrackColor = Color(0xFFFFFFFF),
-                                inactiveTrackColor = Color(0x97FFFFFF),
-                                disabledThumbColor = Color(0xFFFFFFFF),
-                                disabledActiveTrackColor = Color(0xFFFFFFFF),
-                                disabledInactiveTrackColor = Color(0x97FFFFFF),
-
-                            ),
+                            .height(230.dp)
+                            .width(330.dp),
+                    ) {
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(12.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally, // Center horizontally
                             modifier = Modifier
-                                .fillMaxWidth()
-                        )
-
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                                .width(100.dp)
+                                .padding(start = 30.dp, end = 30.dp, top = 15.dp, bottom = 15.dp)
                         ){
-                            IconButton(
-                                onClick = {if(speakerState.volume > 0) speakerVM.decrementVolume() },
-                                modifier = Modifier.size(40.dp) // Adjust the size as desired
-                            ) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.minus),
-                                    contentDescription = null,
-                                    tint = Color(0xFFFFFFFF),
-                                    modifier = Modifier.size(30.dp)
-                                )
-                            }
-                            IconButton(
-                                onClick = {speakerVM.previousSong()},
-                                modifier = Modifier.size(40.dp) // Adjust the size as desired
-                            ) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.previous),
-                                    contentDescription = null,
-                                    tint = Color(0xFFFFFFFF),
-                                    modifier = Modifier.size(30.dp)
-                                )
-                            }
-                            FloatingActionButton(
-                                onClick = { if(isPlaying) speakerVM.pause() else speakerVM.play() },
-                                elevation = FloatingActionButtonDefaults.elevation(0.dp),
-                                shape = CircleShape,
-                                containerColor = Color(0xFFFFFFFF),
-                                modifier = Modifier.size(50.dp) // Adjust the size as desired
-                            ) {
-                                Icon(
-                                    painter = painterResource(id = if(isPlaying) R.drawable.pause else R.drawable.play),
-                                    contentDescription = null,
-                                    tint = Color(0xFF000000),
-                                    modifier = Modifier.size(30.dp)
-                                )
-                            }
-                            IconButton(
-                                onClick = { speakerVM.nextSong() },
-                                modifier = Modifier.size(40.dp) // Adjust the size as desired
-                            ) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.next),
-                                    contentDescription = null,
-                                    tint = Color(0xFFFFFFFF),
-                                    modifier = Modifier.size(30.dp)
-                                )
-                            }
-                            IconButton(
-                                onClick = {if(speakerState.volume < 10) speakerVM.incrementVolume() },
-                                modifier = Modifier.size(40.dp) // Adjust the size as desired
-                            ) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.plus),
-                                    contentDescription = null,
-                                    tint = Color(0xFFFFFFFF),
-                                    modifier = Modifier.size(30.dp)
-                                )
+
+                            //Nombre de la cancion
+                            AnimatedTextOverflow(text = "Peso Pluma: Bzrp Music Sessions, Vol. 39")
+
+                            // artista
+                            Text(
+                                text = "BZRP Music Sessions, Vol. 39",
+                                color = Color(0xB9FFFFFF),
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = FontWeight.Bold,
+                            )
+                            // slider de posicion en la cacin
+                            Slider(
+                                value = 0.5f,
+                                enabled = false,
+                                onValueChange = { /*TODO*/ },
+                                colors = SliderDefaults.colors(
+                                    thumbColor = Color(0xFFFFFFFF),
+                                    activeTrackColor = Color(0xFFFFFFFF),
+                                    inactiveTrackColor = Color(0x97FFFFFF),
+                                    disabledThumbColor = Color(0xFFFFFFFF),
+                                    disabledActiveTrackColor = Color(0xFFFFFFFF),
+                                    disabledInactiveTrackColor = Color(0x97FFFFFF),
+
+                                ),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                            )
+
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            ){
+                                IconButton(
+                                    onClick = {if(speakerState.volume > 0) speakerVM.decrementVolume() },
+                                    modifier = Modifier.size(40.dp) // Adjust the size as desired
+                                ) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.minus),
+                                        contentDescription = null,
+                                        tint = Color(0xFFFFFFFF),
+                                        modifier = Modifier.size(30.dp)
+                                    )
+                                }
+                                IconButton(
+                                    onClick = {speakerVM.previousSong()},
+                                    modifier = Modifier.size(40.dp) // Adjust the size as desired
+                                ) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.previous),
+                                        contentDescription = null,
+                                        tint = Color(0xFFFFFFFF),
+                                        modifier = Modifier.size(30.dp)
+                                    )
+                                }
+                                FloatingActionButton(
+                                    onClick = { if(isPlaying) speakerVM.pause() else speakerVM.play() },
+                                    elevation = FloatingActionButtonDefaults.elevation(0.dp),
+                                    shape = CircleShape,
+                                    containerColor = Color(0xFFFFFFFF),
+                                    modifier = Modifier.size(50.dp) // Adjust the size as desired
+                                ) {
+                                    Icon(
+                                        painter = painterResource(id = if(isPlaying) R.drawable.pause else R.drawable.play),
+                                        contentDescription = null,
+                                        tint = Color(0xFF000000),
+                                        modifier = Modifier.size(30.dp)
+                                    )
+                                }
+                                IconButton(
+                                    onClick = { speakerVM.nextSong() },
+                                    modifier = Modifier.size(40.dp) // Adjust the size as desired
+                                ) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.next),
+                                        contentDescription = null,
+                                        tint = Color(0xFFFFFFFF),
+                                        modifier = Modifier.size(30.dp)
+                                    )
+                                }
+                                IconButton(
+                                    onClick = {if(speakerState.volume < 10) speakerVM.incrementVolume() },
+                                    modifier = Modifier.size(40.dp) // Adjust the size as desired
+                                ) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.plus),
+                                        contentDescription = null,
+                                        tint = Color(0xFFFFFFFF),
+                                        modifier = Modifier.size(30.dp)
+                                    )
+                                }
                             }
                         }
-                    }
 
+                    }
                 }
             }
         }
+
+
     }
 }
 @Composable

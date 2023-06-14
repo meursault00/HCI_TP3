@@ -121,7 +121,7 @@ fun RoutineBox() {
                         .width(200.dp)
                         .align(Alignment.BottomCenter),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xB4EFE5C5)
+                        containerColor = Color(0xFF795454)
                     ),
                 ) {
                     Icon(

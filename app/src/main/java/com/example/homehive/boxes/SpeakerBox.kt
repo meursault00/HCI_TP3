@@ -83,53 +83,11 @@ fun SpeakerBox(onClick: () -> Unit) {
                         .padding(start = 10.dp, end = 10.dp)
                         .align(Alignment.Center),
                 ) {
-                    Row(
-                        horizontalArrangement = Arrangement.SpaceEvenly,
-                        verticalAlignment = Alignment.CenterVertically, // Center vertically
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 15.dp)
-                    ){
-                        FloatingActionButton(
-                            onClick = { /*TODO*/ },
-                            shape = CircleShape,
-                            containerColor = Color(0xFFEEE8D7),
-                            modifier = Modifier.size(30.dp) // Adjust the size as desired
-                        ) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.minus),
-                                contentDescription = null,
-                                tint = Color(0xFF000000),
-                                modifier = Modifier.size(20.dp)
-                            )
-                        }
 
-                        Text(
-                            text = "10",
-                            color = Color(0xFF114225),
-                            modifier = Modifier
-                        )
-
-                        FloatingActionButton(
-                            onClick = { /*TODO*/ },
-                            shape = CircleShape,
-                            containerColor = Color(0xFFEEE8D7),
-                            modifier = Modifier.size(30.dp) // Adjust the size as desired
-
-                        ) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.plus),
-                                contentDescription = null,
-                                tint = Color(0xFF000000),
-                                modifier = Modifier.size(20.dp)
-                            )
-                        }
-                    }
                     Text(
                         text = "CurrentSong",
                         color = Color(0xFF114225),
                     )
-
                     Row(
                         horizontalArrangement = Arrangement.SpaceEvenly,
                         verticalAlignment = Alignment.CenterVertically, // Center vertically
