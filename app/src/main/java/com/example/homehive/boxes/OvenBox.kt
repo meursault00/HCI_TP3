@@ -1,16 +1,21 @@
 package com.example.homehive.boxes
 
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -26,6 +31,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.R
@@ -39,16 +45,24 @@ fun OvenBox(onClick: () -> Unit, viewModel : OvenVM = viewModel()) {
 
     var isOn = remember { mutableStateOf(false) }
 
+    var isOpen = remember { mutableStateOf(false) }
+
+    val height: Dp by animateDpAsState(
+        targetValue = if (isOpen.value) 415.dp else 200.dp,
+        animationSpec = tween(durationMillis = 100)
+    )
+
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .height(height)
             .clickable(onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
         Surface(
             modifier = Modifier
-                .height(200.dp)
                 .width(200.dp)
+
                 .clickable(onClick = onClick),
             shape = RoundedCornerShape(15.dp),
             color = Color(0xFFEFE5C5)
@@ -56,6 +70,7 @@ fun OvenBox(onClick: () -> Unit, viewModel : OvenVM = viewModel()) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
+
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.fuego),
@@ -73,36 +88,124 @@ fun OvenBox(onClick: () -> Unit, viewModel : OvenVM = viewModel()) {
                         .align(Alignment.TopCenter)
                 )
 
-                Text(
-                    text = "${uiState.ovenTemperature}ºC",
-                    fontWeight = FontWeight.Bold,
-                    style = MaterialTheme.typography.headlineLarge,
-                    color = Color(0xFFE3592B),
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                )
+                if(!isOpen.value){
+                    Column(
+                        modifier = Modifier
+                            .padding(start = 10.dp, end = 10.dp)
+                            .align(Alignment.Center)
+                    ){
+                        Text(
+                            text = "${uiState.ovenTemperature}ºC",
+                            fontWeight = FontWeight.Bold,
+                            style = MaterialTheme.typography.headlineLarge,
+                            color = Color(0xFFE3592B),
+                            modifier = Modifier.padding(top = 16.dp)
+                        )
+                        Text(
+                            text = if(isOn.value) "On" else "Off",
+                            fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Color(0xFF114225),
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(start = 20.dp)
+                        )
+                    }
+                }
 
                 Button(
-                    onClick = { isOn.value = !isOn.value },
+                    onClick = { isOpen.value = !isOpen.value },
                     elevation = ButtonDefaults.buttonElevation(
                         defaultElevation = 30.dp,
                         pressedElevation = 0.0.dp,
                     ),
+                    shape = RoundedCornerShape(topStart = 15.dp,
+                        topEnd = 15.dp,
+                        bottomStart = 0.dp,
+                        bottomEnd = 0.dp),
                     modifier = Modifier
-                        .padding(16.dp)
-                        .align(Alignment.BottomEnd),
-
-
+                        .height(45.dp)
+                        .width(200.dp)
+                        .align(Alignment.BottomCenter),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if (isOn.value) Color(0xFFEFE5C5) else Color(0xFFEEE5C9)),
+                        containerColor = if(isOpen.value)  Color(0xFFEFE5C5) else Color(0xB4EFE5C5)
+                    ),
                 ) {
-                    Text(
-                        text = if (isOn.value) "ON" else "OFF",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = Color.DarkGray,
-                        textAlign = TextAlign.Center
+                    Icon(
+                        painter = if (isOpen.value) painterResource(id = R.drawable.upicon) else painterResource(id = R.drawable.downicon),
+                        contentDescription = null,
+                        tint =  Color(0xFFAFA586) ,
+                        modifier = Modifier
+                            .size(60.dp)
                     )
                 }
+
+                if(isOpen.value){
+                    Column(
+                        modifier = Modifier
+                            .padding(start = 10.dp, end = 10.dp)
+                            .align(Alignment.Center)
+                    ){
+                        Button(
+                            onClick = { isOn.value = !isOn.value },
+                            elevation = ButtonDefaults.buttonElevation(
+                                defaultElevation = 30.dp,
+                                pressedElevation = 0.0.dp,
+                            ),
+                            modifier = Modifier
+                                .padding(start = 29.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFFEFE5C5),
+                                contentColor = Color(0xFF1C6135)
+                            )
+                        ) {
+                            Text(text = if (isOn.value) "Turn Off" else "Turn On",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = Color(0xFFAFA586),
+
+                                )
+                        }
+
+                        Text(
+                            text = "${uiState.ovenTemperature}ºC",
+                            fontWeight = FontWeight.Bold,
+                            style = MaterialTheme.typography.headlineLarge,
+                            color = Color(0xFFE3592B),
+                            modifier = Modifier.padding(start = 40.dp)
+                        )
+
+                        Text(
+                            text = "Grill Mode: " + uiState.grillMode,
+                            fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Color(0xFF114225),
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .padding(16.dp)
+                        )
+
+                        Text(
+                            text = "Convection Mode: " + uiState.convectionMode,
+                            fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Color(0xFF114225),
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .padding(16.dp)
+                        )
+
+                        Text(
+                            text = "Source Mode: " + uiState.heatMode,
+                            fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Color(0xFF114225),
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .padding(16.dp)
+                        )
+                    }
+                }
+
+
                 if (!isOn.value) {
                     Box(
                         modifier = Modifier
