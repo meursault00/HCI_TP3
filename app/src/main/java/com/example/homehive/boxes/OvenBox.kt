@@ -217,7 +217,6 @@ fun OvenBox(onClick: () -> Unit, viewModel : OvenVM = viewModel()) {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(Color.Red.copy(alpha = 0.1f))
                     )
                 }
             }
