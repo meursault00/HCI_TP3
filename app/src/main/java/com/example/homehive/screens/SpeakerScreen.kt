@@ -89,7 +89,6 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
         modifier = Modifier
             .padding(innerPadding ?: PaddingValues())
     ) {
-
         if(windowInfo.screenWidthInfo is WindowInfo.WindowType.Compact){
             Surface(
                 color = Color(0xFF000000),
@@ -342,7 +341,32 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                 }
             }
         }
+        else if(windowInfo.screenWidthInfo is WindowInfo.WindowType.Medium)
+        {
+            Surface(
+                color = Color(0xFF7DA74D),
+                modifier = Modifier
+                    .padding(15.dp)
+                    .height(330.dp)
+                    .width(430.dp),
+                shape = RoundedCornerShape(15.dp),
+            ){
+                Text(text = "MEDIUM")
+            }
+        }
+        else{
+            Surface(
+                color = Color(0xFFFF0000),
+                modifier = Modifier
+                    .padding(15.dp)
+                    .height(330.dp)
+                    .width(430.dp),
+                shape = RoundedCornerShape(15.dp),
+            ){
+                Text(text = "EXPANDED")
 
+            }
+        }
 
     }
 }
