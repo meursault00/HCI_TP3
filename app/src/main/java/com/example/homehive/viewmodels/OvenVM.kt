@@ -17,13 +17,19 @@ class OvenVM : ViewModel() {
         }
     }
 
+    fun setPower( newPower : Boolean ){
+        _uiState.update{currentState ->
+            currentState.copy(power = newPower)
+        }
+    }
+
     fun setOvenTemperature( newTemperature : Int ){
         _uiState.update{currentState ->
             currentState.copy(ovenTemperature = newTemperature)
         }
     }
 
-    fun setheatMode( newHeatMode : String ){
+    fun setHeatMode( newHeatMode : String ){
         _uiState.update{currentState ->
             currentState.copy(heatMode =  newHeatMode)
         }
