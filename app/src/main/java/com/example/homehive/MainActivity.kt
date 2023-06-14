@@ -121,7 +121,7 @@ fun App(
                                 icon = Icons.Default.Check
                             ),
                             MenuItem(
-                                id = "devices/tap/1234",
+                                id = "settings",
                                 title = "Settings",
                                 contentDescription = "Go to settings screen",
                                 icon = Icons.Default.Settings
