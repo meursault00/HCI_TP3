@@ -18,7 +18,7 @@ class SpeakerVM : ViewModel() {
     }
     fun decrementVolume(){
         _uiState.update{currentState ->
-            currentState.copy(volume = (uiState.value.volume + 1))
+            currentState.copy(volume = (uiState.value.volume - 1))
         }
     }
 
@@ -30,17 +30,17 @@ class SpeakerVM : ViewModel() {
 
     fun play(){
         _uiState.update{currentState ->
-            currentState.copy(state = "playing")
+            currentState.copy(status = "playing")
         }
     }
     fun pause(){
         _uiState.update{currentState ->
-            currentState.copy(state = "paused")
+            currentState.copy(status = "paused")
         }
     }
     fun stop(){
         _uiState.update{currentState ->
-            currentState.copy(state = "stopped")
+            currentState.copy(status = "stopped")
         }
     }
 

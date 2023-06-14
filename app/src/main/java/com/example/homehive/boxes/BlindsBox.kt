@@ -24,6 +24,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,7 +46,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.R
+import com.example.homehive.viewmodels.BlindsVM
+import com.example.homehive.viewmodels.FridgeVM
+
 enum class CurtainState {
     CLOSED,
     CLOSING,
@@ -53,7 +58,10 @@ enum class CurtainState {
     OPEN,
 }
 @Composable
-fun BlindsBox(onClick: () -> Unit) {
+fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
+
+    val blindState by blindsVM.uiState.collectAsState();
+
     var isOpen = remember { mutableStateOf(false) }
 
     val blindsHeight: Dp by animateDpAsState(
@@ -61,8 +69,7 @@ fun BlindsBox(onClick: () -> Unit) {
         animationSpec = tween(durationMillis = 100)
     )
 
-    val curtainState = remember { mutableStateOf(CurtainState.OPEN) }
-    val curtainPosition = remember { mutableStateOf(3) }
+
 
     Box(
         modifier = Modifier
@@ -88,7 +95,7 @@ fun BlindsBox(onClick: () -> Unit) {
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier
-                        .offset { IntOffset(x = curtainPosition.value , y = 0) }
+                        .offset { IntOffset(x = blindState.position  , y = 0) }
                 )
                 Text(
                     text = "Blinds",
@@ -101,7 +108,7 @@ fun BlindsBox(onClick: () -> Unit) {
                 )
 
                 Text(
-                    text = "${curtainPosition.value}%",
+                    text = "${blindState.position}%",
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFF114225),
@@ -138,7 +145,7 @@ fun BlindsBox(onClick: () -> Unit) {
                     )
                 }
 
-                if (curtainPosition.value <= 0 ) {
+                if (blindState.position <= 0 ) {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -147,7 +154,7 @@ fun BlindsBox(onClick: () -> Unit) {
                 }
                 if(isOpen.value) {
                     Button( // CHECKEAR CONDICIONES DE ESTADO
-                        onClick = { toggleCurtainState(curtainState) },
+                        onClick = {  },
                         elevation = ButtonDefaults.buttonElevation(
                             defaultElevation = 30.dp,
                             pressedElevation = 0.0.dp,
@@ -161,14 +168,14 @@ fun BlindsBox(onClick: () -> Unit) {
                         )
                     ) {
                         Text(
-                            getButtonLabel(curtainState.value),
+                            text = "Open",
                             color = Color(0xFFAFA586)
 
                             )
                     }
                     Slider(
-                        value = curtainPosition.value.toFloat(),
-                        onValueChange = { position -> setPosition(position.toInt(), curtainPosition, curtainState) },
+                        value = blindState.position.toFloat(),
+                        onValueChange = { newPosition -> blindsVM.setPosition(newPosition.toInt()) },
                         valueRange = 0f..100f,
                         modifier = Modifier
                             .padding(bottom = 50.dp, start = 10.dp, end = 10.dp)
@@ -177,39 +184,5 @@ fun BlindsBox(onClick: () -> Unit) {
                 }
             }
         }
-    }
-}
-
-
-private fun setPosition(position: Int, curtainPosition: MutableState<Int>, curtainState: MutableState<CurtainState>) {
-    curtainPosition.value = position
-    curtainState.value = when (position) {
-        0 -> CurtainState.CLOSED
-        100 -> CurtainState.OPEN
-        else -> {
-            when (curtainState.value) {
-                CurtainState.CLOSED, CurtainState.CLOSING -> CurtainState.OPENING
-                CurtainState.OPEN, CurtainState.OPENING -> CurtainState.CLOSING
-            }
-        }
-    }
-}
-
-
-private fun toggleCurtainState(curtainState: MutableState<CurtainState>) {
-    curtainState.value = when (curtainState.value) {
-        CurtainState.OPEN -> CurtainState.OPENING
-        CurtainState.OPENING -> CurtainState.CLOSED
-        CurtainState.CLOSED -> CurtainState.CLOSING
-        CurtainState.CLOSING -> CurtainState.OPEN
-    }
-}
-
-private fun getButtonLabel(curtainState: CurtainState): String {
-    return when (curtainState) {
-        CurtainState.OPEN -> "Open"
-        CurtainState.CLOSING -> "Closing..."
-        CurtainState.CLOSED -> "Close"
-        CurtainState.OPENING -> "Opening..."
     }
 }

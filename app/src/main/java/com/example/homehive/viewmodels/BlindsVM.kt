@@ -13,12 +13,12 @@ class BlindsVM : ViewModel() {
 
     fun setOpen(){
         _uiState.update{currentState ->
-            currentState.copy(state = "opening")
+            currentState.copy(status = "opening")
         }
     }
     fun setClose(){
         _uiState.update{currentState ->
-            currentState.copy(state = "closing")
+            currentState.copy(status = "closing")
         }
     }
 

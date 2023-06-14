@@ -22,7 +22,7 @@ class FridgeVM : ViewModel() {
 
     fun setFridgeTemperature( newTemperature : Int ){
         _uiState.update{currentState ->
-            currentState.copy(fridgeTemperature = newTemperature)
+            currentState.copy(temperature = newTemperature)
         }
     }
 

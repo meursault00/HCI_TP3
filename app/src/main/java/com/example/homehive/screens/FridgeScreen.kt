@@ -72,7 +72,7 @@ fun FridgeComponentBeta (fridgeVM : FridgeVM = viewModel() ){     // FRIDGE TEST
             Text(text = "Power = " + fridgeUIState.power.toString())
         }
         Box(modifier = Modifier.background(Color.Gray)){
-            Text(text = "Fridge Temperature = " + fridgeUIState.fridgeTemperature.toString())
+            Text(text = "Fridge Temperature = " + fridgeUIState.temperature.toString())
         }
         Box(modifier = Modifier.background(Color.Gray)){
             Text(text = "Freezer Temperature = " + fridgeUIState.freezerTemperature.toString())
@@ -88,7 +88,7 @@ fun FridgeComponentBeta (fridgeVM : FridgeVM = viewModel() ){     // FRIDGE TEST
             horizontalArrangement = Arrangement.Center
         ) {
             Button(
-                onClick = { fridgeVM.setFridgeTemperature(fridgeUIState.fridgeTemperature - 1) },
+                onClick = { fridgeVM.setFridgeTemperature(fridgeUIState.temperature - 1) },
                 modifier = Modifier
                     .size(48.dp)
                     .clip(RoundedCornerShape(14.dp))
@@ -108,7 +108,7 @@ fun FridgeComponentBeta (fridgeVM : FridgeVM = viewModel() ){     // FRIDGE TEST
                     .padding(horizontal = 30.dp, vertical = 8.dp)
             ) {
                 Text(
-                    text = fridgeUIState.fridgeTemperature.toString(),
+                    text = fridgeUIState.temperature.toString(),
                     color = Color.DarkGray,
                     fontWeight = FontWeight.Bold,
                     fontSize = 24.sp
@@ -118,7 +118,7 @@ fun FridgeComponentBeta (fridgeVM : FridgeVM = viewModel() ){     // FRIDGE TEST
             Spacer(modifier = Modifier.width(16.dp)) // Add spacing between buttons and temperature box
 
             Button(
-                onClick = { fridgeVM.setFridgeTemperature(fridgeUIState.fridgeTemperature + 1) },
+                onClick = { fridgeVM.setFridgeTemperature(fridgeUIState.temperature + 1) },
                 modifier = Modifier
                     .size(48.dp)
                     .clip(RoundedCornerShape(14.dp))

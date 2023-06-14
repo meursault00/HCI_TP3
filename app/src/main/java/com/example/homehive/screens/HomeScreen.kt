@@ -13,12 +13,14 @@ import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.example.homehive.boxes.BlindsBox
 import com.example.homehive.boxes.FridgeBox
 import com.example.homehive.boxes.OvenBox
 import com.example.homehive.boxes.SpeakerBox
 import com.example.homehive.boxes.TapBox
+import com.example.homehive.viewmodels.FridgeVM
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

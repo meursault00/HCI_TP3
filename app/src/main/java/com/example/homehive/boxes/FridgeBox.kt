@@ -23,6 +23,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,24 +35,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.R
+import com.example.homehive.viewmodels.FridgeVM
 
 
-enum class FridgeMode {
-    NORMAL,
-    VACATION,
-    PARTY,
-}
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FridgeBox(onClick: () -> Unit) {
+fun FridgeBox(onClick: () -> Unit , fridgeVM : FridgeVM = viewModel()) {
+
+    val uiState by fridgeVM.uiState.collectAsState();
+
     var isOpen = remember { mutableStateOf(false) };
-
-    var fridgeTemp = remember { mutableStateOf(2) };
-
-    var fridgeMode = remember { mutableStateOf(FridgeMode.NORMAL) };
-    var freezerTemp = remember { mutableStateOf(-8) };
-
 
     val height: Dp by animateDpAsState(
         targetValue = if (isOpen.value) 415.dp else 200.dp,
@@ -98,7 +93,7 @@ fun FridgeBox(onClick: () -> Unit) {
                             .align(Alignment.Center)
                     ) {
                         Text(
-                            text = "${freezerTemp.value}°C",
+                            text = "${uiState.freezerTemperature}°C",
                             fontWeight = FontWeight.Bold,
                             style = MaterialTheme.typography.bodyLarge,
                             color = Color(0xFF4BACC4),
@@ -106,14 +101,14 @@ fun FridgeBox(onClick: () -> Unit) {
 
                         )
                         Text(
-                            text = "${fridgeTemp.value}ºC",
+                            text = "${uiState.temperature}ºC",
                             fontWeight = FontWeight.Bold,
                             style = MaterialTheme.typography.headlineLarge,
                             color = Color(0xFF216E81),
                             modifier = Modifier.align(Alignment.CenterHorizontally)
                         )
                         Text(
-                            text = "${getFridgeMode(fridgeMode)}",
+                            text = "${uiState.mode}",
                             fontWeight = FontWeight.Bold,
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color(0xFF216E81),
@@ -128,18 +123,17 @@ fun FridgeBox(onClick: () -> Unit) {
                             .align(Alignment.Center)
                     ) {
                         Text(
-                            text = "Fridge: ${fridgeTemp.value}ºC",
+                            text = "Fridge: ${uiState.temperature}ºC",
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color(0xFF2B4E5C),
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier
                         )
                         Slider(
-                            value = fridgeTemp.value.toFloat(),
+                            value = uiState.temperature.toFloat(),
                             onValueChange = { newFridgeTemp ->
-                                setFridgeTemp(
-                                    newFridgeTemp.toInt(),
-                                    fridgeTemp
+                                fridgeVM.setFridgeTemperature(
+                                    newFridgeTemp.toInt()
                                 )
                             },
                             valueRange = 2f..8f,
@@ -152,18 +146,17 @@ fun FridgeBox(onClick: () -> Unit) {
                             modifier = Modifier
                         )
                         Text(
-                            text = "Fridge: ${freezerTemp.value}ºC",
+                            text = "Fridge: ${uiState.freezerTemperature}ºC",
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color(0xFF2B4E5C),
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier
                         )
                         Slider(
-                            value = freezerTemp.value.toFloat(),
+                            value = uiState.freezerTemperature.toFloat(),
                             onValueChange = { newFreezerTemp ->
-                                setFreezerTemp(
-                                    newFreezerTemp.toInt(),
-                                    freezerTemp
+                                fridgeVM.setFreezerTemperature(
+                                    newFreezerTemp.toInt()
                                 )
                             },
                             valueRange = -20f..-8f,
@@ -185,7 +178,7 @@ fun FridgeBox(onClick: () -> Unit) {
                             modifier = Modifier.padding(bottom = 10.dp)
                         )
                         Button(
-                            onClick = { setFridgeMode(FridgeMode.NORMAL, fridgeMode) },
+                            onClick = { fridgeVM.setMode("Normal") },
                             elevation = ButtonDefaults.buttonElevation(
                                 defaultElevation = 30.dp,
                                 pressedElevation = 0.0.dp,
@@ -200,7 +193,7 @@ fun FridgeBox(onClick: () -> Unit) {
                                 .height(45.dp)
                                 .width(200.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (fridgeMode.value == FridgeMode.NORMAL) Color(
+                                containerColor = if ( uiState.mode === "Normal" ) Color(
                                     0xFFEFE5C5
                                 ) else Color(0x54F3F3F0)
                             ),
@@ -214,7 +207,7 @@ fun FridgeBox(onClick: () -> Unit) {
                             )
                         }
                         Button(
-                            onClick = { setFridgeMode(FridgeMode.VACATION, fridgeMode) },
+                            onClick = { fridgeVM.setMode("Vacation") },
                             elevation = ButtonDefaults.buttonElevation(
                                 defaultElevation = 30.dp,
                                 pressedElevation = 0.0.dp,
@@ -229,7 +222,7 @@ fun FridgeBox(onClick: () -> Unit) {
                                 .height(45.dp)
                                 .width(200.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (fridgeMode.value == FridgeMode.VACATION) Color(
+                                containerColor = if (uiState.mode === "Vacation") Color(
                                     0xFFEFE5C5
                                 ) else Color(0x54F3F3F0)
                             ),
@@ -243,7 +236,7 @@ fun FridgeBox(onClick: () -> Unit) {
                             )
                         }
                         Button(
-                            onClick = { setFridgeMode(FridgeMode.PARTY, fridgeMode) },
+                            onClick = { fridgeVM.setMode("Party") },
                             elevation = ButtonDefaults.buttonElevation(
                                 defaultElevation = 30.dp,
                                 pressedElevation = 0.0.dp,
@@ -258,7 +251,7 @@ fun FridgeBox(onClick: () -> Unit) {
                                 .height(45.dp)
                                 .width(200.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (fridgeMode.value == FridgeMode.PARTY) Color(
+                                containerColor = if (uiState.mode === "Party") Color(
                                     0xFFEFE5C5
                                 ) else Color(0x54F3F3F0)
                             ),
@@ -309,22 +302,3 @@ fun FridgeBox(onClick: () -> Unit) {
     }
 }
 
-private fun setFridgeTemp(newFridgeTemp: Int, fridgeTemp: MutableState<Int> ) {
-    fridgeTemp.value = newFridgeTemp
-}
-
-private fun setFreezerTemp(newFreezerTemp: Int, freezerTemp: MutableState<Int> ) {
-    freezerTemp.value = newFreezerTemp
-}
-
-private fun setFridgeMode(newFridgeMode: FridgeMode, fridgeMode: MutableState<FridgeMode> ) {
-    fridgeMode.value = newFridgeMode
-}
-
-private fun getFridgeMode(fridgeMode: MutableState<FridgeMode>): String {
-    return when (fridgeMode.value) {
-        FridgeMode.NORMAL -> "Normal"
-        FridgeMode.VACATION -> "Vacation"
-        FridgeMode.PARTY -> "Party"
-    }
-}

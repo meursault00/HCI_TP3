@@ -31,6 +31,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -44,6 +45,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -60,14 +62,21 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.R
+import com.example.homehive.viewmodels.FridgeVM
+import com.example.homehive.viewmodels.TapVM
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TapBox(onClick: () -> Unit) {
+fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
+
+    val tapState by tapVM.uiState.collectAsState();
+
 
     var isOpen = remember { mutableStateOf(false) };
     var isOn = remember { mutableStateOf(false) };
+    var isDispensing = remember { mutableStateOf(false) };
 
     var dispenseValue = remember { mutableStateOf("") };
     var dispenseValueError = remember { mutableStateOf("") };
@@ -166,10 +175,36 @@ fun TapBox(onClick: () -> Unit) {
                             .background(Color.Black.copy(alpha = 0.3f))
                     )
                 }
+                if(isDispensing.value && !isOpen.value){
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color.Black.copy(alpha = 0.3f))
+                    )
+                    Column(
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                    ) {
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .size(100.dp)
+                                .align(Alignment.CenterHorizontally),
+                            color = Color(0xFFD3DEE0)
+                        )
+                        Text(
+                            text = "Dispensing ${ dispenseValue.value } ${ dispenseUnit.value }",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color(0xFFD3DEE0),
+                            modifier = Modifier
+                                .padding(top = 20.dp)
+                                .align(Alignment.CenterHorizontally)
+                        )
+                    }
+                }
                 if(isOpen.value){
 
                     Button(
-                        onClick = { toggleTap(isOn) },
+                        onClick = { if(isOn.value) tapVM.setClose() else tapVM.setOpen(); isOn.value = !isOn.value ; isDispensing.value = false; dispenseValue.value = ""; dispenseUnit.value = ""},
                         elevation = ButtonDefaults.buttonElevation(
                             defaultElevation = 30.dp,
                             pressedElevation = 0.0.dp,
@@ -197,15 +232,17 @@ fun TapBox(onClick: () -> Unit) {
                             isError = dispenseValueHasError.value,
                             onValueChange = { newValue ->
                                 // Ensure the value falls within the range of 1 to 100
-                                dispenseValue.value = newValue
+
+                                val sanitizedValue = newValue.takeIf { it.isNullOrBlank() || it.toIntOrNull() in 1..100 } ?: dispenseValue.value
+                                dispenseValue.value = sanitizedValue
                                 dispenseValueHasError.value = false
+
                             },
                             shape = RoundedCornerShape(15.dp),
                             colors = TextFieldDefaults.outlinedTextFieldColors(
                                 containerColor = Color(0x4DEFE5C5),
                                 focusedBorderColor = Color(0x00D3DEE0),
                                 unfocusedBorderColor = Color(0x00D3DEE0),
-
                                 cursorColor = Color(0xFFD3DEE0),
                                 textColor = Color(0xFFD3DEE0),
                             ),
@@ -293,7 +330,9 @@ fun TapBox(onClick: () -> Unit) {
                                         else -> {
                                             dispenseUnitHasError.value = false
                                             dispenseValueHasError.value = false
-                                            submitDispense(dispenseValue, dispenseUnit)
+                                            tapVM.dispense(dispenseValue.value.toInt(), dispenseUnit.value)
+                                            isOn.value = true;
+                                            isDispensing.value = true;
                                         }
                                   }
                             },
@@ -324,17 +363,3 @@ fun TapBox(onClick: () -> Unit) {
     }
 }
 
-private fun toggleTap(isOn: MutableState<Boolean>){
-    isOn.value = !isOn.value;
-}
-
-private fun updateTapDispensingValue(dispenseValue: MutableState<String> ){
-
-    println(dispenseValue.value)
-}
-
-private fun submitDispense(dispenseValue: MutableState<String>, dispenseUnit: MutableState<String>){
-    // HANDLE DISPENSE
-    println(dispenseValue.value)
-    println(dispenseUnit.value)
-}

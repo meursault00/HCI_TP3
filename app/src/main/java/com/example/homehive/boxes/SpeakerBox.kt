@@ -88,7 +88,7 @@ fun SpeakerBox(onClick: () -> Unit) {
                         verticalAlignment = Alignment.CenterVertically, // Center vertically
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 40.dp)
+                            .padding(top = 15.dp)
                     ){
                         FloatingActionButton(
                             onClick = { /*TODO*/ },
@@ -125,7 +125,6 @@ fun SpeakerBox(onClick: () -> Unit) {
                             )
                         }
                     }
-                    Spacer(modifier = Modifier.height(10.dp))
                     Text(
                         text = "CurrentSong",
                         color = Color(0xFF114225),
