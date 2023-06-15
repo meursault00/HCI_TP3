@@ -44,6 +44,7 @@ import com.example.homehive.sendCustomNotification
 import com.example.homehive.states.hasError
 import com.example.homehive.ui.theme.HomeHiveTheme
 import com.example.homehive.viewmodels.DevicesVM
+import com.example.homehive.viewmodels.RoutinesVM
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
@@ -67,7 +68,9 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 fun TestScreen(
     navController: NavController,
     innerPadding: PaddingValues?,
-    devicesVM: DevicesVM = viewModel()
+    devicesVM: DevicesVM = viewModel(),
+    routinesVM: RoutinesVM = viewModel()
+
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val uiState by devicesVM.uiState.collectAsState()
@@ -91,10 +94,74 @@ fun TestScreen(
                         .padding(16.dp)
                 ) {
                     Text(
-                        text = stringResource(R.string.load_devices),
+                        text = "Fetch All Devices",
                         modifier = Modifier.padding(8.dp)
                     )
                 }
+                Button(
+                    onClick = {
+                        devicesVM.fetchADevice("04add9611b2cde4d")
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Text(
+                        text = "Fetch A Device",
+                        modifier = Modifier.padding(8.dp)
+                    )
+                }
+                Button(
+                    onClick = {
+                        routinesVM.fetchRoutines()
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Text(
+                        text = "Fetch All Routines",
+                        modifier = Modifier.padding(8.dp)
+                    )
+                }
+                Button(
+                    onClick = {
+                        routinesVM.fetchARoutine("0153972e3de51892")
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Text(
+                        text = "Fetch A Routine",
+                        modifier = Modifier.padding(8.dp)
+                    )
+                }
+                Text("Actualmente no actualiza nada hay que actualizar el codigo y ver en Logcat y buscar el tag okHttp")
+                Button(
+                    onClick = {
+                        // Ejemplo para accion que no recibe parametros, ID de un Speaker
+                        // devicesVM.editADevice("04add9611b2cde4d", "stop", listOf())
+
+                        // Ejemplo para accion que recibe parametros String, ID de un Fridge
+                        // devicesVM.editADevice("17af29013f750d0e", "setMode", listOf("party"))
+
+                        // Ejemplo para accion que recibe parametros Int, ID de un Fridge
+                        // devicesVM.editADevice("17af29013f750d0e", "setTemperature", listOf(-4))
+
+                        // Ejemplo para accion que recibe parametros Mixtos, ID de un Tap
+                        // devicesVM.editADevice("a7837dbd80d58abf", "dispense", listOf(10,"ml"))
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Text(
+                        text = "Update A Device",
+                        modifier = Modifier.padding(8.dp)
+                    )
+                }
+                // --------------------------------------------------------------------------------------------------------------------------------------------
 
                 Button(
                     onClick = {

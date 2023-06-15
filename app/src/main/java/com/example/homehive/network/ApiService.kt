@@ -1,25 +1,63 @@
 package com.example.homehive.network
 
-import com.example.homehive.network.models.NetworkDevicesList
-import com.example.homehive.network.models.NetworkResult
+import com.example.homehive.network.deviceModels.NetworkDevicesList
+import com.example.homehive.network.deviceModels.NetworkResult
+import com.example.homehive.network.routineModels.NetworkRoutinesList
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PUT
-import retrofit2.http.Query
+import retrofit2.http.Path
+
+data class ArrayValue(
+    val values: List<Any>
+)
+
+
 
 interface ApiService {
     @GET("devices/")
     suspend fun getAllDevices(): Response<NetworkDevicesList>
 
-    @GET("devices/")
-    suspend fun getADevice(@Query("deviceId")deviceId: String): Response<NetworkResult>
+    @GET("devices/{deviceId}")
+    suspend fun getADevice(@Path("deviceId")deviceId: String): Response<NetworkResult>
 
-//    @GET("/routines")
-//    suspend fun getAllRoutines(): Response<NetworkRoutinesList>
-//
-//    @GET("/routines")
-//    suspend fun getARoutine(@Query("routineId")routineId: String): Response<NetworkRoutinesList>
+    @PUT("/api/devices/{deviceId}/{actionName}")
+    @JvmSuppressWildcards
+    suspend fun updateADeviceNull(
+        @Path("deviceId") deviceId: String,
+        @Path("actionName") actionName: String,
+        @Body requestBody: List<Any>
+    ): String
 
-//    @PUT("/routines")
-    //execute de routines (PUT)
+    @PUT("/api/devices/{deviceId}/{actionName}")
+    suspend fun updateADeviceString(
+        @Path("deviceId") deviceId: String,
+        @Path("actionName") actionName: String,
+        @Body requestBody: List<String>
+    ): String
+
+    @PUT("/api/devices/{deviceId}/{actionName}")
+    suspend fun updateADeviceInt(
+        @Path("deviceId") deviceId: String,
+        @Path("actionName") actionName: String,
+        @Body requestBody: List<Int>
+    ): String
+
+    @PUT("/api/devices/{deviceId}/{actionName}")
+    @JvmSuppressWildcards
+    suspend fun updateADeviceMixed(
+        @Path("deviceId") deviceId: String,
+        @Path("actionName") actionName: String,
+        @Body requestBody: List<Any>
+    ): String
+
+    @GET("/api/routines")
+    suspend fun getAllRoutines(): Response<NetworkRoutinesList>
+
+    @GET("/api/routines/{routineId}")
+    suspend fun getARoutine(@Path("routineId")routineId: String): Response<NetworkRoutinesList>
+
+
+
 }
