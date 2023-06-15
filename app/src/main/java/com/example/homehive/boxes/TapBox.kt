@@ -175,7 +175,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                             .background(Color.Black.copy(alpha = 0.3f))
                     )
                 }
-                if(isDispensing.value && !isOpen.value){
+                if(isDispensing.value && isOpen.value){
                     Box(
                         modifier = Modifier
                             .fillMaxSize()

@@ -52,6 +52,7 @@ fun SpeakerBox(onClick: () -> Unit) {
         contentAlignment = Alignment.Center,
     ) {
         Surface(
+            color = Color(0xFFDBD0AF),
             modifier = Modifier
                 .height(200.dp)
                 .width(200.dp)
@@ -63,10 +64,10 @@ fun SpeakerBox(onClick: () -> Unit) {
                 contentAlignment = Alignment.Center
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.speaker),
+                    painter = painterResource(id = R.drawable.spot),
                     contentDescription = null,
-                    contentScale = ContentScale.FillBounds,
                     modifier = Modifier
+                        .padding(top = 16.dp)
                 )
                 Text(
                     text = "Speaker",
@@ -83,7 +84,6 @@ fun SpeakerBox(onClick: () -> Unit) {
                         .padding(start = 10.dp, end = 10.dp)
                         .align(Alignment.Center),
                 ) {
-
                     Text(
                         text = "CurrentSong",
                         color = Color(0xFF114225),
@@ -97,39 +97,39 @@ fun SpeakerBox(onClick: () -> Unit) {
                         FloatingActionButton(
                             onClick = { /*TODO*/ },
                             shape = CircleShape,
-                            containerColor = Color(0xFF000000),
+                            containerColor = Color(0xFFFFFFFF),
                             modifier = Modifier.size(30.dp) // Adjust the size as desired
                         ) {
                             Icon(
                                 painter = painterResource(id = R.drawable.previous),
                                 contentDescription = null,
-                                tint = Color(0xFFFFFFFF),
+                                tint = Color(0xFF000000),
                                 modifier = Modifier.size(20.dp)
                             )
                         }
                         FloatingActionButton(
                             onClick = { /*TODO*/ },
                             shape = CircleShape,
-                            containerColor = Color(0xFF000000),
+                            containerColor = Color(0xFFFFFFFF),
                             modifier = Modifier.size(40.dp) // Adjust the size as desired
                         ) {
                             Icon(
                                 painter = painterResource(id = R.drawable.play),
                                 contentDescription = null,
-                                tint = Color(0xFFFFFFFF),
+                                tint = Color(0xFF000000),
                                 modifier = Modifier.size(20.dp)
                             )
                         }
                         FloatingActionButton(
                             onClick = { /*TODO*/ },
                             shape = CircleShape,
-                            containerColor = Color(0xFF000000),
+                            containerColor = Color(0xFFFFFFFF),
                             modifier = Modifier.size(30.dp) // Adjust the size as desired
                         ) {
                             Icon(
                                 painter = painterResource(id = R.drawable.next),
                                 contentDescription = null,
-                                tint = Color(0xFFFFFFFF),
+                                tint = Color(0xFF000000),
                                 modifier = Modifier.size(20.dp)
                             )
                         }
@@ -151,19 +151,17 @@ fun SpeakerBox(onClick: () -> Unit) {
                         .width(200.dp)
                         .align(Alignment.BottomCenter),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if(isOpen.value)  Color(0xFFEFE5C5) else Color(0xB4EFE5C5)
+                        containerColor = if(isOpen.value)  Color(0xFF7CE17A) else Color(0xFF7CE17A)
                     ),
                 ) {
                     Icon(
                         painter = if (isOpen.value) painterResource(id = R.drawable.upicon) else painterResource(id = R.drawable.downicon),
                         contentDescription = null,
-                        tint =  Color(0xFFAFA586) ,
+                        tint =  Color(0xFF000000),
                         modifier = Modifier
                             .size(60.dp)
                     )
                 }
-
-
 
             }
         }
