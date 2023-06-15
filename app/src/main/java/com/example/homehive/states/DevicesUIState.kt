@@ -1,6 +1,6 @@
 package com.example.homehive.states
 
-import com.example.homehive.network.models.NetworkDevicesList
+import com.example.homehive.network.deviceModels.NetworkDevicesList
 
 data class DevicesUIState(
     val devices: NetworkDevicesList? = null,
