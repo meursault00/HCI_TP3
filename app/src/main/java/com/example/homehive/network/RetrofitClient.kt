@@ -1,5 +1,6 @@
 package com.example.homehive.network
 
+import android.util.Log
 import com.example.homehive.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -8,24 +9,27 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
 
-    private val retrofit: Retrofit
+    private var retrofit: Retrofit? = null
 
     init {
-        val httpLoggingInterceptor = HttpLoggingInterceptor()
-            .setLevel(HttpLoggingInterceptor.Level.BODY)
+        try{
+            val httpLoggingInterceptor = HttpLoggingInterceptor()
+                .setLevel(HttpLoggingInterceptor.Level.BODY)
 
-        val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(httpLoggingInterceptor)
-            .build()
+            val okHttpClient = OkHttpClient.Builder()
+                .addInterceptor(httpLoggingInterceptor)
+                .build()
 
-        retrofit = Retrofit.Builder()
-            .baseUrl(BuildConfig.API_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(okHttpClient)
-            .build()
+            retrofit = Retrofit.Builder()
+                .baseUrl(BuildConfig.API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build()
+        }catch(e:Exception){
+            Log.d("homehivestatus", "Retrofit Exception : ${e.message}")
+        }
+
     }
 
-    fun getApiService() : ApiService {
-        return retrofit.create(ApiService::class.java)
-    }
+    fun getApiService() : ApiService? = retrofit?.create(ApiService::class.java)
 }

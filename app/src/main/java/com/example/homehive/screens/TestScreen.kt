@@ -75,12 +75,19 @@ fun TestScreen( navController: NavController,
             modifier = Modifier.fillMaxSize(),
             snackbarHost = { SnackbarHost(snackbarHostState) },
         ) {  paddingValues ->
-
-            RefreshingComponent(
-            viewModel = devicesVM,
-            navController = navController,
-            innerPadding = innerPadding,
-            modifier = Modifier.padding(paddingValues))
+            paddingValues
+            Button(
+                onClick = {
+                    devicesVM.fetchDevices()
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.load_devices),
+                    modifier = Modifier.padding(8.dp))
+            }
 
             if (uiState.hasError) {
                 val actionLabel = stringResource(R.string.dismiss)

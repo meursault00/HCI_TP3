@@ -57,7 +57,7 @@ fun NavHost(
         }
         composable("help") {
             App(navController = navController) { navController, innerPadding ->
-                HelpScreen(navController = navController, innerPadding = innerPadding)
+                TestScreen(navController = navController, innerPadding = innerPadding, devicesVM = viewModel())
             }
         }
 //        composable(

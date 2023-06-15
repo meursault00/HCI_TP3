@@ -1,5 +1,6 @@
 package com.example.homehive.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.homehive.network.RetrofitClient
@@ -15,7 +16,6 @@ class DevicesVM : ViewModel() {
 
     private val _uiState = MutableStateFlow(DevicesUIState())
     val uiState: StateFlow<DevicesUIState> = _uiState.asStateFlow()
-
     private var fetchJob: Job? = null
 
     fun dismissMessage() {
@@ -27,14 +27,18 @@ class DevicesVM : ViewModel() {
         fetchJob = viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             runCatching {
+                Log.d("homehivestatus", " Llegue hasta aca")
                 val apiService = RetrofitClient.getApiService()
-                apiService.getAllDevices()
+                Log.d("homehivestatus", " Nunca llego hasta aca!")
+                apiService?.getAllDevices() ?: throw Exception("API Service is null")
             }.onSuccess { response ->
+                Log.d("homehivestatus", "Success: Inside Success Block")
                 _uiState.update { it.copy(
                     devices = response.body(),
                     isLoading = false
                 ) }
             }.onFailure { e ->
+                Log.d("homehivestatus", "Failure: Inside Failure Block \nError message  ${e.message}")
                 _uiState.update { it.copy(
                     message = e.message,
                     isLoading = false

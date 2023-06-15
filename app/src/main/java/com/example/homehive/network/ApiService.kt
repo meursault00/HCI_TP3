@@ -8,10 +8,10 @@ import retrofit2.http.PUT
 import retrofit2.http.Query
 
 interface ApiService {
-    @GET("/devices")
+    @GET("devices/")
     suspend fun getAllDevices(): Response<NetworkDevicesList>
 
-    @GET("/devices")
+    @GET("devices/")
     suspend fun getADevice(@Query("deviceId")deviceId: String): Response<NetworkResult>
 
 //    @GET("/routines")
