@@ -114,7 +114,7 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                 .height(680.dp)
                 .padding(vertical = 15.dp, horizontal = 15.dp),
             shape = RoundedCornerShape(15.dp),
-            color = Color(0xFFEFE5C5),
+            color = MaterialTheme.colorScheme.secondary,
         ) {
             Image(
                 painter = painterResource(id = R.drawable.fuego),
@@ -136,7 +136,7 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                             text = "Oven",
                             fontWeight = FontWeight.Bold,
                             style = MaterialTheme.typography.headlineLarge,
-                            color = Color(0xFF114225),
+                            color = MaterialTheme.colorScheme.primary,
                             modifier = Modifier
                                 .padding(16.dp)
                         )
@@ -145,7 +145,7 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                             modifier = Modifier
                                 .padding(top = 16.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0xFFF4CF6D)
+                                containerColor = MaterialTheme.colorScheme.tertiary
                             )
                         ) {
                             Text(getButtonLabel(ovenState.value))
@@ -183,7 +183,7 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                             colors = SliderDefaults.colors(
                                 thumbColor = Color(0xFF620606),
                                 activeTrackColor = Color(0xFFE3592B),
-                                inactiveTrackColor = Color(0xFFF4CF6D).copy(alpha = 0.7f),
+                                inactiveTrackColor = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.7f),
                             ),
                             modifier = Modifier.padding(horizontal = 10.dp)
                         )
@@ -204,7 +204,7 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                     .height(45.dp)
                                     .weight(1f),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = if (grillMode.value == GrillMode.OFF) Color(0xFFF4CF6D) else Color(0xCCF3F3F0)
+                                    containerColor = if (grillMode.value == GrillMode.OFF) MaterialTheme.colorScheme.tertiary else Color(0xCCF3F3F0)
                                 )
                             ) {
                                 Text(
@@ -221,7 +221,7 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                     .height(45.dp)
                                     .weight(1f),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = if (grillMode.value == GrillMode.ECONOMIC) Color(0xFFF4CF6D) else Color(0xCCF3F3F0)
+                                    containerColor = if (grillMode.value == GrillMode.ECONOMIC) MaterialTheme.colorScheme.tertiary else Color(0xCCF3F3F0)
                                 )
                             ) {
                                 Text(
@@ -238,7 +238,7 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                     .height(45.dp)
                                     .weight(1f),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = if (grillMode.value == GrillMode.COMPLETE) Color(0xFFF4CF6D) else Color(0xCCF3F3F0)
+                                    containerColor = if (grillMode.value == GrillMode.COMPLETE) MaterialTheme.colorScheme.tertiary else Color(0xCCF3F3F0)
                                 )
                             ) {
                                 Text(
@@ -266,7 +266,7 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                     .height(45.dp)
                                     .weight(1f),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = if (convectionMode.value == ConvectionMode.OFF) Color(0xFFF4CF6D) else Color(0xCCF3F3F0)
+                                    containerColor = if (convectionMode.value == ConvectionMode.OFF) MaterialTheme.colorScheme.tertiary else Color(0xCCF3F3F0)
                                 )
                             ) {
                                 Text(
@@ -283,7 +283,7 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                     .height(45.dp)
                                     .weight(1f),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = if (convectionMode.value == ConvectionMode.ECONOMIC) Color(0xFFF4CF6D) else Color(0xCCF3F3F0)
+                                    containerColor = if (convectionMode.value == ConvectionMode.ECONOMIC) MaterialTheme.colorScheme.tertiary else Color(0xCCF3F3F0)
                                 )
                             ) {
                                 Text(
@@ -300,7 +300,7 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                     .height(45.dp)
                                     .weight(1f),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = if (convectionMode.value == ConvectionMode.CONVENTIONAL) Color(0xFFF4CF6D) else Color(0xCCF3F3F0)
+                                    containerColor = if (convectionMode.value == ConvectionMode.CONVENTIONAL) MaterialTheme.colorScheme.tertiary else Color(0xCCF3F3F0)
                                 )
                             ) {
                                 Text(
@@ -328,7 +328,7 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                     .height(45.dp)
                                     .weight(1f),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = if (sourceMode.value == SourceMode.CONVENTIONAL) Color(0xFFF4CF6D) else Color(0xCCF3F3F0)
+                                    containerColor = if (sourceMode.value == SourceMode.CONVENTIONAL) MaterialTheme.colorScheme.tertiary else Color(0xCCF3F3F0)
                                 )
                             ) {
                                 Text(
@@ -345,7 +345,7 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                     .height(45.dp)
                                     .weight(1f),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = if (sourceMode.value == SourceMode.ABOVE) Color(0xFFF4CF6D) else Color(0xCCF3F3F0)
+                                    containerColor = if (sourceMode.value == SourceMode.ABOVE) MaterialTheme.colorScheme.tertiary else Color(0xCCF3F3F0)
                                 )
                             ) {
                                 Text(
@@ -362,7 +362,7 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                     .height(45.dp)
                                     .weight(1f),
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = if (sourceMode.value == SourceMode.BELOW) Color(0xFFF4CF6D) else Color(0xCCF3F3F0)
+                                    containerColor = if (sourceMode.value == SourceMode.BELOW) MaterialTheme.colorScheme.tertiary else Color(0xCCF3F3F0)
                                 )
                             ) {
                                 Text(

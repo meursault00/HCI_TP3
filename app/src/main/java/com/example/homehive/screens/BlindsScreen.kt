@@ -62,13 +62,13 @@ fun BlindsScreen(navController: NavController, innerPadding: PaddingValues?) {
                 .width(600.dp)
                 .padding(vertical = 15.dp, horizontal = 15.dp),
             shape = RoundedCornerShape(15.dp),
-            color = Color(0xFFF4CF6D)
+            color = MaterialTheme.colorScheme.tertiary
         ) {
             Text(
                 text = "Blinds",
                 fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.headlineLarge,
-                color = Color(0xFF114225),
+                color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .padding(16.dp)
                     .align(Alignment.TopCenter)
@@ -93,7 +93,7 @@ fun BlindsScreen(navController: NavController, innerPadding: PaddingValues?) {
                             .padding(bottom = 8.dp)
                             .align(Alignment.End), // Align the button to the end (top end of the Box)
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFFF4CF6D)
+                            containerColor = MaterialTheme.colorScheme.tertiary
                         )
                     ) {
                         Text(getButtonLabel(curtainState.value))

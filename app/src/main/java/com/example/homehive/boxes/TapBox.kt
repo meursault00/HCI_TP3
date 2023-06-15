@@ -125,7 +125,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                     text = "Tap",
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
-                    color = Color(0xFF114225),
+                    color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
                         .padding(16.dp)
                         .align(Alignment.TopCenter)
@@ -154,7 +154,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                         .width(200.dp)
                         .align(Alignment.BottomCenter),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if(isOpen.value)  Color(0xFFEFE5C5) else Color(0xFFEFE5C5)
+                        containerColor = if(isOpen.value)  MaterialTheme.colorScheme.secondary else Color(0xFFEFE5C5)
                     ),
                 ) {
                     Icon(
@@ -210,12 +210,12 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                         .padding(top = 70.dp)
                         .align(Alignment.TopCenter), // Align the button to the end (top end of the Box)
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if(isOn.value) Color(0xFFEFE5C5) else Color(0xFF918A76),
+                        containerColor = if(isOn.value) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.background,
                     )
                 ) {
                     Text(text = if (isOn.value) "Turn Off" else "Turn On",
                         style = MaterialTheme.typography.bodySmall,
-                        color = if(isOn.value) Color(0xFF8D856D) else Color(0xFFEFE5C5),
+                        color = if(isOn.value) Color(0xFF8D856D) else MaterialTheme.colorScheme.secondary,
 
                         )
                 }
@@ -344,8 +344,8 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                                 .padding(top = 230.dp)
                                 .align(Alignment.Center), // Align the button to the end (top end of the Box)
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0xFFEFE5C5),
-                                contentColor = Color(0xFF1C6135)
+                                containerColor = MaterialTheme.colorScheme.secondary,
+
                             )
                         ) {
                             Text(text = "Dispense",

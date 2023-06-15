@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -48,7 +49,7 @@ fun DrawerHeader() {
             Icon(
                 imageVector = Icons.Default.Person,
                 contentDescription = "Person Icon",
-                tint = Color(0xFF203831),
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .padding(vertical = 2.dp, horizontal = 20.dp)
                     .width(50.dp)

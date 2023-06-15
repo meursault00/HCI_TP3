@@ -41,6 +41,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.Card
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.rememberCoroutineScope
@@ -49,7 +50,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
-
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.homehive.ui.theme.HomeHiveTheme
@@ -81,7 +81,7 @@ fun App(
     val scope = rememberCoroutineScope()
     Scaffold(
         scaffoldState = scaffoldState,
-        backgroundColor = Color(0xFF203831),
+        backgroundColor = MaterialTheme.colorScheme.primary,
         topBar = {
             AppBar(
                 navController,

@@ -24,9 +24,9 @@ private val DarkColorScheme = darkColorScheme(
 
 private val LightColorScheme = lightColorScheme(
     primary = Color(0xFF203831),
-    secondary = Color(0xFFEECC66),
-    tertiary = Pink40,
-    background = Color(0xFFFFFBFE),
+    secondary = Color(0xFFEFE5C5), // HAY OPACOS
+    tertiary = Color(0xFFF4CF6D),
+    background = Color(0xFF918A76),
     surface = Color(0xFFFFFBFE),
     onPrimary = Color.White,
     onSecondary = Color.White,

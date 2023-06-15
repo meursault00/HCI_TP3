@@ -314,7 +314,7 @@ fun SettingsScreen(
                 Box(
                     modifier = Modifier
                         .background(
-                            color = if ( uiState.language)  Color(0xFFEFE5C5) else Color(0xB4EFE5C5),
+                            color = if ( uiState.language)  MaterialTheme.colorScheme.secondary else Color(0xB4EFE5C5),
 
                             shape = RoundedCornerShape(
                                 topStart = 15.dp,
@@ -341,7 +341,7 @@ fun SettingsScreen(
                 Box(
                     modifier = Modifier
                         .background(
-                            color = if ( !uiState.language)  Color(0xFFEFE5C5) else Color(0xB4EFE5C5),
+                            color = if ( !uiState.language)  MaterialTheme.colorScheme.secondary else Color(0xB4EFE5C5),
 
                             shape = RoundedCornerShape(
                                 topStart = 0.dp,
@@ -393,7 +393,7 @@ fun SettingsScreen(
                 Box(
                     modifier = Modifier
                         .background(
-                            color = if (uiState.theme) Color(0xFFEFE5C5) else Color(0xB4EFE5C5),
+                            color = if (uiState.theme) MaterialTheme.colorScheme.secondary else Color(0xB4EFE5C5),
 
                             shape = RoundedCornerShape(
                                 topStart = 15.dp,
@@ -420,7 +420,7 @@ fun SettingsScreen(
                 Box(
                     modifier = Modifier
                         .background(
-                            color = if (!uiState.theme) Color(0xFFEFE5C5) else Color(0xB4EFE5C5),
+                            color = if (!uiState.theme) MaterialTheme.colorScheme.secondary else Color(0xB4EFE5C5),
 
                             shape = RoundedCornerShape(
                                 topStart = 0.dp,

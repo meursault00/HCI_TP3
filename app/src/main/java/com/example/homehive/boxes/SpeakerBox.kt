@@ -73,7 +73,7 @@ fun SpeakerBox(onClick: () -> Unit) {
                     text = "Speaker",
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
-                    color = Color(0xFF114225),
+                    color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
                         .padding(16.dp)
                         .align(Alignment.TopCenter)
@@ -86,7 +86,7 @@ fun SpeakerBox(onClick: () -> Unit) {
                 ) {
                     Text(
                         text = "CurrentSong",
-                        color = Color(0xFF114225),
+                        color = MaterialTheme.colorScheme.primary,
                     )
                     Row(
                         horizontalArrangement = Arrangement.SpaceEvenly,

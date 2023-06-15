@@ -60,7 +60,7 @@ fun RoutineBox() {
             modifier = Modifier
                 .width(200.dp),
             shape = RoundedCornerShape(15.dp),
-            color = Color(0xFFefe5c5)
+            color = MaterialTheme.colorScheme.secondary
         ) {
             Box(
                 modifier = Modifier
@@ -92,7 +92,7 @@ fun RoutineBox() {
                 ) {
                     Text(
                         "RUN",
-                        color = Color(0xFFefe5c5)
+                        color = MaterialTheme.colorScheme.secondary
 
                     )
                 }
@@ -100,7 +100,7 @@ fun RoutineBox() {
                     text = "3 Actions",
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFF114225),
+                    color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
                         .padding(top = 120.dp)
                         .align(Alignment.TopCenter)
@@ -190,7 +190,7 @@ fun RoutineBox() {
 //                .width(200.dp)
 //                .clickable(onClick = onClick),
 //            shape = RoundedCornerShape(15.dp),
-//            color = Color(0xFFEFE5C5)
+//            color = MaterialTheme.colorScheme.secondary
 //        ) {
 //            Box(
 //                modifier = Modifier.fillMaxSize(),
@@ -214,9 +214,9 @@ fun RoutineBox() {
 //                    modifier = Modifier
 //                        .padding(16.dp)
 //                        .align(Alignment.BottomEnd)
-//                        .background(Color(0xFFEFE5C5)),
+//                        .background(MaterialTheme.colorScheme.secondary),
 //                    colors = ButtonDefaults.buttonColors(
-//                        containerColor = if (true) Color(0xFFEFE5C5) else Color(0xFFEEE5C9)),
+//                        containerColor = if (true) MaterialTheme.colorScheme.secondary else Color(0xFFEEE5C9)),
 //
 //                ) {
 //                    Text(
@@ -241,7 +241,7 @@ fun RoutineBox() {
 //                        .width(200.dp)
 //                        .align(Alignment.BottomCenter),
 //                    colors = ButtonDefaults.buttonColors(
-//                        containerColor = Color(0xB4EFE5C5)
+//                        containerColor = MaterialTheme.colorScheme.secondary
 //                    ),
 //                ) {
 //                    Icon(

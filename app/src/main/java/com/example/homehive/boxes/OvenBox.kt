@@ -67,7 +67,7 @@ fun OvenBox(onClick: () -> Unit, viewModel : OvenVM = viewModel()) {
 
                 .clickable(onClick = onClick),
             shape = RoundedCornerShape(15.dp),
-            color = Color(0xFFEFE5C5)
+            color = MaterialTheme.colorScheme.secondary
         ) {
             Box(
                 modifier = Modifier.fillMaxSize(),
@@ -84,7 +84,7 @@ fun OvenBox(onClick: () -> Unit, viewModel : OvenVM = viewModel()) {
                     text = "Oven",
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
-                    color = Color(0xFF114225),
+                    color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
                         .padding(16.dp)
                         .align(Alignment.TopCenter)
@@ -119,13 +119,13 @@ fun OvenBox(onClick: () -> Unit, viewModel : OvenVM = viewModel()) {
                         pressedElevation = 0.0.dp,
                     ),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if(isOn.value) Color(0xFFEFE5C5) else Color(0xFF918A76),
+                        containerColor = if(isOn.value) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.background,
                     ),
                     modifier = Modifier.padding(top = 70.dp)
                     ) {
                     Text(text = if (isOn.value) "Turn Off" else "Turn On",
                         style = MaterialTheme.typography.bodySmall,
-                        color = if(isOn.value) Color(0xFF8D856D) else Color(0xFFEFE5C5),
+                        color = if(isOn.value) Color(0xFF8D856D) else MaterialTheme.colorScheme.secondary,
                         )
                 }
                 Button(
@@ -143,7 +143,7 @@ fun OvenBox(onClick: () -> Unit, viewModel : OvenVM = viewModel()) {
                         .width(200.dp)
                         .align(Alignment.BottomCenter),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFEFE5C5)
+                        containerColor = MaterialTheme.colorScheme.secondary
                     ),
                 ) {
                     Icon(
@@ -167,7 +167,7 @@ fun OvenBox(onClick: () -> Unit, viewModel : OvenVM = viewModel()) {
                             text = "Grill Mode: " + uiState.grillMode,
                             fontSize = MaterialTheme.typography.bodyMedium.fontSize,
                             style = MaterialTheme.typography.bodyMedium,
-                            color = Color(0xFF114225),
+                            color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier
                                 .padding(16.dp)
@@ -177,7 +177,7 @@ fun OvenBox(onClick: () -> Unit, viewModel : OvenVM = viewModel()) {
                             text = "Convection Mode: " + uiState.convectionMode,
                             fontSize = MaterialTheme.typography.bodyMedium.fontSize,
                             style = MaterialTheme.typography.bodyMedium,
-                            color = Color(0xFF114225),
+                            color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier
                                 .padding(16.dp)
@@ -187,7 +187,7 @@ fun OvenBox(onClick: () -> Unit, viewModel : OvenVM = viewModel()) {
                             text = "Source Mode: " + uiState.heatMode,
                             fontSize = MaterialTheme.typography.bodyMedium.fontSize,
                             style = MaterialTheme.typography.bodyMedium,
-                            color = Color(0xFF114225),
+                            color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier
                                 .padding(16.dp)

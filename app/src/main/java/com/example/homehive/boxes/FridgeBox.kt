@@ -139,7 +139,7 @@ fun FridgeBox(onClick: () -> Unit , fridgeVM : FridgeVM = viewModel()) {
                             valueRange = 2f..8f,
 
                             colors = SliderDefaults.colors(
-                                thumbColor = Color(0xFFEFE5C5),
+                                thumbColor = MaterialTheme.colorScheme.secondary,
                                 activeTrackColor = Color(0xBE296874),
                                 inactiveTrackColor = Color(0xFFEDF5F2).copy(alpha = 0.3f),
                             ),
@@ -162,7 +162,7 @@ fun FridgeBox(onClick: () -> Unit , fridgeVM : FridgeVM = viewModel()) {
                             valueRange = -20f..-8f,
 
                             colors = SliderDefaults.colors(
-                                thumbColor = Color(0xFFEFE5C5),
+                                thumbColor = MaterialTheme.colorScheme.secondary,
                                 activeTrackColor = Color(0x9EEDF3F1),
                                 inactiveTrackColor = Color(0xFF2E4957).copy(alpha = 0.3f),
                             ),
@@ -193,9 +193,7 @@ fun FridgeBox(onClick: () -> Unit , fridgeVM : FridgeVM = viewModel()) {
                                 .height(45.dp)
                                 .width(200.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if ( uiState.mode === "Normal" ) Color(
-                                    0xFFEFE5C5
-                                ) else Color(0x54F3F3F0)
+                                containerColor = if ( uiState.mode === "Normal" ) MaterialTheme.colorScheme.secondary else Color(0x54F3F3F0)
                             ),
                         ) {
                             Text(
@@ -222,9 +220,7 @@ fun FridgeBox(onClick: () -> Unit , fridgeVM : FridgeVM = viewModel()) {
                                 .height(45.dp)
                                 .width(200.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (uiState.mode === "Vacation") Color(
-                                    0xFFEFE5C5
-                                ) else Color(0x54F3F3F0)
+                                containerColor = if (uiState.mode === "Vacation") MaterialTheme.colorScheme.secondary else Color(0x54F3F3F0)
                             ),
                         ) {
                             Text(
@@ -251,9 +247,7 @@ fun FridgeBox(onClick: () -> Unit , fridgeVM : FridgeVM = viewModel()) {
                                 .height(45.dp)
                                 .width(200.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (uiState.mode === "Party") Color(
-                                    0xFFEFE5C5
-                                ) else Color(0x54F3F3F0)
+                                containerColor = if (uiState.mode === "Party") MaterialTheme.colorScheme.secondary else Color(0x54F3F3F0)
                             ),
                         ) {
                             Text(
@@ -284,7 +278,7 @@ fun FridgeBox(onClick: () -> Unit , fridgeVM : FridgeVM = viewModel()) {
                         .width(200.dp)
                         .align(Alignment.BottomCenter),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFEFE5C5)
+                        containerColor = MaterialTheme.colorScheme.secondary
                     ),
                 ) {
                     Icon(

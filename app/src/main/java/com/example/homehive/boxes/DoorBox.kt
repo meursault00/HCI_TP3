@@ -78,7 +78,7 @@ fun DoorBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                 .width(200.dp)
                 .clickable(onClick = onClick),
             shape = RoundedCornerShape(15.dp),
-            color = Color(0xFFF4CF6D)
+            color = MaterialTheme.colorScheme.tertiary
         ) {
             Box(
                 modifier = Modifier
@@ -96,7 +96,7 @@ fun DoorBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                     text = "Blinds",
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
-                    color = Color(0xFF114225),
+                    color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
                         .padding(16.dp)
                         .align(Alignment.TopCenter)
@@ -106,7 +106,7 @@ fun DoorBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                     text = "${blindState.position}%",
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFF114225),
+                    color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
                         .padding(16.dp)
                         .align(Alignment.Center)
@@ -128,7 +128,7 @@ fun DoorBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                         .width(200.dp)
                         .align(Alignment.BottomCenter),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xB4EFE5C5)
+                        containerColor = MaterialTheme.colorScheme.secondary
                     ),
                 ) {
                     Icon(
@@ -152,7 +152,7 @@ fun DoorBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                             .padding(bottom = 100.dp)
                             .align(Alignment.Center), // Align the button to the end (top end of the Box)
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFFEFE5C5),
+                            containerColor = MaterialTheme.colorScheme.secondary,
 
                             )
                     ) {

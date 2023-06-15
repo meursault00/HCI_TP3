@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -44,7 +45,7 @@ fun AppBar(
             modifier = Modifier
                 .padding(15.dp)
                 .fillMaxWidth(),
-            color = Color(0xFF27443B), // FF114225 // 0xFF2C4B42
+            color = MaterialTheme.colorScheme.primary, // FF114225 // 0xFF2C4B42
             shadowElevation = 4.dp,
             shape = RoundedCornerShape(40.dp)
         ) {
