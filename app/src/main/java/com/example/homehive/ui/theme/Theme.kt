@@ -17,9 +17,16 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = Color(0xFFEFE5C5),
+    secondary = Color(0xFF2D465E), // HAY OPACOS
+    tertiary = Color(0xFF203831),
+    background = Color(0xFF918A76),
+    surface = Color(0xFFFFFBFE),
+    onPrimary = Color.White,
+    onSecondary = Color.White,
+    onTertiary = Color.White,
+    onBackground = Color(0xFF1C1B1F),
+    onSurface = Color(0xFF1C1B1F),
 )
 
 private val LightColorScheme = lightColorScheme(

@@ -64,7 +64,7 @@ class MainActivity : ComponentActivity() {
         createNotificationChannel(this)
         super.onCreate(savedInstanceState)
         setContent {
-            HomeHiveTheme {
+            HomeHiveTheme(darkTheme = false) {
                 NavHost(startDestination = "home")
             }
         }

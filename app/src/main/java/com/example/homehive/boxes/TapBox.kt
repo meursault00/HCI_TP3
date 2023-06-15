@@ -154,7 +154,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                         .width(200.dp)
                         .align(Alignment.BottomCenter),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if(isOpen.value)  MaterialTheme.colorScheme.secondary else Color(0xFFEFE5C5)
+                        containerColor = MaterialTheme.colorScheme.secondary
                     ),
                 ) {
                     Icon(
