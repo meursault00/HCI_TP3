@@ -31,6 +31,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,6 +40,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.homehive.MiniDisplay
 import com.example.homehive.R
+import com.example.homehive.sendCustomNotification
 import com.example.homehive.states.hasError
 import com.example.homehive.ui.theme.HomeHiveTheme
 import com.example.homehive.viewmodels.DevicesVM
@@ -62,32 +64,55 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TestScreen( navController: NavController,
-                innerPadding: PaddingValues?,
-                devicesVM : DevicesVM = viewModel()
-)
-{
+fun TestScreen(
+    navController: NavController,
+    innerPadding: PaddingValues?,
+    devicesVM: DevicesVM = viewModel()
+) {
     val snackbarHostState = remember { SnackbarHostState() }
     val uiState by devicesVM.uiState.collectAsState()
 
+    val context = LocalContext.current // Obtain the context
+
     HomeHiveTheme() {
         Scaffold(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize(),
             snackbarHost = { SnackbarHost(snackbarHostState) },
-        ) {  paddingValues ->
+        ) { paddingValues ->
             paddingValues
-            Button(
-                onClick = {
-                    devicesVM.fetchDevices()
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-            ) {
-                Text(
-                    text = stringResource(R.string.load_devices),
-                    modifier = Modifier.padding(8.dp))
+            Column() {
+                Button(
+                    onClick = {
+                        devicesVM.fetchDevices()
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Text(
+                        text = stringResource(R.string.load_devices),
+                        modifier = Modifier.padding(8.dp)
+                    )
+                }
+
+                Button(
+                    onClick = {
+                        val title = "Chrissy chan"
+                        val content = "ChrisChrisChrisChrisChrisCHrisCHsriChrisChrisChrisChrisChrisCHrisCHsriChrisChrisChrisChrisChrisCHrisCHsri"
+                        sendCustomNotification(context, title, content)
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Text(
+                        text = "Send Notification",
+                        modifier = Modifier.padding(8.dp)
+                    )
+                }
             }
+
 
             if (uiState.hasError) {
                 val actionLabel = stringResource(R.string.dismiss)
@@ -105,8 +130,8 @@ fun TestScreen( navController: NavController,
             }
         }
     }
-
 }
+
 
 
 @Composable
