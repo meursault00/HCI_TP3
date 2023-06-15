@@ -142,8 +142,8 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                 Button(
                     onClick = { isOpen.value = !isOpen.value },
                     elevation = ButtonDefaults.buttonElevation(
-                        defaultElevation = 4.dp,
-                        pressedElevation = 0.0.dp,
+                        defaultElevation = 12.dp,
+                        pressedElevation = 12.0.dp,
                     ),
                     shape = RoundedCornerShape(topStart = 15.dp,
                         topEnd = 15.dp,
@@ -160,7 +160,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                     Icon(
                         painter = if (isOpen.value) painterResource(id = R.drawable.upicon) else painterResource(id = R.drawable.downicon),
                         contentDescription = null,
-                        tint =  Color(0xFFAFA586) ,
+                        tint =  MaterialTheme.colorScheme.background,
                         modifier = Modifier
                             .size(60.dp)
                     )
@@ -215,7 +215,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                 ) {
                     Text(text = if (isOn.value) "Turn Off" else "Turn On",
                         style = MaterialTheme.typography.bodySmall,
-                        color = if(isOn.value) Color(0xFF8D856D) else MaterialTheme.colorScheme.secondary,
+                        color = if(isOn.value) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.secondary,
 
                         )
                 }
@@ -350,7 +350,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                         ) {
                             Text(text = "Dispense",
                                 style = MaterialTheme.typography.bodySmall,
-                                color = Color(0xFFAFA586),
+                                color = MaterialTheme.colorScheme.background,
 
                                 )
                         }

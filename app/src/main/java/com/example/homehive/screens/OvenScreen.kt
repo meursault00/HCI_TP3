@@ -45,6 +45,7 @@ import com.example.homehive.viewmodels.OvenVM
 import java.io.Console
 
 import androidx.compose.ui.graphics.graphicsLayer
+import com.example.homehive.library.AnimatedTextOverflow
 
 enum class GrillMode {
     OFF,
@@ -128,7 +129,8 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
             ) {
                 Box(){
                     Row(
-                        modifier = Modifier.padding(16.dp)
+                        modifier = Modifier
+                            .padding(16.dp)
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
@@ -142,13 +144,20 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                         )
                         Button(
                             onClick = { setOvenStateLocal(ovenState) },
+                            elevation = ButtonDefaults.buttonElevation(
+                                defaultElevation = 12.dp,
+                                pressedElevation = 0.0.dp,
+                            ),
                             modifier = Modifier
                                 .padding(top = 16.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = MaterialTheme.colorScheme.tertiary
+                                containerColor = MaterialTheme.colorScheme.secondary
                             )
                         ) {
-                            Text(getButtonLabel(ovenState.value))
+                            Text(
+                                text = "${getButtonLabel(ovenState.value)}",
+                                color = MaterialTheme.colorScheme.background,
+                            )
                         }
                     }
                 }
@@ -207,12 +216,12 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                     containerColor = if (grillMode.value == GrillMode.OFF) MaterialTheme.colorScheme.tertiary else Color(0xCCF3F3F0)
                                 )
                             ) {
-                                Text(
+                                AnimatedTextOverflow(
                                     text = "OFF",
-                                    fontWeight = FontWeight.Bold,
                                     style = MaterialTheme.typography.bodySmall,
                                     color = Color(0xFF2B4E5C)
                                 )
+
                             }
                             Button(
                                 onClick = { setGrillModeLocal(GrillMode.ECONOMIC, grillMode) },
@@ -224,9 +233,8 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                     containerColor = if (grillMode.value == GrillMode.ECONOMIC) MaterialTheme.colorScheme.tertiary else Color(0xCCF3F3F0)
                                 )
                             ) {
-                                Text(
+                                AnimatedTextOverflow(
                                     text = "ECONOMIC",
-                                    fontWeight = FontWeight.Bold,
                                     style = MaterialTheme.typography.bodySmall,
                                     color = Color(0xFF2B4E5C)
                                 )
@@ -241,9 +249,8 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                     containerColor = if (grillMode.value == GrillMode.COMPLETE) MaterialTheme.colorScheme.tertiary else Color(0xCCF3F3F0)
                                 )
                             ) {
-                                Text(
+                                AnimatedTextOverflow(
                                     text = "COMPLETE",
-                                    fontWeight = FontWeight.Bold,
                                     style = MaterialTheme.typography.bodySmall,
                                     color = Color(0xFF2B4E5C)
                                 )
@@ -269,9 +276,8 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                     containerColor = if (convectionMode.value == ConvectionMode.OFF) MaterialTheme.colorScheme.tertiary else Color(0xCCF3F3F0)
                                 )
                             ) {
-                                Text(
+                                AnimatedTextOverflow(
                                     text = "OFF",
-                                    fontWeight = FontWeight.Bold,
                                     style = MaterialTheme.typography.bodySmall,
                                     color = Color(0xFF2B4E5C)
                                 )
@@ -286,9 +292,8 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                     containerColor = if (convectionMode.value == ConvectionMode.ECONOMIC) MaterialTheme.colorScheme.tertiary else Color(0xCCF3F3F0)
                                 )
                             ) {
-                                Text(
+                                AnimatedTextOverflow(
                                     text = "ECONOMIC",
-                                    fontWeight = FontWeight.Bold,
                                     style = MaterialTheme.typography.bodySmall,
                                     color = Color(0xFF2B4E5C)
                                 )
@@ -303,9 +308,8 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                     containerColor = if (convectionMode.value == ConvectionMode.CONVENTIONAL) MaterialTheme.colorScheme.tertiary else Color(0xCCF3F3F0)
                                 )
                             ) {
-                                Text(
-                                    text = "CONV",
-                                    fontWeight = FontWeight.Bold,
+                                AnimatedTextOverflow(
+                                    text = "CONVECTION",
                                     style = MaterialTheme.typography.bodySmall,
                                     color = Color(0xFF2B4E5C)
                                 )
@@ -331,9 +335,8 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                     containerColor = if (sourceMode.value == SourceMode.CONVENTIONAL) MaterialTheme.colorScheme.tertiary else Color(0xCCF3F3F0)
                                 )
                             ) {
-                                Text(
-                                    text = "CONV",
-                                    fontWeight = FontWeight.Bold,
+                                AnimatedTextOverflow(
+                                    text = "CONVECTION",
                                     style = MaterialTheme.typography.bodySmall,
                                     color = Color(0xFF2B4E5C)
                                 )
@@ -348,9 +351,8 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                     containerColor = if (sourceMode.value == SourceMode.ABOVE) MaterialTheme.colorScheme.tertiary else Color(0xCCF3F3F0)
                                 )
                             ) {
-                                Text(
+                                AnimatedTextOverflow(
                                     text = "ABOVE",
-                                    fontWeight = FontWeight.Bold,
                                     style = MaterialTheme.typography.bodySmall,
                                     color = Color(0xFF2B4E5C)
                                 )
@@ -365,9 +367,8 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                     containerColor = if (sourceMode.value == SourceMode.BELOW) MaterialTheme.colorScheme.tertiary else Color(0xCCF3F3F0)
                                 )
                             ) {
-                                Text(
+                                AnimatedTextOverflow(
                                     text = "BELOW",
-                                    fontWeight = FontWeight.Bold,
                                     style = MaterialTheme.typography.bodySmall,
                                     color = Color(0xFF2B4E5C)
                                 )

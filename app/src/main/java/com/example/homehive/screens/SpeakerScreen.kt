@@ -71,6 +71,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.R
 import com.example.homehive.WindowInfo
+import com.example.homehive.library.AnimatedTextOverflow
 import com.example.homehive.rememberWindowInfo
 import com.example.homehive.viewmodels.SpeakerVM
 import kotlinx.coroutines.delay
@@ -618,46 +619,6 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
             }
         }
 
-    }
-}
-@Composable
-fun AnimatedTextOverflow(text: String) {
-    val scrollState = rememberScrollState()
-    val coroutineScope = rememberCoroutineScope()
-    val textWidth = remember { mutableStateOf(0) }
-
-    LaunchedEffect(Unit) {
-        coroutineScope.launch {
-            while (true) {
-                delay(1000)
-                scrollState.animateScrollTo(
-                    scrollState.maxValue,
-                    animationSpec = tween(durationMillis = 2500, easing = LinearEasing)
-                )
-                delay(2000)
-                scrollState.animateScrollTo(
-                    scrollState.maxValue - textWidth.value,
-                    animationSpec = tween(durationMillis = 2500, easing = LinearEasing)
-                )
-            }
-        }
-    }
-
-    Box(
-        modifier = Modifier
-            .horizontalScroll(scrollState)
-            .onGloballyPositioned { coordinates ->
-                textWidth.value = coordinates.size.width
-            }
-    ) {
-        Text(
-            text = text,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFFFFFFFF),
-            style = TextStyle(fontSize = 20.sp),
-            overflow = TextOverflow.Clip,
-            maxLines = 1
-        )
     }
 }
 

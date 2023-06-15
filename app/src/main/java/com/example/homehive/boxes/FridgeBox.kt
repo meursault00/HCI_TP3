@@ -284,7 +284,7 @@ fun FridgeBox(onClick: () -> Unit , fridgeVM : FridgeVM = viewModel()) {
                     Icon(
                         painter = if (isOpen.value) painterResource(id = R.drawable.upicon) else painterResource(id = R.drawable.downicon),
                         contentDescription = null,
-                        tint =  Color(0xFFAFA586) ,
+                        tint =  MaterialTheme.colorScheme.background ,
                         modifier = Modifier
                             .size(60.dp)
                     )

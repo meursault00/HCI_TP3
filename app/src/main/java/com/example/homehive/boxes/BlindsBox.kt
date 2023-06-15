@@ -143,7 +143,7 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                     Icon(
                         painter = if (isOpen.value) painterResource(id = R.drawable.upicon) else painterResource(id = R.drawable.downicon),
                         contentDescription = null,
-                        tint =  Color(0xFFAFA586) ,
+                        tint =  MaterialTheme.colorScheme.background,
                         modifier = Modifier
                             .size(60.dp)
                     )
@@ -154,8 +154,6 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                         defaultElevation = 30.dp,
                         pressedElevation = 0.0.dp,
                     ),
-                    modifier = Modifier
-                        .align(Alignment.Center), // Align the button to the end (top end of the Box)
                     colors = ButtonDefaults.buttonColors(
                         containerColor = if(!isClosing) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.background,
 
@@ -163,10 +161,19 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                 ) {
                     Text(
                         text = if(!isClosing) "Open" else "Close",
-                        color = if(!isClosing) Color(0xFF8D856D) else MaterialTheme.colorScheme.secondary
+                        color = if(!isClosing) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.secondary
 
                     )
                 }
+                Text(
+                    text = "${blindState.position}%",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(top = 70.dp),
+                )
 
                 if(isOpen.value) {
 

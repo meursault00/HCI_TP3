@@ -17,8 +17,8 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Color(0xFFEFE5C5),
-    secondary = Color(0xFF2D465E), // HAY OPACOS
+    primary = Color(0xFF2F535E),
+    secondary = Color(0xFF5488B9), // HAY OPACOS
     tertiary = Color(0xFF203831),
     background = Color(0xFF918A76),
     surface = Color(0xFFFFFBFE),
@@ -33,7 +33,7 @@ private val LightColorScheme = lightColorScheme(
     primary = Color(0xFF203831),
     secondary = Color(0xFFEFE5C5), // HAY OPACOS
     tertiary = Color(0xFFF4CF6D),
-    background = Color(0xFF918A76),
+    background = Color(0xFF918A76), // BOTONES APAGADOS Y COSASS ASI
     surface = Color(0xFFFFFBFE),
     onPrimary = Color.White,
     onSecondary = Color.White,
