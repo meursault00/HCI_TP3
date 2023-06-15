@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.example.homehive.boxes.BlindsBox
+import com.example.homehive.boxes.DoorBox
 import com.example.homehive.boxes.FridgeBox
 import com.example.homehive.boxes.OvenBox
 import com.example.homehive.boxes.SpeakerBox
@@ -56,7 +57,7 @@ fun HomeScreen(navController: NavController, innerPadding: PaddingValues?) {
                 })
             }
             item {
-                SpeakerBox(onClick = {
+                DoorBox(onClick = {
                     navController.navigate("devices/speaker/1234")
                 })
             }

@@ -47,7 +47,6 @@ fun OvenBox(onClick: () -> Unit, viewModel : OvenVM = viewModel()) {
     val context = LocalContext.current;
 
     var isOn = remember { mutableStateOf(false) }
-
     var isOpen = remember { mutableStateOf(false) }
 
     val height: Dp by animateDpAsState(
@@ -72,7 +71,7 @@ fun OvenBox(onClick: () -> Unit, viewModel : OvenVM = viewModel()) {
         ) {
             Box(
                 modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.TopCenter
 
             ) {
                 Image(
@@ -91,30 +90,44 @@ fun OvenBox(onClick: () -> Unit, viewModel : OvenVM = viewModel()) {
                         .align(Alignment.TopCenter)
                 )
 
-                if(!isOpen.value){
-                    Column(
-                        modifier = Modifier
-                            .padding(start = 10.dp, end = 10.dp)
-                            .align(Alignment.Center)
-                    ){
-                        Text(
-                            text = "${uiState.ovenTemperature}ºC",
-                            fontWeight = FontWeight.Bold,
-                            style = MaterialTheme.typography.headlineLarge,
-                            color = Color(0xFFE3592B),
-                            modifier = Modifier.padding(top = 16.dp)
-                        )
-                        Text(
-                            text = if(isOn.value) "On" else "Off",
-                            fontSize = MaterialTheme.typography.bodyMedium.fontSize,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = Color(0xFF114225),
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(start = 20.dp)
-                        )
-                    }
+
+
+                if(isOn.value){
+                    Text(
+                        text = "${uiState.ovenTemperature}ºC",
+                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.headlineMedium,
+                        color = Color(0xFFE3592B),
+                        modifier = Modifier.padding(top = 112.dp)
+                    )
                 }
 
+                if (!isOn.value) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color.Black.copy(alpha = 0.3f))
+                    )
+                }
+
+                Button(
+                    onClick = { isOn.value = !isOn.value
+                        sendCustomNotification(context, "Oven", if(isOn.value) "Turned On" else "Turned Off")
+                    },
+                    elevation = ButtonDefaults.buttonElevation(
+                        defaultElevation = 30.dp,
+                        pressedElevation = 0.0.dp,
+                    ),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = if(isOn.value) Color(0xFFEFE5C5) else Color(0xFF918A76),
+                    ),
+                    modifier = Modifier.padding(top = 70.dp)
+                    ) {
+                    Text(text = if (isOn.value) "Turn Off" else "Turn On",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = if(isOn.value) Color(0xFF8D856D) else Color(0xFFEFE5C5),
+                        )
+                }
                 Button(
                     onClick = { isOpen.value = !isOpen.value },
                     elevation = ButtonDefaults.buttonElevation(
@@ -130,7 +143,7 @@ fun OvenBox(onClick: () -> Unit, viewModel : OvenVM = viewModel()) {
                         .width(200.dp)
                         .align(Alignment.BottomCenter),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if(isOpen.value)  Color(0xFFEFE5C5) else Color(0xB4EFE5C5)
+                        containerColor = Color(0xFFEFE5C5)
                     ),
                 ) {
                     Icon(
@@ -142,39 +155,14 @@ fun OvenBox(onClick: () -> Unit, viewModel : OvenVM = viewModel()) {
                     )
                 }
 
+
                 if(isOpen.value){
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
                             .align(Alignment.Center)
                     ){
-                        Button(
-                            onClick = { isOn.value = !isOn.value
-                                        sendCustomNotification(context, "Oven", if(isOn.value) "Turned On" else "Turned Off")
-                                      },
-                            elevation = ButtonDefaults.buttonElevation(
-                                defaultElevation = 30.dp,
-                                pressedElevation = 0.0.dp,
-                            ),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0xFFEFE5C5),
-                                contentColor = Color(0xFF1C6135)
-                            ),
-                            modifier = Modifier.padding(top = 16.dp)
-                        ) {
-                            Text(text = if (isOn.value) "Turn Off" else "Turn On",
-                                style = MaterialTheme.typography.bodySmall,
-                                color = Color(0xFFAFA586),
 
-                                )
-                        }
-
-                        Text(
-                            text = "${uiState.ovenTemperature}ºC",
-                            fontWeight = FontWeight.Bold,
-                            style = MaterialTheme.typography.headlineLarge,
-                            color = Color(0xFFE3592B),
-                        )
                         Text(
                             text = "Grill Mode: " + uiState.grillMode,
                             fontSize = MaterialTheme.typography.bodyMedium.fontSize,
@@ -208,19 +196,8 @@ fun OvenBox(onClick: () -> Unit, viewModel : OvenVM = viewModel()) {
                 }
 
 
-                if (!isOn.value) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(Color.Black.copy(alpha = 0.3f))
-                    )
-                }
-                else{
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                    )
-                }
+
+
             }
         }
     }

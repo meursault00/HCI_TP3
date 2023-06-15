@@ -53,12 +53,9 @@ import com.example.homehive.viewmodels.FridgeVM
 
 
 @Composable
-fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
+fun DoorBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
 
     val blindState by blindsVM.uiState.collectAsState();
-
-    var isBlindOpen = blindState.position > 0f;
-    var isClosing = blindState.status == "closing" || blindState.status == "closed";
 
     var isOpen = remember { mutableStateOf(false) }
 
@@ -115,13 +112,7 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                         .align(Alignment.Center)
                 )
 
-                if (!isBlindOpen) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(Color.Black.copy(alpha = 0.3f))
-                    )
-                }
+
                 Button(
                     onClick = { isOpen.value = !isOpen.value },
                     elevation = ButtonDefaults.buttonElevation(
@@ -137,39 +128,40 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                         .width(200.dp)
                         .align(Alignment.BottomCenter),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFEFE5C5)
+                        containerColor = Color(0xB4EFE5C5)
                     ),
                 ) {
                     Icon(
                         painter = if (isOpen.value) painterResource(id = R.drawable.upicon) else painterResource(id = R.drawable.downicon),
                         contentDescription = null,
-                        tint =  Color(0xFFAFA586) ,
+                        tint = Color(0xFFAFA586),
                         modifier = Modifier
                             .size(60.dp)
                     )
                 }
-                Button( // CHECKEAR CONDICIONES DE ESTADO
-                    onClick = { /*TODO*/ },
-                    elevation = ButtonDefaults.buttonElevation(
-                        defaultElevation = 30.dp,
-                        pressedElevation = 0.0.dp,
-                    ),
-                    modifier = Modifier
-                        .align(Alignment.Center), // Align the button to the end (top end of the Box)
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = if(!isClosing) Color(0xFFEFE5C5) else Color(0xFF918A76),
 
-                        )
-                ) {
-                    Text(
-                        text = if(!isClosing) "Open" else "Close",
-                        color = if(!isClosing) Color(0xFF8D856D) else Color(0xFFEFE5C5)
-
-                    )
-                }
 
                 if(isOpen.value) {
+                    Button( // CHECKEAR CONDICIONES DE ESTADO
+                        onClick = {  },
+                        elevation = ButtonDefaults.buttonElevation(
+                            defaultElevation = 30.dp,
+                            pressedElevation = 0.0.dp,
+                        ),
+                        modifier = Modifier
+                            .padding(bottom = 100.dp)
+                            .align(Alignment.Center), // Align the button to the end (top end of the Box)
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFFEFE5C5),
 
+                            )
+                    ) {
+                        Text(
+                            text = "Open",
+                            color = Color(0xFFAFA586)
+
+                        )
+                    }
                     Slider(
                         value = blindState.position.toFloat(),
                         onValueChange = { newPosition -> blindsVM.setPosition(newPosition.toInt()) },

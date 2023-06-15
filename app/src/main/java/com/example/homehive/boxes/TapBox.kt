@@ -130,24 +130,19 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                         .padding(16.dp)
                         .align(Alignment.TopCenter)
                 )
-                if(!isOpen.value){
-                    Text(
-                        text = if(isOn.value) "On" else "Off",
-                        fontSize = MaterialTheme.typography.bodyMedium.fontSize,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = Color(0xFF114225),
-                        fontWeight = FontWeight.Bold,
+
+                if (!isOn.value) {
+                    Box(
                         modifier = Modifier
-                            .padding(16.dp)
-                            .align(Alignment.Center)
+                            .fillMaxSize()
+                            .background(Color.Black.copy(alpha = 0.3f))
                     )
                 }
-
 
                 Button(
                     onClick = { isOpen.value = !isOpen.value },
                     elevation = ButtonDefaults.buttonElevation(
-                        defaultElevation = 30.dp,
+                        defaultElevation = 4.dp,
                         pressedElevation = 0.0.dp,
                     ),
                     shape = RoundedCornerShape(topStart = 15.dp,
@@ -159,7 +154,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                         .width(200.dp)
                         .align(Alignment.BottomCenter),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if(isOpen.value)  Color(0xFFEFE5C5) else Color(0xB4EFE5C5)
+                        containerColor = if(isOpen.value)  Color(0xFFEFE5C5) else Color(0xFFEFE5C5)
                     ),
                 ) {
                     Icon(
@@ -171,13 +166,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                     )
                 }
 
-                if (!isOn.value) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(Color.Black.copy(alpha = 0.3f))
-                    )
-                }
+
                 if(isDispensing.value && isOpen.value){
                     Box(
                         modifier = Modifier
@@ -204,34 +193,36 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                         )
                     }
                 }
+
+                Button(
+                    onClick = { if(isOn.value) tapVM.setClose() else tapVM.setOpen();
+                        isOn.value = !isOn.value ;
+                        isDispensing.value = false;
+                        dispenseValue.value = "";
+                        dispenseUnit.value = "";
+                        sendCustomNotification(context, "Tap", "Tap is ${ if(isOn.value) "On" else "Off" }")
+                    },
+                    elevation = ButtonDefaults.buttonElevation(
+                        defaultElevation = 30.dp,
+                        pressedElevation = 0.0.dp,
+                    ),
+                    modifier = Modifier
+                        .padding(top = 70.dp)
+                        .align(Alignment.TopCenter), // Align the button to the end (top end of the Box)
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = if(isOn.value) Color(0xFFEFE5C5) else Color(0xFF918A76),
+                    )
+                ) {
+                    Text(text = if (isOn.value) "Turn Off" else "Turn On",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = if(isOn.value) Color(0xFF8D856D) else Color(0xFFEFE5C5),
+
+                        )
+                }
+
                 if(isOpen.value){
 
-                    Button(
-                        onClick = { if(isOn.value) tapVM.setClose() else tapVM.setOpen();
-                            isOn.value = !isOn.value ;
-                            isDispensing.value = false;
-                            dispenseValue.value = "";
-                            dispenseUnit.value = "";
-                            sendCustomNotification(context, "Tap", "Tap is ${ if(isOn.value) "On" else "Off" }")
-                                  },
-                        elevation = ButtonDefaults.buttonElevation(
-                            defaultElevation = 30.dp,
-                            pressedElevation = 0.0.dp,
-                        ),
-                        modifier = Modifier
-                            .padding(top = 60.dp)
-                            .align(Alignment.TopCenter), // Align the button to the end (top end of the Box)
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFFEFE5C5),
-                            contentColor = Color(0xFF1C6135)
-                        )
-                    ) {
-                        Text(text = if (isOn.value) "Turn Off" else "Turn On",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = Color(0xFFAFA586),
 
-                        )
-                    }
 
                     if(!isOn.value){
                         // FORM
