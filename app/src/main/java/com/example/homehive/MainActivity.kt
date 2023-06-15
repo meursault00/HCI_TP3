@@ -64,7 +64,7 @@ class MainActivity : ComponentActivity() {
         createNotificationChannel(this)
         super.onCreate(savedInstanceState)
         setContent {
-            HomeHiveTheme() {
+            HomeHiveTheme(darkTheme = true) {
                 NavHost(startDestination = "home")
             }
         }
@@ -72,6 +72,7 @@ class MainActivity : ComponentActivity() {
 }
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun App(
     navController: NavController,

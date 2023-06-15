@@ -109,7 +109,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
 
                 .clickable(onClick = onClick),
             shape = RoundedCornerShape(15.dp),
-            color = Color(0xFFA0CCCF)
+            color = MaterialTheme.colorScheme.onBackground,
         ) {
             Box(
                 modifier = Modifier.fillMaxSize(),
@@ -125,7 +125,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                     text = "Tap",
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
-                    color = MaterialTheme.colorScheme.primary,
+                    color = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier
                         .padding(16.dp)
                         .align(Alignment.TopCenter)

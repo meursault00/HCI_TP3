@@ -17,28 +17,28 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Color(0xFF2F535E),
-    secondary = Color(0xFF5488B9), // HAY OPACOS
-    tertiary = Color(0xFF203831),
-    background = Color(0xFF918A76),
+    primary = Color(0xFF1A3830), //FF203831 // INTERESANTE = FF4F7469
+    secondary = Color(0xFF202020), // HAY OPACOS
+    tertiary = Color(0xFF526863),
+    background = Color(0xFFA8A495), // BOTONES APAGADOS Y COSASS ASI
     surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
+    onPrimary = Color(0xFFDADFDD),
     onSecondary = Color.White,
     onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
+    onBackground = Color(0xFF325052),
     onSurface = Color(0xFF1C1B1F),
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Color(0xFF203831),
+    primary = Color(0xFF84A89D), //FF203831 // INTERESANTE = FF4F7469 // FF84A89D
     secondary = Color(0xFFEFE5C5), // HAY OPACOS
     tertiary = Color(0xFFF4CF6D),
     background = Color(0xFF918A76), // BOTONES APAGADOS Y COSASS ASI
     surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
+    onPrimary = Color(0xFF203831),
     onSecondary = Color.White,
     onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
+    onBackground = Color(0xFFA0CCCF), // TAP BACKGROUND
     onSurface = Color(0xFF1C1B1F),
 
 )

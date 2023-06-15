@@ -99,7 +99,7 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                     text = "Blinds",
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
-                    color = MaterialTheme.colorScheme.primary,
+                    color = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier
                         .padding(16.dp)
                         .align(Alignment.TopCenter)
@@ -168,7 +168,7 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                 Text(
                     text = "${blindState.position}%",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.primary,
+                    color = MaterialTheme.colorScheme.onPrimary,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .align(Alignment.Center)

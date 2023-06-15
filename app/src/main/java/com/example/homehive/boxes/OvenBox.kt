@@ -88,7 +88,7 @@ fun OvenBox(onClick: () -> Unit, viewModel : OvenVM = viewModel()) {
                     text = "Oven",
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
-                    color = MaterialTheme.colorScheme.primary,
+                    color = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier
                         .padding(16.dp)
                         .align(Alignment.TopCenter)
