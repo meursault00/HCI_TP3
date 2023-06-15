@@ -7,25 +7,25 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,20 +36,22 @@ fun AppBar(
     navController: NavController,
     onNavigationIconClick: () -> Unit
 ) {
-    Row(Modifier.fillMaxWidth()){
-        Box(
+    Row(
+        Modifier
+            .fillMaxWidth()
+    ){
+        Surface(
             modifier = Modifier
-                .padding(top = 22.dp, start = 20.dp, end = 20.dp)
-                .background(
-                    color = Color(0xFF203831),
-                    shape = RoundedCornerShape(32.dp)
-                )
-                    // SHADOW DE CHRIS
+                .padding(15.dp)
                 .fillMaxWidth(),
-            contentAlignment = Alignment.CenterStart,
+            color = Color(0xFF27443B), // FF114225 // 0xFF2C4B42
+            shadowElevation = 4.dp,
+            shape = RoundedCornerShape(40.dp)
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .padding(4.dp)
+                    .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Row(
@@ -84,13 +86,14 @@ fun AppBar(
                         .clip(CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
-                    androidx.compose.material3.IconButton(onClick = {
+                    IconButton(onClick = {
                         navController.navigate("routines")
                     }) {
-                        androidx.compose.material3.Icon(
-                            imageVector = Icons.Filled.Check, // CAMBIAR ICONO
-                            contentDescription = "Star",
-                            tint = Color(0xFFAFC1BB)
+                        Icon(
+                            painter = painterResource(id = R.drawable.routine ),
+                            contentDescription = null,
+                            tint = Color(0xFFFFFFFF),
+                            modifier = Modifier.size(30.dp)
                         )
                     }
                 }

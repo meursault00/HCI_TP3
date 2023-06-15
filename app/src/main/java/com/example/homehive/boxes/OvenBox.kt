@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -35,6 +36,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.R
+import com.example.homehive.sendCustomNotification
 import com.example.homehive.viewmodels.OvenVM
 
 
@@ -42,6 +44,7 @@ import com.example.homehive.viewmodels.OvenVM
 fun OvenBox(onClick: () -> Unit, viewModel : OvenVM = viewModel()) {
 
     val uiState by viewModel.uiState.collectAsState()
+    val context = LocalContext.current;
 
     var isOn = remember { mutableStateOf(false) }
 
@@ -141,22 +144,23 @@ fun OvenBox(onClick: () -> Unit, viewModel : OvenVM = viewModel()) {
 
                 if(isOpen.value){
                     Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
-                            .padding(start = 10.dp, end = 10.dp)
                             .align(Alignment.Center)
                     ){
                         Button(
-                            onClick = { isOn.value = !isOn.value },
+                            onClick = { isOn.value = !isOn.value
+                                        sendCustomNotification(context, "Oven", if(isOn.value) "Turned On" else "Turned Off")
+                                      },
                             elevation = ButtonDefaults.buttonElevation(
                                 defaultElevation = 30.dp,
                                 pressedElevation = 0.0.dp,
                             ),
-                            modifier = Modifier
-                                .padding(start = 29.dp),
-                                colors = ButtonDefaults.buttonColors(
+                            colors = ButtonDefaults.buttonColors(
                                 containerColor = Color(0xFFEFE5C5),
                                 contentColor = Color(0xFF1C6135)
-                            )
+                            ),
+                            modifier = Modifier.padding(top = 16.dp)
                         ) {
                             Text(text = if (isOn.value) "Turn Off" else "Turn On",
                                 style = MaterialTheme.typography.bodySmall,
@@ -170,9 +174,7 @@ fun OvenBox(onClick: () -> Unit, viewModel : OvenVM = viewModel()) {
                             fontWeight = FontWeight.Bold,
                             style = MaterialTheme.typography.headlineLarge,
                             color = Color(0xFFE3592B),
-                            modifier = Modifier.padding(start = 40.dp)
                         )
-
                         Text(
                             text = "Grill Mode: " + uiState.grillMode,
                             fontSize = MaterialTheme.typography.bodyMedium.fontSize,

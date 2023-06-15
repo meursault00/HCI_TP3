@@ -1,5 +1,6 @@
 package com.example.homehive
 
+import android.content.res.Resources
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -21,7 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -78,7 +79,8 @@ fun DrawerBody(
                     }
                     .padding(16.dp)
             ) {
-                Icon(imageVector = item.icon,
+                Icon(
+                    painter = item.painter,
                     contentDescription = item.contentDescription
                 )
                 Spacer(modifier = Modifier.width(16.dp))

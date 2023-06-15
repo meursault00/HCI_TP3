@@ -112,25 +112,25 @@ fun App(
                                 id = "home",
                                 title = "Home",
                                 contentDescription = "Go to home screen",
-                                icon = Icons.Default.Home
+                                painter = painterResource(id = R.drawable.home),
                             ),
                             MenuItem(
                                 id = "routines",
                                 title = "Routines",
                                 contentDescription = "Go to routines screen",
-                                icon = Icons.Default.Check
+                                painter = painterResource(id = R.drawable.routine),
                             ),
                             MenuItem(
                                 id = "settings",
                                 title = "Settings",
                                 contentDescription = "Go to settings screen",
-                                icon = Icons.Default.Settings
+                                painter = painterResource(id = R.drawable.settings),
                             ),
                             MenuItem(
                                 id = "help",
                                 title = "Help",
                                 contentDescription = "Get help",
-                                icon = Icons.Default.Info
+                                painter = painterResource(id = R.drawable.info),
                             ),
                         ),
                         onItemClick = {

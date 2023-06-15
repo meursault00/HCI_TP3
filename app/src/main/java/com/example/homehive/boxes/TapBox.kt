@@ -55,6 +55,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -64,6 +65,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.R
+import com.example.homehive.sendCustomNotification
 import com.example.homehive.viewmodels.FridgeVM
 import com.example.homehive.viewmodels.TapVM
 
@@ -73,6 +75,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
 
     val tapState by tapVM.uiState.collectAsState();
 
+    val context = LocalContext.current;
 
     var isOpen = remember { mutableStateOf(false) };
     var isOn = remember { mutableStateOf(false) };
@@ -204,7 +207,13 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                 if(isOpen.value){
 
                     Button(
-                        onClick = { if(isOn.value) tapVM.setClose() else tapVM.setOpen(); isOn.value = !isOn.value ; isDispensing.value = false; dispenseValue.value = ""; dispenseUnit.value = ""},
+                        onClick = { if(isOn.value) tapVM.setClose() else tapVM.setOpen();
+                            isOn.value = !isOn.value ;
+                            isDispensing.value = false;
+                            dispenseValue.value = "";
+                            dispenseUnit.value = "";
+                            sendCustomNotification(context, "Tap", "Tap is ${ if(isOn.value) "On" else "Off" }")
+                                  },
                         elevation = ButtonDefaults.buttonElevation(
                             defaultElevation = 30.dp,
                             pressedElevation = 0.0.dp,
