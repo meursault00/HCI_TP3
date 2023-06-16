@@ -1,19 +1,19 @@
 package com.example.homehive.viewmodels
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.example.homehive.states.OvenUIState
 import com.example.homehive.states.SettingsUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
+var isDarkTheme = mutableStateOf(false) // Global variable for theme
+
 class SettingsVM : ViewModel() {
     private val _uiState = MutableStateFlow(SettingsUIState())
     val uiState: StateFlow<SettingsUIState> = _uiState.asStateFlow()
-
-    private val _isDarkTheme = MutableStateFlow(false)
-    val isDarkTheme: StateFlow<Boolean> = _isDarkTheme
 
     fun toggleLanguage() {
         _uiState.update { currentState ->
@@ -25,7 +25,7 @@ class SettingsVM : ViewModel() {
         _uiState.update { currentState ->
             currentState.copy(theme = !currentState.theme)
         }
-        _isDarkTheme.value = !_isDarkTheme.value
+        isDarkTheme.value = !isDarkTheme.value // Update the global variable
     }
 
 }

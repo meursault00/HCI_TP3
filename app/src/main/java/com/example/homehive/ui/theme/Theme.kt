@@ -1,27 +1,17 @@
 package com.example.homehive.ui.theme
 
 import android.app.Activity
-import android.os.Build
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.homehive.viewmodels.SettingsVM
+import com.example.homehive.viewmodels.isDarkTheme
 
 private val DarkColorScheme = darkColorScheme(
     primary = Color(0xFF1A3830), //FF203831 // INTERESANTE = FF4F7469
@@ -56,11 +46,7 @@ fun HomeHiveTheme(
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val settingsVM: SettingsVM = viewModel() // Access the SettingsVM using viewModel()
-
-    val isDarkTheme by settingsVM.isDarkTheme.collectAsState() // Collect the value as a state
-
-    val colorScheme = if (isDarkTheme) {
+    val colorScheme = if (isDarkTheme.value) {
         DarkColorScheme
     } else {
         LightColorScheme
@@ -71,7 +57,7 @@ fun HomeHiveTheme(
         SideEffect {
             val window = (view.context as Activity).window
             window.statusBarColor = colorScheme.primary.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !isDarkTheme
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !isDarkTheme.value
         }
     }
 
@@ -81,5 +67,6 @@ fun HomeHiveTheme(
         content = content
     )
 }
+
 
 

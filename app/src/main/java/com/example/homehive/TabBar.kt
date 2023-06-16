@@ -116,7 +116,7 @@ fun TabBar(
     ) { page ->
         when (page) {
             0 -> {
-                HomeScreen(navController = navController, innerPadding = innerPadding)
+                //HomeScreen(navController = navController, innerPadding = innerPadding )
             }
             1 -> {
 

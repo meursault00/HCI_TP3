@@ -83,87 +83,83 @@ fun App(
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
-    HomeHiveTheme() {
-        Scaffold(
-            scaffoldState = scaffoldState,
-            backgroundColor = MaterialTheme.colorScheme.primary,
-            topBar = {
-
-
-                /*
-                TabBar(
-                    navController,
-                    modifier = Modifier
-                        .padding(top = 90.dp)
-                        .height(50.dp)
-                        .fillMaxSize()
-                )*/
-                AppBar(
-                    navController,
-                    onNavigationIconClick = {
-                        scope.launch {
-                            scaffoldState.drawerState.open()
-                        }
-                    }
-                )
-
-            },
-            drawerGesturesEnabled = scaffoldState.drawerState.isOpen,
-            drawerContent = {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    Image(
-                        painter = painterResource(id = R.drawable.nav_drawer_bg),
-                        contentDescription = null,
-                        contentScale = ContentScale.FillBounds,
-                        modifier = Modifier.fillMaxSize()
-                    )
-                    Column(
-                        Modifier.padding(16.dp),
-                        verticalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        DrawerHeader()
-                        DrawerBody(
-                            items = listOf(
-                                MenuItem(
-                                    id = "home",
-                                    title = "Home",
-                                    contentDescription = "Go to home screen",
-                                    painter = painterResource(id = R.drawable.home),
-                                ),
-                                MenuItem(
-                                    id = "routines",
-                                    title = "Routines",
-                                    contentDescription = "Go to routines screen",
-                                    painter = painterResource(id = R.drawable.routine),
-                                ),
-                                MenuItem(
-                                    id = "settings",
-                                    title = "Settings",
-                                    contentDescription = "Go to settings screen",
-                                    painter = painterResource(id = R.drawable.settings),
-                                ),
-                                MenuItem(
-                                    id = "help",
-                                    title = "Help",
-                                    contentDescription = "Get help",
-                                    painter = painterResource(id = R.drawable.info),
-                                ),
-                            ),
-                            onItemClick = {
-                                scope.launch {
-                                    scaffoldState.drawerState.close()
-                                    navController.navigate("${it.id}")
-                                }
-                                println("Clicked on ${it.title}")
-                            }
-                        )
+    Scaffold(
+        scaffoldState = scaffoldState,
+        backgroundColor = MaterialTheme.colorScheme.primary,
+        topBar = {
+            /*
+            TabBar(
+                navController,
+                modifier = Modifier
+                    .padding(top = 90.dp)
+                    .height(50.dp)
+                    .fillMaxSize()
+            )*/
+            AppBar(
+                navController,
+                onNavigationIconClick = {
+                    scope.launch {
+                        scaffoldState.drawerState.open()
                     }
                 }
-            },
-            content = { innerPadding ->
-                content(navController = navController, innerPadding = innerPadding)
+            )
+
+        },
+        drawerGesturesEnabled = scaffoldState.drawerState.isOpen,
+        drawerContent = {
+            Box(modifier = Modifier.fillMaxSize()) {
+                Image(
+                    painter = painterResource(id = R.drawable.nav_drawer_bg),
+                    contentDescription = null,
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier.fillMaxSize()
+                )
+                Column(
+                    Modifier.padding(16.dp),
+                    verticalArrangement = Arrangement.SpaceBetween
+                ) {
+                    DrawerHeader()
+                    DrawerBody(
+                        items = listOf(
+                            MenuItem(
+                                id = "home",
+                                title = "Home",
+                                contentDescription = "Go to home screen",
+                                painter = painterResource(id = R.drawable.home),
+                            ),
+                            MenuItem(
+                                id = "routines",
+                                title = "Routines",
+                                contentDescription = "Go to routines screen",
+                                painter = painterResource(id = R.drawable.routine),
+                            ),
+                            MenuItem(
+                                id = "settings",
+                                title = "Settings",
+                                contentDescription = "Go to settings screen",
+                                painter = painterResource(id = R.drawable.settings),
+                            ),
+                            MenuItem(
+                                id = "help",
+                                title = "Help",
+                                contentDescription = "Get help",
+                                painter = painterResource(id = R.drawable.info),
+                            ),
+                        ),
+                        onItemClick = {
+                            scope.launch {
+                                scaffoldState.drawerState.close()
+                                navController.navigate("${it.id}")
+                            }
+                            println("Clicked on ${it.title}")
+                        }
+                    )
+                }
             }
-        )
-    }
+        },
+        content = { innerPadding ->
+            content(navController = navController, innerPadding = innerPadding)
+        }
+    )
 
 }

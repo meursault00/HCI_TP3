@@ -2,6 +2,11 @@ package com.example.homehive
 
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.*
@@ -19,14 +24,28 @@ import com.example.homehive.screens.SettingsScreen
 import com.example.homehive.screens.SpeakerScreen
 import com.example.homehive.screens.TapScreen
 import com.example.homehive.screens.TestScreen
+import com.example.homehive.viewmodels.DevicesVM
 import com.example.homehive.viewmodels.FridgeVM
+
 
 @Composable
 fun NavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = "routines"
+    startDestination: String = "routines",
 ) {
+
+    val devicesVM = remember { DevicesVM() }
+    val devicesState by devicesVM.uiState.collectAsState()
+    LaunchedEffect(Unit) {
+        devicesVM.fetchDevices()
+    }
+    // Access the list of devices from devicesState.devices
+    val devices = devicesState.devices
+    SideEffect {
+        println("List of devices: $devices")
+    }
+
     val uri = "http://www.example.com"
     val secureUri = "https://www.example.com"
 
@@ -47,15 +66,17 @@ fun NavHost(
         }
         composable("home") {
             App(navController = navController) { navController, innerPadding ->
-                HomeScreen(navController = navController, innerPadding = innerPadding)
+                HomeScreen(navController = navController, innerPadding = innerPadding , devicesVM = devicesVM )
             }
         }
         composable("settings") {
+            println("List of devices: $devices")
             App(navController = navController) { navController, innerPadding ->
                 SettingsScreen(navController = navController, innerPadding = innerPadding)
             }
         }
         composable("help") {
+            println("List of devices: $devices")
             App(navController = navController) { navController, innerPadding ->
                 TestScreen(navController = navController, innerPadding = innerPadding, devicesVM = viewModel())
             }
@@ -100,3 +121,4 @@ fun NavHost(
         }
     }
 }
+

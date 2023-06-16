@@ -61,6 +61,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.R
 import com.example.homehive.viewmodels.SettingsVM
+import com.example.homehive.viewmodels.isDarkTheme
 
 
 @Composable
@@ -204,7 +205,7 @@ fun AppearanceBox(viewModel : SettingsVM = viewModel()) {
                             Box(
                                 modifier = Modifier
                                     .background(
-                                        color = if (uiState.theme) Color(0xFFF4CF6D) else Color(0xCCF3F3F0),
+                                        color = if (!isDarkTheme.value) Color(0xFFF4CF6D) else Color(0xCCF3F3F0),
 
                                         shape = RoundedCornerShape(
                                             topStart = 15.dp,
@@ -222,7 +223,7 @@ fun AppearanceBox(viewModel : SettingsVM = viewModel()) {
                                         append(stringResource(R.string.light_mode))
                                     },
                                     fontSize = 16.sp,
-                                    color = if (!uiState.theme) Color(0xFF7E9694) else Color.DarkGray,
+                                    color = if (isDarkTheme.value) Color(0xFF7E9694) else Color.DarkGray,
                                     modifier = Modifier.padding(8.dp),
                                     fontWeight = FontWeight.Bold
                                 )
@@ -231,7 +232,7 @@ fun AppearanceBox(viewModel : SettingsVM = viewModel()) {
                             Box(
                                 modifier = Modifier
                                     .background(
-                                        color = if (!uiState.theme) Color(0xFFF4CF6D) else Color(0xCCF3F3F0),
+                                        color = if (isDarkTheme.value) Color(0xFFF4CF6D) else Color(0xCCF3F3F0),
 
                                         shape = RoundedCornerShape(
                                             topStart = 0.dp,
@@ -249,7 +250,7 @@ fun AppearanceBox(viewModel : SettingsVM = viewModel()) {
                                         append(stringResource(R.string.dark_mode))
                                     },
                                     fontSize = 16.sp,
-                                    color = if (uiState.theme) Color(0xFF7E9694) else Color.DarkGray,
+                                    color = if (!isDarkTheme.value) Color(0xFF7E9694) else Color.DarkGray,
                                     modifier = Modifier.padding(8.dp),
                                     fontWeight = FontWeight.Bold
 
