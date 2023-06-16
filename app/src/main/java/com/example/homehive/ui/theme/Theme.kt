@@ -37,13 +37,13 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Color(0xFF84A89D), //FF203831 // INTERESANTE = FF4F7469 // FF84A89D
+    primary = Color(0xFF4F7469), //FF203831 // INTERESANTE = FF4F7469 // FF84A89D
     secondary = Color(0xFFEFE5C5), // HAY OPACOS
     tertiary = Color(0xFFF4CF6D),
     background = Color(0xFF918A76), // BOTONES APAGADOS Y COSASS ASI
-    surface = Color(0xFFFFFBFE),
+    surface = Color(0xFFFFFBFE), // BLANCO SPEAKER
     onPrimary = Color(0xFF203831),
-    onSecondary = Color.White,
+    onSecondary = Color(0xFF795454), // ROUTINES
     onTertiary = Color.White,
     onBackground = Color(0xFFA0CCCF), // TAP BACKGROUND
     onSurface = Color(0xFF1C1B1F),

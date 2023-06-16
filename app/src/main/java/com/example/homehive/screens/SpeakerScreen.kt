@@ -1,5 +1,6 @@
 package com.example.homehive.screens
 
+import android.content.ClipData
 import android.graphics.drawable.Animatable
 import android.widget.ProgressBar
 import androidx.compose.animation.core.LinearEasing
@@ -25,10 +26,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
@@ -57,6 +61,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.painterResource
@@ -69,6 +74,8 @@ import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.homehive.BottomShadow
+import com.example.homehive.MenuItem
 import com.example.homehive.R
 import com.example.homehive.WindowInfo
 import com.example.homehive.library.AnimatedTextOverflow
@@ -76,6 +83,7 @@ import com.example.homehive.rememberWindowInfo
 import com.example.homehive.viewmodels.SpeakerVM
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 
 @Composable
@@ -113,7 +121,12 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                     horizontalArrangement = Arrangement.SpaceBetween,
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .padding(start = 20.dp, end = 20.dp, top = 15.dp, bottom = 15.dp)
+                                        .padding(
+                                            start = 20.dp,
+                                            end = 20.dp,
+                                            top = 15.dp,
+                                            bottom = 15.dp
+                                        )
                                 ) {
                                     Text(
                                         text = "Speaker",
@@ -121,21 +134,43 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                         style = MaterialTheme.typography.headlineLarge,
                                         fontWeight = FontWeight.Bold,
                                     )
-                                    OutlinedButton(
-                                        onClick = { speakerVM.stop()},
-                                        modifier= Modifier.size(40.dp),  //avoid the oval shape
-                                        shape = CircleShape,
-                                        border= BorderStroke(1.dp, Color.White),
-                                        contentPadding = PaddingValues(0.dp),  //avoid the little icon
-                                        colors = ButtonDefaults.outlinedButtonColors(contentColor =  Color.White)
-                                    ) {
-                                        Icon(
-                                            painter = painterResource(id = R.drawable.stop),
-                                            contentDescription = null,
-                                            tint = Color(0xFFFFFFFF),
-                                            modifier = Modifier.size(20.dp)
-                                        )
+
+                                    Row(
+                                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                    )
+                                    {
+                                        OutlinedButton(
+                                            onClick = { },
+                                            modifier= Modifier.size(40.dp),  //avoid the oval shape
+                                            shape = CircleShape,
+                                            border= BorderStroke(1.dp, Color.White),
+                                            contentPadding = PaddingValues(0.dp),  //avoid the little icon
+                                            colors = ButtonDefaults.outlinedButtonColors(contentColor =  Color.White)
+                                        ) {
+                                            Icon(
+                                                painter = painterResource(id = R.drawable.playlist),
+                                                contentDescription = null,
+                                                tint = Color(0xFFFFFFFF),
+                                                modifier = Modifier.size(20.dp)
+                                            )
+                                        }
+                                        OutlinedButton(
+                                            onClick = { speakerVM.stop()},
+                                            modifier= Modifier.size(40.dp),  //avoid the oval shape
+                                            shape = CircleShape,
+                                            border= BorderStroke(1.dp, Color.White),
+                                            contentPadding = PaddingValues(0.dp),  //avoid the little icon
+                                            colors = ButtonDefaults.outlinedButtonColors(contentColor =  Color.White)
+                                        ) {
+                                            Icon(
+                                                painter = painterResource(id = R.drawable.stop),
+                                                contentDescription = null,
+                                                tint = Color(0xFFFFFFFF),
+                                                modifier = Modifier.size(20.dp)
+                                            )
+                                        }
                                     }
+
                                 }
 
                                 Row (
@@ -151,6 +186,40 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                                 .height(300.dp)
                                                 .width(250.dp),
                                         ) {
+                                            PlaylistSongs(
+                                                playlistName = "Playlist 1",
+                                                items = listOf(
+                                                Song(
+                                                    name = "Song 1",
+                                                    artist = "Artist 1",
+                                                    duration = "3:00",
+                                                ),
+                                                Song(
+                                                    name = "Song 2",
+                                                    artist = "Artist 2",
+                                                    duration = "3:00",
+                                                ),
+                                                Song(
+                                                    name = "Song 3",
+                                                    artist = "Artist 3",
+                                                    duration = "3:00",
+                                                ),
+                                                Song(
+                                                    name = "Song 4",
+                                                    artist = "Artist 4",
+                                                    duration = "3:00",
+                                                ),
+                                                Song(
+                                                    name = "Song 5",
+                                                    artist = "Artist 1",
+                                                    duration = "3:00",
+                                                ),
+                                                Song(
+                                                    name = "Song 6",
+                                                    artist = "Artist 2",
+                                                    duration = "3:00",
+                                                ),
+                                            ))
 
                                         }
 
@@ -199,10 +268,12 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                                             onValueChange = { newValue -> speakerVM.setVolume(newValue.toInt()) },
                                                             modifier = Modifier
                                                                 .alpha(0f)
-                                                                .padding(start= 30.dp ,end = 70.dp)
+                                                                .padding(start = 30.dp, end = 70.dp)
                                                                 .graphicsLayer {
-                                                                    scaleX = 2f // Increase the scale of the thumb horizontally
-                                                                    scaleY = 2f // Increase the scale of the thumb vertically
+                                                                    scaleX =
+                                                                        2f // Increase the scale of the thumb horizontally
+                                                                    scaleY =
+                                                                        2f // Increase the scale of the thumb vertically
                                                                 },
                                                             steps = 10,
                                                             valueRange = 0f..10f,
@@ -244,11 +315,18 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                 horizontalAlignment = Alignment.CenterHorizontally, // Center horizontally
                                 modifier = Modifier
                                     .width(100.dp)
-                                    .padding(start = 30.dp, end = 30.dp, top = 15.dp, bottom = 15.dp)
+                                    .padding(
+                                        start = 30.dp,
+                                        end = 30.dp,
+                                        top = 15.dp,
+                                        bottom = 15.dp
+                                    )
                             ){
 
                                 //Nombre de la cancion
-                                AnimatedTextOverflow(text = "Peso Pluma: Bzrp Music Sessions, Vol. 39")
+                                AnimatedTextOverflow(
+                                    text = "Peso Pluma: Bzrp Music Sessions, Vol. 39"
+                                )
 
                                 // artista
                                 Text(
@@ -397,12 +475,27 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                         fontWeight = FontWeight.Bold,
                                     )
                                     OutlinedButton(
-                                        onClick = { speakerVM.stop() },
-                                        modifier = Modifier.size(40.dp),  //avoid the oval shape
+                                        onClick = { },
+                                        modifier= Modifier.size(40.dp),  //avoid the oval shape
                                         shape = CircleShape,
-                                        border = BorderStroke(1.dp, Color.White),
+                                        border= BorderStroke(1.dp, Color.White),
                                         contentPadding = PaddingValues(0.dp),  //avoid the little icon
-                                        colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White)
+                                        colors = ButtonDefaults.outlinedButtonColors(contentColor =  Color.White)
+                                    ) {
+                                        Icon(
+                                            painter = painterResource(id = R.drawable.playlist),
+                                            contentDescription = null,
+                                            tint = Color(0xFFFFFFFF),
+                                            modifier = Modifier.size(20.dp)
+                                        )
+                                    }
+                                    OutlinedButton(
+                                        onClick = { speakerVM.stop()},
+                                        modifier= Modifier.size(40.dp),  //avoid the oval shape
+                                        shape = CircleShape,
+                                        border= BorderStroke(1.dp, Color.White),
+                                        contentPadding = PaddingValues(0.dp),  //avoid the little icon
+                                        colors = ButtonDefaults.outlinedButtonColors(contentColor =  Color.White)
                                     ) {
                                         Icon(
                                             painter = painterResource(id = R.drawable.stop),
@@ -426,7 +519,40 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                                 .height(300.dp)
                                                 .width(250.dp),
                                         ) {
-
+                                            PlaylistSongs(
+                                                playlistName = "Playlist 1",
+                                                items = listOf(
+                                                    Song(
+                                                        name = "Song 1",
+                                                        artist = "Artist 1",
+                                                        duration = "3:00",
+                                                    ),
+                                                    Song(
+                                                        name = "Song 2",
+                                                        artist = "Artist 2",
+                                                        duration = "3:00",
+                                                    ),
+                                                    Song(
+                                                        name = "Song 3",
+                                                        artist = "Artist 3",
+                                                        duration = "3:00",
+                                                    ),
+                                                    Song(
+                                                        name = "Song 4",
+                                                        artist = "Artist 4",
+                                                        duration = "3:00",
+                                                    ),
+                                                    Song(
+                                                        name = "Song 5",
+                                                        artist = "Artist 1",
+                                                        duration = "3:00",
+                                                    ),
+                                                    Song(
+                                                        name = "Song 6",
+                                                        artist = "Artist 2",
+                                                        duration = "3:00",
+                                                    ),
+                                                ))
                                         }
 
                                     }
@@ -517,7 +643,12 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                 horizontalAlignment = Alignment.CenterHorizontally, // Center horizontally
                                 modifier = Modifier
                                     .width(100.dp)
-                                    .padding(start = 30.dp, end = 30.dp, top = 15.dp, bottom = 15.dp)
+                                    .padding(
+                                        start = 30.dp,
+                                        end = 30.dp,
+                                        top = 15.dp,
+                                        bottom = 15.dp
+                                    )
                             ) {
 
                                 //Nombre de la cancion
@@ -695,3 +826,83 @@ fun VerticalSlider(
             .then(modifier)
     )
 }
+
+
+@Composable
+fun PlaylistSongs(items: List<Song>, playlistName: String = "PLAYLIST") {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(5.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            Text(
+                text = playlistName,
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.surface
+            )
+        }
+
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            items(items) { song ->
+                SongRow(song = song)
+                Divider(color = MaterialTheme.colorScheme.surface, modifier = Modifier.alpha(0.6f))
+            }
+        }
+    }
+
+}
+@Composable
+fun SongRow(song: Song) {
+    Row(
+        modifier = Modifier
+            .padding(5.dp)
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            painter = painterResource(id = R.drawable.song),
+            contentDescription = null,
+            modifier = Modifier.size(30.dp).padding(start= 10.dp),
+            tint = MaterialTheme.colorScheme.surface
+        )
+        Column(
+            modifier = Modifier
+                .padding(start = 16.dp)
+                .weight(1f)
+        ) {
+            Text(
+                text = song.name,
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.surface
+            )
+            Text(
+                text = song.artist,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.surface,
+                modifier = Modifier.alpha(0.6f)
+
+            )
+            Text(
+                text = song.duration,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.surface,
+                modifier = Modifier.alpha(0.6f)
+
+            )
+        }
+    }
+}
+data class Song(
+    val name: String,
+    val artist: String,
+    val duration: String,
+)

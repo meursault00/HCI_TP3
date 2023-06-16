@@ -178,7 +178,7 @@ fun BottomShadow(alpha: Float = 0.1f, height: Dp = 8.dp) {
         .background(
             brush = Brush.verticalGradient(
                 colors = listOf(
-                    Color.Black.copy(alpha = alpha),
+                    Color.White.copy(alpha = alpha),
                     Color.Transparent,
                 )
             )

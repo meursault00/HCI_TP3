@@ -73,6 +73,7 @@ import kotlin.coroutines.coroutineContext
 @Composable
 fun TabBar(
     navController: NavController,
+    innerPadding: PaddingValues = PaddingValues(0.dp),
     modifier: Modifier = Modifier,
 ) {
     val pagerState = rememberPagerState()
@@ -113,18 +114,17 @@ fun TabBar(
         pageCount = pages.size,
         state = pagerState,
     ) { page ->
-        val innerPadding = PaddingValues(top = 140.dp, start = 0.dp, bottom = 0.dp, end = 0.dp)
         when (page) {
             0 -> {
                 HomeScreen(navController = navController, innerPadding = innerPadding)
             }
             1 -> {
+
                 RoutinesScreen(navController = navController, innerPadding = innerPadding)
             }
             2 -> {
                 SettingsScreen(navController = navController, innerPadding = innerPadding)
             }
-
 
         }
         /*
