@@ -116,7 +116,7 @@ fun TabBar(
         val innerPadding = PaddingValues(top = 140.dp, start = 0.dp, bottom = 0.dp, end = 0.dp)
         when (page) {
             0 -> {
-                HomeScreen(navController = navController, innerPadding = innerPadding)
+                //HomeScreen(navController = navController, innerPadding = innerPadding )
             }
             1 -> {
                 RoutinesScreen(navController = navController, innerPadding = innerPadding)

@@ -35,6 +35,7 @@ class DevicesVM : ViewModel() {
                 apiService?.getAllDevices() ?: throw Exception("API Service is null")
             }.onSuccess { response ->
                 Log.d("homehivestatus", "Success: Inside Success Block")
+                Log.d("homehivestatus", response.body().toString())
                 _uiState.update { it.copy(
                     devices = response.body(),
                     isLoading = false
