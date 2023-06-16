@@ -13,11 +13,11 @@ data class NetworkState (
     @SerializedName("level" ) var level  :                          Int? = null,
     @SerializedName("currentLevel") var currentLevel  :             Int? = null,
     // oven
-    @SerializedName("temperature") var temperature  :               Int? = null,
+    @SerializedName("temperature") var temperature  :               Float? = null,
     @SerializedName("heat" ) var heat  :                            String? = null,
     @SerializedName("grill" ) var grill  :                          String? = null,
     @SerializedName("convection" ) var convection  :                String? = null,
     // refrigerator
-    @SerializedName("freezerTemperature") var freezerTemperature  : Int? = null,
+    @SerializedName("freezerTemperature") var freezerTemperature  : Float? = null,
     @SerializedName("mode" ) var mode  :                            String? = null,
 )
