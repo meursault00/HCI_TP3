@@ -10,11 +10,18 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.homehive.viewmodels.SettingsVM
 
 private val DarkColorScheme = darkColorScheme(
     primary = Color(0xFF1A3830), //FF203831 // INTERESANTE = FF4F7469
@@ -45,26 +52,26 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun HomeHiveTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
+    val settingsVM: SettingsVM = viewModel() // Access the SettingsVM using viewModel()
 
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+    val isDarkTheme by settingsVM.isDarkTheme.collectAsState() // Collect the value as a state
+
+    val colorScheme = if (isDarkTheme) {
+        DarkColorScheme
+    } else {
+        LightColorScheme
     }
+
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
             window.statusBarColor = colorScheme.primary.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !isDarkTheme
         }
     }
 
@@ -74,3 +81,5 @@ fun HomeHiveTheme(
         content = content
     )
 }
+
+

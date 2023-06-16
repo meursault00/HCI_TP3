@@ -12,6 +12,9 @@ class SettingsVM : ViewModel() {
     private val _uiState = MutableStateFlow(SettingsUIState())
     val uiState: StateFlow<SettingsUIState> = _uiState.asStateFlow()
 
+    private val _isDarkTheme = MutableStateFlow(false)
+    val isDarkTheme: StateFlow<Boolean> = _isDarkTheme
+
     fun toggleLanguage() {
         _uiState.update { currentState ->
             currentState.copy(language = !currentState.language)
@@ -22,5 +25,7 @@ class SettingsVM : ViewModel() {
         _uiState.update { currentState ->
             currentState.copy(theme = !currentState.theme)
         }
+        _isDarkTheme.value = !_isDarkTheme.value
     }
+
 }
