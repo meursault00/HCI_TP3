@@ -59,7 +59,7 @@ fun RoutineBox() {
     )
     var items = listOf(
         "Action 1 This is a task that probably occupies mutliple char spaces",
-        "Action 2 This is a task that probably occupies mutliple char spaces",
+        "Action 2 This idds a task that probably occupies mutliple char spaces",
         "Action 3 This is a task that probably occupies mutliple char spaces",
         "Action 4 This is a task that probably occupies mutliple char spaces",
         "Action 5 This is a task that probably occupies mutliple char spaces",
