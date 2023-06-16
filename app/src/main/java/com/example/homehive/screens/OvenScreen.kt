@@ -138,7 +138,7 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                             text = "Oven",
                             fontWeight = FontWeight.Bold,
                             style = MaterialTheme.typography.headlineLarge,
-                            color = MaterialTheme.colorScheme.primary,
+                            color = MaterialTheme.colorScheme.onPrimary,
                             modifier = Modifier
                                 .padding(16.dp)
                         )

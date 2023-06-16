@@ -44,7 +44,7 @@ fun DrawerHeader() {
 //                painter = painterResource(id = R.drawable.bee_pic),
 //                contentDescription = "Bee profile picture",
 //                contentScale = ContentScale.Crop,
-////            modifier = Modifier.fillMaxSize()
+//            modifier = Modifier.fillMaxSize()
 //            )
             Icon(
                 imageVector = Icons.Default.Person,

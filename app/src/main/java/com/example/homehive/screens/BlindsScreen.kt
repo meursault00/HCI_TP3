@@ -68,7 +68,7 @@ fun BlindsScreen(navController: NavController, innerPadding: PaddingValues?) {
                 text = "Blinds",
                 fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.headlineLarge,
-                color = MaterialTheme.colorScheme.primary,
+                color = MaterialTheme.colorScheme.onPrimary,
                 modifier = Modifier
                     .padding(16.dp)
                     .align(Alignment.TopCenter)

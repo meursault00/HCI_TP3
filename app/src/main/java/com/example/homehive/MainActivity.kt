@@ -2,6 +2,7 @@ package com.example.homehive
 
 import android.media.Image
 import android.os.Bundle
+import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -64,7 +66,8 @@ class MainActivity : ComponentActivity() {
         createNotificationChannel(this)
         super.onCreate(savedInstanceState)
         setContent {
-            HomeHiveTheme(darkTheme = true) {
+
+            HomeHiveTheme(darkTheme = false) {
                 NavHost(startDestination = "home")
             }
         }
@@ -80,10 +83,19 @@ fun App(
 ) {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
+
     Scaffold(
         scaffoldState = scaffoldState,
         backgroundColor = MaterialTheme.colorScheme.primary,
         topBar = {
+            /*
+            TabBar(
+                navController,
+                modifier = Modifier
+                    .padding(top = 90.dp)
+                    .height(50.dp)
+                    .fillMaxSize()
+            )*/
             AppBar(
                 navController,
                 onNavigationIconClick = {
@@ -92,6 +104,7 @@ fun App(
                     }
                 }
             )
+
         },
         drawerGesturesEnabled = scaffoldState.drawerState.isOpen,
         drawerContent = {
