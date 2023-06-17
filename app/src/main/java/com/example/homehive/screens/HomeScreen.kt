@@ -67,7 +67,17 @@ fun HomeScreen(
                     val viewModel = remember(device.id) {
                         when (device.type?.name) {
                             "oven" -> {
-                                deviceViewModelMap.getOrPut(device.id.toString()) { OvenVM() }
+                                deviceViewModelMap.getOrPut(device.id.toString()) {
+                                    OvenVM(
+                                        device.id,
+                                        device.state?.status,
+                                        device.state?.temperature,
+                                        device.state?.grill,
+                                        device.state?.heat,
+                                        device.state?.convection,
+                                        devicesVM,
+                                    )
+                                }
                             }
                             "refrigerator" -> {
                                 deviceViewModelMap.getOrPut(device.id.toString()) {
@@ -86,12 +96,20 @@ fun HomeScreen(
                                          device.id,
                                          device.state?.status,
                                          devicesVM
-                                    )
+                                     )
                                  }
                             }
 
                             "blinds" -> {
-                                deviceViewModelMap.getOrPut(device.id.toString()) { BlindsVM() }
+                                deviceViewModelMap.getOrPut(device.id.toString()) {
+                                    BlindsVM(
+                                        device.id,
+                                        device.state?.status,
+                                        device.state?.level,
+                                        device.state?.currentLevel,
+                                        devicesVM,
+                                    )
+                                }
                             }
 
                             "speaker" -> {

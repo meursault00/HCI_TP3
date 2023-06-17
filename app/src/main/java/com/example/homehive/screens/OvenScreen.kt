@@ -71,7 +71,7 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
 
     val uiState by viewModel.uiState.collectAsState()
 
-    val ovenState = remember { mutableStateOf(uiState.power) }
+    val ovenState = remember { mutableStateOf(uiState.power == "on") }
 
     val grillMode = remember {
         when (uiState.grillMode) {
@@ -398,7 +398,7 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                             Button(
                                 onClick = {
                                     viewModel.setOvenTemperature(ovenTemperature.value)
-                                    viewModel.setPower(ovenState.value)
+                                    viewModel.togglePower()
 
                                     when (grillMode.value) {
                                         GrillMode.OFF -> viewModel.setGrillMode("apagado")
