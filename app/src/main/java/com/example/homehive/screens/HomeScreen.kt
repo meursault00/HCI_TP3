@@ -26,13 +26,19 @@ import com.example.homehive.boxes.OvenBox
 import com.example.homehive.boxes.SpeakerBox
 import com.example.homehive.boxes.TapBox
 import com.example.homehive.network.deviceModels.NetworkResult
+import com.example.homehive.viewmodels.BlindsVM
 import com.example.homehive.viewmodels.DevicesVM
 import com.example.homehive.viewmodels.FridgeVM
+import com.example.homehive.viewmodels.OvenVM
+import com.example.homehive.viewmodels.SpeakerVM
+import com.example.homehive.viewmodels.TapVM
 
 @Composable
 fun HandleDevice(device: NetworkResult, navController: NavController) {
 
 }
+
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
@@ -40,6 +46,8 @@ fun HomeScreen(
     innerPadding: PaddingValues?,
     devicesVM: DevicesVM
 ) {
+    devicesVM.fetchDevices()
+    val deviceViewModelMap = remember { mutableMapOf<String, ViewModel>() }
     val devicesState by devicesVM.uiState.collectAsState()
 
     Box(
@@ -53,36 +61,69 @@ fun HomeScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             devicesState.devices?.result?.forEach { device ->
-                item{
+                item {
+
+                //por cada item creamos un viewmodel especifico, lo
+                    val viewModel = remember(device.id) {
+                        when (device.type?.name) {
+                            "oven" -> {
+                                deviceViewModelMap.getOrPut(device.id.toString()) { OvenVM() }
+                            }
+                            "refrigerator" -> {
+                                deviceViewModelMap.getOrPut(device.id.toString()) {
+                                    FridgeVM(
+                                        device.id,
+                                        device.state?.temperature,
+                                        device.state?.freezerTemperature,
+                                        device.state?.mode,
+                                        devicesVM,
+                                    )
+                                }
+                            }
+                            "faucet" -> {
+                                 deviceViewModelMap.getOrPut(device.id.toString()) { TapVM() }
+                            }
+
+                            "blinds" -> {
+                                deviceViewModelMap.getOrPut(device.id.toString()) { BlindsVM() }
+                            }
+
+                            "speaker" -> {
+                                deviceViewModelMap.getOrPut(device.id.toString()) { SpeakerVM() }
+                            }
+                            // Add more cases for other device types
+                            else -> {
+                                // Handle unknown device types if necessary
+                                null
+                            }
+                        }
+                    }
                     when (device.type?.name) {
                         "oven" -> {
-                            OvenBox(onClick = {
-                                navController.navigate("devices/oven/1234")
-                            })
+                            (viewModel as? OvenVM)?.let { OvenBox(onClick = {}, ovenVM = it)}
                         }
-
                         "refrigerator" -> {
-                            FridgeBox(onClick = {})
+                            (viewModel as? FridgeVM)?.let { FridgeBox(onClick = {}, fridgeVM = it) }
                         }
-
                         "faucet" -> {
-                            TapBox(onClick = {})
+                            (viewModel as? TapVM)?.let { TapBox(onClick = {}, tapVM = it) }
                         }
-
                         "blinds" -> {
-                            BlindsBox(onClick = {})
+                            (viewModel as? BlindsVM)?.let { BlindsBox(onClick = {}, blindsVM = it) }
                         }
-
                         "speaker" -> {
-                            SpeakerBox(onClick = {
-                                navController.navigate("devices/speaker/1234")
-                            })
+                            (viewModel as? SpeakerVM)?.let {
+                                SpeakerBox(onClick = {
+                                    navController.navigate("devices/speaker/1234")
+                                }, speakerVM = it)
+                            }
                         }
                         // Add more cases for other device types
                         else -> {
                             // Handle unknown device types if necessary
                         }
                     }
+
                 }
             }
         }

@@ -15,7 +15,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.homehive.screens.BlindsScreen
-import com.example.homehive.screens.FridgeScreen
 import com.example.homehive.screens.HelpScreen
 import com.example.homehive.screens.HomeScreen
 import com.example.homehive.screens.OvenScreen
@@ -86,7 +85,7 @@ fun NavHost(
 //        ) {}
         composable("devices/fridge/1234") {
             App(navController = navController) { navController, innerPadding ->
-                FridgeScreen(navController = navController, innerPadding = innerPadding)
+                // FridgeScreen(navController = navController, innerPadding = innerPadding)
             }
         }
         composable("devices/tap/1234") {

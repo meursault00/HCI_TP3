@@ -45,9 +45,9 @@ import com.example.homehive.viewmodels.OvenVM
 
 
 @Composable
-fun OvenBox(onClick: () -> Unit, viewModel : OvenVM = viewModel()) {
+fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
 
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by ovenVM.uiState.collectAsState()
     val context = LocalContext.current;
 
     var isOn = remember { mutableStateOf(false) }
