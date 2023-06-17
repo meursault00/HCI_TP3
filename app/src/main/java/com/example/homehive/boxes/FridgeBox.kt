@@ -1,5 +1,6 @@
 package com.example.homehive.boxes
 
+import android.util.Log
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -51,10 +52,16 @@ fun FridgeBox(
 
     var isOpen = remember { mutableStateOf(false) };
 
+    var currentMode = uiState.mode;
+    var auxTemperature  = remember { mutableStateOf(uiState.temperature)};
+    var auxFreezerTemperature = remember { mutableStateOf(uiState.freezerTemperature)};
+
+
     val height: Dp by animateDpAsState(
         targetValue = if (isOpen.value) 415.dp else 200.dp,
         animationSpec = tween(durationMillis = 100)
     )
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -111,7 +118,7 @@ fun FridgeBox(
                             modifier = Modifier.align(Alignment.CenterHorizontally)
                         )
                         Text(
-                            text = "${uiState.mode}",
+                            text = currentMode,
                             fontWeight = FontWeight.Bold,
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color(0xFF216E81),
@@ -122,22 +129,23 @@ fun FridgeBox(
                 else{
                     Column(
                         modifier = Modifier
-                            .padding(start = 10.dp, end = 10.dp)
+                            .padding(start = 10.dp,top = 5.dp,  end = 10.dp)
                             .align(Alignment.Center)
                     ) {
                         Text(
-                            text = "Fridge: ${uiState.temperature}ºC",
+                            text = "Fridge at ${auxTemperature.value}ºC",
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color(0xFF2B4E5C),
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier
                         )
                         Slider(
-                            value = uiState.temperature.toFloat(),
+                            value = auxTemperature.value.toFloat(),
                             onValueChange = { newFridgeTemp ->
-                                fridgeVM.setFridgeTemperature(
-                                    newFridgeTemp.toInt()
-                                )
+                                auxTemperature.value = newFridgeTemp.toInt()
+                            },
+                            onValueChangeFinished = {
+                                fridgeVM.setFridgeTemperature(auxTemperature.value)
                             },
                             valueRange = 2f..8f,
 
@@ -149,21 +157,21 @@ fun FridgeBox(
                             modifier = Modifier
                         )
                         Text(
-                            text = "Fridge: ${uiState.freezerTemperature}ºC",
+                            text = "Freezer at ${auxFreezerTemperature.value}ºC",
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color(0xFF2B4E5C),
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier
                         )
                         Slider(
-                            value = uiState.freezerTemperature.toFloat(),
+                            value = auxFreezerTemperature.value.toFloat(),
                             onValueChange = { newFreezerTemp ->
-                                fridgeVM.setFreezerTemperature(
-                                    newFreezerTemp.toInt()
-                                )
+                                auxFreezerTemperature.value = newFreezerTemp.toInt()
                             },
                             valueRange = -20f..-8f,
-
+                            onValueChangeFinished = {
+                                fridgeVM.setFreezerTemperature(auxFreezerTemperature.value)
+                            },
                             colors = SliderDefaults.colors(
                                 thumbColor = MaterialTheme.colorScheme.secondary,
                                 activeTrackColor = Color(0x9EEDF3F1),
@@ -181,7 +189,7 @@ fun FridgeBox(
                             modifier = Modifier.padding(bottom = 10.dp)
                         )
                         Button(
-                            onClick = { fridgeVM.setMode("Normal") },
+                            onClick = { fridgeVM.setMode("default") },
                             elevation = ButtonDefaults.buttonElevation(
                                 defaultElevation = 30.dp,
                                 pressedElevation = 0.0.dp,
@@ -196,11 +204,11 @@ fun FridgeBox(
                                 .height(45.dp)
                                 .width(200.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if ( uiState.mode === "Normal" ) MaterialTheme.colorScheme.secondary else Color(0x54F3F3F0)
+                                containerColor = if ( currentMode == "default" ) MaterialTheme.colorScheme.secondary else Color(0x54F3F3F0)
                             ),
                         ) {
                             Text(
-                                text = "Normal",
+                                text = "Default",
                                 fontWeight = FontWeight.Bold,
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = Color(0xFF2B4E5C),
@@ -208,7 +216,7 @@ fun FridgeBox(
                             )
                         }
                         Button(
-                            onClick = { fridgeVM.setMode("Vacation") },
+                            onClick = { fridgeVM.setMode("party") },
                             elevation = ButtonDefaults.buttonElevation(
                                 defaultElevation = 30.dp,
                                 pressedElevation = 0.0.dp,
@@ -223,11 +231,11 @@ fun FridgeBox(
                                 .height(45.dp)
                                 .width(200.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (uiState.mode === "Vacation") MaterialTheme.colorScheme.secondary else Color(0x54F3F3F0)
+                                containerColor = if (currentMode =="party") MaterialTheme.colorScheme.secondary else Color(0x54F3F3F0)
                             ),
                         ) {
                             Text(
-                                text = "Vacation",
+                                text = "Party",
                                 fontWeight = FontWeight.Bold,
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = Color(0xFF2B4E5C),
@@ -235,7 +243,7 @@ fun FridgeBox(
                             )
                         }
                         Button(
-                            onClick = { fridgeVM.setMode("Party") },
+                            onClick = { fridgeVM.setMode("vacation") },
                             elevation = ButtonDefaults.buttonElevation(
                                 defaultElevation = 30.dp,
                                 pressedElevation = 0.0.dp,
@@ -250,11 +258,11 @@ fun FridgeBox(
                                 .height(45.dp)
                                 .width(200.dp),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (uiState.mode === "Party") MaterialTheme.colorScheme.secondary else Color(0x54F3F3F0)
+                                containerColor = if (currentMode == "vacation") MaterialTheme.colorScheme.secondary else Color(0x54F3F3F0)
                             ),
                         ) {
                             Text(
-                                text = "Party",
+                                text = "Vacation",
                                 fontWeight = FontWeight.Bold,
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = Color(0xFF2B4E5C),

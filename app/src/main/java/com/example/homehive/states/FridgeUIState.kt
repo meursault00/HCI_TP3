@@ -6,7 +6,7 @@ data class FridgeUIState (
     val id: String = "",
     val temperature: Int = 4,            // [2, 8]
     val freezerTemperature: Int = 0,     // [-20, -8]
-    val mode: String = "Normal"               // Normal, Fiesta o Vacaciones
+    val mode: String = "default"               // default, party, vacation
 )
 
 
