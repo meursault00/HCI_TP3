@@ -67,7 +67,17 @@ fun HomeScreen(
                     val viewModel = remember(device.id) {
                         when (device.type?.name) {
                             "oven" -> {
-                                deviceViewModelMap.getOrPut(device.id.toString()) { OvenVM() }
+                                deviceViewModelMap.getOrPut(device.id.toString()) {
+                                    OvenVM(
+                                        device.id,
+                                        device.state?.status,
+                                        device.state?.temperature,
+                                        device.state?.grill,
+                                        device.state?.heat,
+                                        device.state?.convection,
+                                        devicesVM,
+                                    )
+                                }
                             }
                             "refrigerator" -> {
                                 deviceViewModelMap.getOrPut(device.id.toString()) {
@@ -81,15 +91,38 @@ fun HomeScreen(
                                 }
                             }
                             "faucet" -> {
-                                 deviceViewModelMap.getOrPut(device.id.toString()) { TapVM() }
+                                 deviceViewModelMap.getOrPut(device.id.toString()) {
+                                     TapVM(
+                                         device.id,
+                                         device.state?.status,
+                                         devicesVM
+                                     )
+                                 }
                             }
 
                             "blinds" -> {
-                                deviceViewModelMap.getOrPut(device.id.toString()) { BlindsVM() }
+                                deviceViewModelMap.getOrPut(device.id.toString()) {
+                                    BlindsVM(
+                                        device.id,
+                                        device.state?.status,
+                                        device.state?.level,
+                                        device.state?.currentLevel,
+                                        devicesVM,
+                                    )
+                                }
                             }
 
                             "speaker" -> {
-                                deviceViewModelMap.getOrPut(device.id.toString()) { SpeakerVM() }
+                                deviceViewModelMap.getOrPut(device.id.toString()) {
+                                    SpeakerVM(
+                                        device.id,
+                                        device.state?.status,
+                                        device.state?.volume,
+                                        device.state?.song,
+                                        device.state?.genre,
+                                        devicesVM,
+                                    )
+                                }
                             }
                             // Add more cases for other device types
                             else -> {

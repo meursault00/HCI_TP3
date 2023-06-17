@@ -7,43 +7,58 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-class OvenVM : ViewModel() {
-    private val _uiState = MutableStateFlow(OvenUIState())
-    val uiState : StateFlow<OvenUIState> = _uiState.asStateFlow()
+class OvenVM(
+    deviceID: String?,
+    power: String?,
+    ovenTemperature: Int?,
+    grillMode: String?,
+    heatMode: String?,
+    convectionMode: String?,
+    val devicesVM: DevicesVM
+) : ViewModel() {
+    private val _uiState = MutableStateFlow(OvenUIState(
+        id = deviceID ?: "",
+        power = power ?: "",
+        ovenTemperature = ovenTemperature ?: 0,
+        grillMode = grillMode ?: "",
+        heatMode = heatMode ?: "",
+        convectionMode = convectionMode ?: ""
+    ))
+    val uiState: StateFlow<OvenUIState> = _uiState.asStateFlow()
 
-    fun togglePower(){
-        _uiState.update{currentState ->
-            currentState.copy(power = (!uiState.value.power))
-        }
-    }
-
-    fun setPower( newPower : Boolean ){
-        _uiState.update{currentState ->
+    fun togglePower() {
+        _uiState.update { currentState ->
+            val newPower = if (currentState.power == "on") "off" else "on"
             currentState.copy(power = newPower)
         }
+        devicesVM.editADevice(uiState.value.id, "togglePower", listOf())
     }
 
     fun setOvenTemperature( newTemperature : Int ){
         _uiState.update{currentState ->
             currentState.copy(ovenTemperature = newTemperature)
         }
+        devicesVM.editADevice(uiState.value.id, "setTemperature", listOf(newTemperature))
     }
 
-    fun setHeatMode( newHeatMode : String ){
+    fun setHeatMode( newMode : String ){
         _uiState.update{currentState ->
-            currentState.copy(heatMode =  newHeatMode)
+            currentState.copy(heatMode =  newMode)
         }
+        devicesVM.editADevice(uiState.value.id, "setMode", listOf(newMode))
     }
 
-    fun setGrillMode( newGrillMode : String ){
+    fun setGrillMode( newMode : String ){
         _uiState.update{currentState ->
-            currentState.copy(grillMode =  newGrillMode)
+            currentState.copy(grillMode =  newMode)
         }
+        devicesVM.editADevice(uiState.value.id, "setMode", listOf(newMode))
     }
 
-    fun setConvectionMode( newConvectionMode : String ){
+    fun setConvectionMode( newMode : String ){
         _uiState.update{currentState ->
-            currentState.copy(convectionMode =  newConvectionMode)
+            currentState.copy(convectionMode =  newMode)
         }
+        devicesVM.editADevice(uiState.value.id, "setMode", listOf(newMode))
     }
 }
