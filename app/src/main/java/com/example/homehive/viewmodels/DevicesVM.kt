@@ -54,9 +54,7 @@ class DevicesVM : ViewModel() {
         fetchJob = viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             runCatching {
-                Log.d("homehivestatus", " Llegue hasta aca")
                 val apiService = RetrofitClient.getApiService()
-                Log.d("homehivestatus", " Nunca llego hasta aca!")
                 apiService?.getADevice(id) ?: throw Exception("API Service is null")
             }.onSuccess { response ->
                 Log.d("homehivestatus", "Success: Inside Success Block")
@@ -117,14 +115,16 @@ class DevicesVM : ViewModel() {
                     }
                 } ?: throw Exception("API Service is null")
             }.onSuccess { response ->
-                Log.d("homehivestatus", "Success: Inside Success Block")
+                Log.d("homehivestatus", "Apí Call was Successful")
+                Log.d("debug", response)
                 // Opcion 1 : llamar a la fetchAllDevices que va a sobrescribir la lista de dispositivos pero esta vez con el update que se hizo
                 // en esta misma funcion
                 // Opcion 2 : Hacer un find sobre la lista con el ID del dispositivo y actualizarlo localmente, esto puede ser bastante tedioso
                 // en la version web lo haciamos pero es bastante paja
+                // Es necesario? El UIState no se carrea el update local?
                 _uiState.update { it.copy(isLoading = false) }
             }.onFailure { e ->
-                Log.d("homehivestatus", "Failure: Inside Failure Block \nError message  ${e.message}")
+                Log.d("debug", "Api Call was Unsuccessful \nError message  ${e.message}")
                 _uiState.update { it.copy(message = e.message, isLoading = false) }
             }
         }

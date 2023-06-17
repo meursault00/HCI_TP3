@@ -49,9 +49,9 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
 
     val uiState by ovenVM.uiState.collectAsState()
     val context = LocalContext.current;
-
-    var isOn = remember { mutableStateOf(false) }
-    var isOpen = remember { mutableStateOf(false) }
+    
+    val ovenState = remember { mutableStateOf(uiState.power == "on") }
+    val isOpen = remember { mutableStateOf(false) }
 
     val height: Dp by animateDpAsState(
         targetValue = if (isOpen.value) 415.dp else 200.dp,
@@ -98,14 +98,14 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
 
 
 
-                if (!isOn.value) {
+                if (!ovenState.value) {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
                             .background(Color.Black.copy(alpha = 0.3f))
                     )
                 }
-                if(isOn.value){
+                if(ovenState.value){
                     Text(
                         text = "${uiState.ovenTemperature}ºC",
                         fontWeight = FontWeight.Bold,
@@ -115,21 +115,23 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
                     )
                 }
                 Button(
-                    onClick = { isOn.value = !isOn.value
-                        sendCustomNotification(context, "Oven", if(isOn.value) "Turned On" else "Turned Off")
-                    },
+                    onClick = { 
+                                ovenState.value = !ovenState.value
+                                sendCustomNotification(context, "Oven", if(ovenState.value) "Turned On" else "Turned Off")
+                                ovenVM.togglePower() 
+                              },
                     elevation = ButtonDefaults.buttonElevation(
                         defaultElevation = 30.dp,
                         pressedElevation = 0.0.dp,
                     ),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if(isOn.value) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.background,
+                        containerColor = if(ovenState.value) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.background,
                     ),
                     modifier = Modifier.padding(top = 70.dp)
                     ) {
-                    Text(text = if (isOn.value) "Turn Off" else "Turn On",
+                    Text(text = if (ovenState.value) "Turn Off" else "Turn On",
                         style = MaterialTheme.typography.bodySmall,
-                        color = if(isOn.value) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.secondary,
+                        color = if(ovenState.value) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.secondary,
                         )
                 }
 
@@ -162,7 +164,7 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
                                 modifier = Modifier
                             )
                             AnimatedTextOverflow(
-                                text = "${uiState.grillMode}",
+                                text = uiState.grillMode,
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.background,
                             )
@@ -180,7 +182,7 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
                                 modifier = Modifier
                             )
                             AnimatedTextOverflow(
-                                text = "${uiState.convectionMode}",
+                                text = uiState.convectionMode,
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.background,
                             )
@@ -198,7 +200,7 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
                                 modifier = Modifier
                             )
                             AnimatedTextOverflow(
-                                text = "${uiState.heatMode}",
+                                text = uiState.heatMode,
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.background,
                             )
@@ -233,9 +235,6 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
                             .size(60.dp)
                     )
                 }
-
-
-
             }
         }
     }
