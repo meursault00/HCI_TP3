@@ -21,6 +21,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -99,39 +100,42 @@ fun SpeakerBox(onClick: () -> Unit, speakerVM : SpeakerVM = viewModel()) {
                         FloatingActionButton(
                             onClick = { /*TODO*/ },
                             shape = CircleShape,
-                            containerColor = Color(0xFFFFFFFF),
+                            elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp),
+                            containerColor = MaterialTheme.colorScheme.secondary,
                             modifier = Modifier.size(30.dp) // Adjust the size as desired
                         ) {
                             Icon(
                                 painter = painterResource(id = R.drawable.previous),
                                 contentDescription = null,
-                                tint = Color(0xFF000000),
+                                tint = MaterialTheme.colorScheme.onSurface,
                                 modifier = Modifier.size(20.dp)
                             )
                         }
                         FloatingActionButton(
                             onClick = { /*TODO*/ },
                             shape = CircleShape,
-                            containerColor = Color(0xFFFFFFFF),
+                            elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp),
+                            containerColor = MaterialTheme.colorScheme.secondary,
                             modifier = Modifier.size(40.dp) // Adjust the size as desired
                         ) {
                             Icon(
                                 painter = painterResource(id = R.drawable.play),
                                 contentDescription = null,
-                                tint = Color(0xFF000000),
+                                tint = MaterialTheme.colorScheme.onSurface,
                                 modifier = Modifier.size(20.dp)
                             )
                         }
                         FloatingActionButton(
                             onClick = { /*TODO*/ },
                             shape = CircleShape,
-                            containerColor = Color(0xFFFFFFFF),
+                            elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp),
+                            containerColor = MaterialTheme.colorScheme.secondary,
                             modifier = Modifier.size(30.dp) // Adjust the size as desired
                         ) {
                             Icon(
                                 painter = painterResource(id = R.drawable.next),
                                 contentDescription = null,
-                                tint = Color(0xFF000000),
+                                tint = MaterialTheme.colorScheme.onSurface,
                                 modifier = Modifier.size(20.dp)
                             )
                         }
@@ -153,16 +157,17 @@ fun SpeakerBox(onClick: () -> Unit, speakerVM : SpeakerVM = viewModel()) {
                         .width(200.dp)
                         .align(Alignment.BottomCenter),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if(isOpen.value)  Color(0xFF7CE17A) else Color(0xFF7CE17A)
+                        containerColor = MaterialTheme.colorScheme.secondary
                     ),
                 ) {
                     Icon(
-                        painter = if (isOpen.value) painterResource(id = R.drawable.upicon) else painterResource(id = R.drawable.downicon),
+                        painter = painterResource(id = R.drawable.music) ,
                         contentDescription = null,
-                        tint =  Color(0xFF000000),
+                        tint =  MaterialTheme.colorScheme.background,
                         modifier = Modifier
-                            .size(60.dp)
+                            .size(20.dp)
                     )
+
                 }
 
             }

@@ -23,7 +23,7 @@ private val DarkColorScheme = darkColorScheme(
     onSecondary = Color.White,
     onTertiary = Color.White,
     onBackground = Color(0xFF325052),
-    onSurface = Color(0xFF1C1B1F),
+    onSurface = Color(0xFFFFFFFF),
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -36,7 +36,7 @@ private val LightColorScheme = lightColorScheme(
     onSecondary = Color(0xFF795454), // ROUTINES
     onTertiary = Color.White,
     onBackground = Color(0xFFA0CCCF), // TAP BACKGROUND
-    onSurface = Color(0xFF1C1B1F),
+    onSurface = Color(0xFF000000),
 
 )
 
