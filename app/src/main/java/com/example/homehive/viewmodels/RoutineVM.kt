@@ -22,7 +22,7 @@ class RoutineVM(
     )
     val uiState: StateFlow<RoutineUIState> = _uiState.asStateFlow()
 
-    fun executeRoutine(){
-        // routinesVM.executeRoutine(routineID);
+    fun executeRoutine(id: String){
+         routinesVM.executeARoutine(id);
     }
 }
