@@ -120,7 +120,7 @@ fun TabBar(
             }
             1 -> {
 
-                RoutinesScreen(navController = navController, innerPadding = innerPadding)
+                // RoutinesScreen(navController = navController, innerPadding = innerPadding)
             }
             2 -> {
                 SettingsScreen(navController = navController, innerPadding = innerPadding)
