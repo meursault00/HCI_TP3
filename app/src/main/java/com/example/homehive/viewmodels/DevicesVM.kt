@@ -89,14 +89,14 @@ class DevicesVM : ViewModel() {
                         apiService?.updateADeviceNull(id, action, params)
                     }
 
-                    // Acciones que no requieren parametros String
+                    // Acciones que requieren parametros String
                     action in listOf("setGenre", "setHeat", "setGrill", "setConvection", "setMode") -> {
                         Log.d("homehivestatus", "String Parameters")
                         val stringParams = params.mapNotNull { it as? String }
                         apiService?.updateADeviceString(id, action, stringParams)
                     }
 
-                    // Acciones que no requieren parametros Int
+                    // Acciones que requieren parametros Int
                     action in listOf("setVolume", "setLevel", "setTemperature", "setFreezerTemperature") -> {
                         Log.d("homehivestatus", "Int Parameters")
                         val intParams = params.mapNotNull { it as? Int }
