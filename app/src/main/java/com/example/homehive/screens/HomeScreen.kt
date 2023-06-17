@@ -1,5 +1,6 @@
 package com.example.homehive.screens
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.homehive.DeviceViewModelMap
 import com.example.homehive.boxes.BlindsBox
 import com.example.homehive.boxes.DoorBox
 import com.example.homehive.boxes.FridgeBox
@@ -33,12 +35,6 @@ import com.example.homehive.viewmodels.OvenVM
 import com.example.homehive.viewmodels.SpeakerVM
 import com.example.homehive.viewmodels.TapVM
 
-@Composable
-fun HandleDevice(device: NetworkResult, navController: NavController) {
-
-}
-
-
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
@@ -47,7 +43,6 @@ fun HomeScreen(
     devicesVM: DevicesVM
 ) {
     devicesVM.fetchDevices()
-    val deviceViewModelMap = remember { mutableMapOf<String, ViewModel>() }
     val devicesState by devicesVM.uiState.collectAsState()
 
     Box(
@@ -62,12 +57,10 @@ fun HomeScreen(
         ) {
             devicesState.devices?.result?.forEach { device ->
                 item {
-
-                //por cada item creamos un viewmodel especifico, lo
                     val viewModel = remember(device.id) {
                         when (device.type?.name) {
                             "oven" -> {
-                                deviceViewModelMap.getOrPut(device.id.toString()) {
+                                DeviceViewModelMap.map.getOrPut(device.id.toString()) {
                                     OvenVM(
                                         device.id,
                                         device.state?.status,
@@ -75,65 +68,63 @@ fun HomeScreen(
                                         device.state?.grill,
                                         device.state?.heat,
                                         device.state?.convection,
-                                        devicesVM,
+                                        devicesVM
                                     )
                                 }
                             }
                             "refrigerator" -> {
-                                deviceViewModelMap.getOrPut(device.id.toString()) {
+                                DeviceViewModelMap.map.getOrPut(device.id.toString()) {
                                     FridgeVM(
                                         device.id,
                                         device.state?.temperature,
                                         device.state?.freezerTemperature,
                                         device.state?.mode,
-                                        devicesVM,
+                                        devicesVM
                                     )
                                 }
                             }
                             "faucet" -> {
-                                 deviceViewModelMap.getOrPut(device.id.toString()) {
-                                     TapVM(
-                                         device.id,
-                                         device.state?.status,
-                                         devicesVM
-                                     )
-                                 }
+                                DeviceViewModelMap.map.getOrPut(device.id.toString()) {
+                                    TapVM(
+                                        device.id,
+                                        device.state?.status,
+                                        devicesVM
+                                    )
+                                }
                             }
-
                             "blinds" -> {
-                                deviceViewModelMap.getOrPut(device.id.toString()) {
+                                DeviceViewModelMap.map.getOrPut(device.id.toString()) {
                                     BlindsVM(
                                         device.id,
                                         device.state?.status,
                                         device.state?.level,
                                         device.state?.currentLevel,
-                                        devicesVM,
+                                        devicesVM
                                     )
                                 }
                             }
-
                             "speaker" -> {
-                                deviceViewModelMap.getOrPut(device.id.toString()) {
+                                DeviceViewModelMap.map.getOrPut(device.id.toString()) {
                                     SpeakerVM(
                                         device.id,
                                         device.state?.status,
                                         device.state?.volume,
                                         device.state?.song,
                                         device.state?.genre,
-                                        devicesVM,
+                                        devicesVM
                                     )
                                 }
                             }
                             // Add more cases for other device types
-                            else -> {
-                                // Handle unknown device types if necessary
-                                null
-                            }
+                            else -> null
                         }
                     }
+
                     when (device.type?.name) {
                         "oven" -> {
-                            (viewModel as? OvenVM)?.let { OvenBox(onClick = {}, ovenVM = it)}
+                            (viewModel as? OvenVM)?.let { OvenBox(onClick = {
+                                navController.navigate("devices/oven/" + device.id.toString())
+                            }, ovenVM = it) }
                         }
                         "refrigerator" -> {
                             (viewModel as? FridgeVM)?.let { FridgeBox(onClick = {}, fridgeVM = it) }
@@ -147,7 +138,7 @@ fun HomeScreen(
                         "speaker" -> {
                             (viewModel as? SpeakerVM)?.let {
                                 SpeakerBox(onClick = {
-                                    navController.navigate("devices/speaker/1234")
+                                    navController.navigate("devices/speaker/" + device.id.toString())
                                 }, speakerVM = it)
                             }
                         }
@@ -156,13 +147,8 @@ fun HomeScreen(
                             // Handle unknown device types if necessary
                         }
                     }
-
                 }
             }
         }
     }
 }
-
-
-
-

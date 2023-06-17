@@ -66,10 +66,14 @@ enum class SourceMode {
 }
 
 @Composable
-fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewModel : OvenVM = viewModel()) {
-    val OvenUIState by viewModel.uiState.collectAsState()
+fun OvenScreen(
+    navController: NavController,
+    innerPadding: PaddingValues?,
+    ovenVM : OvenVM = viewModel()
+) {
+    val OvenUIState by ovenVM.uiState.collectAsState()
 
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by ovenVM.uiState.collectAsState()
 
     val ovenState = remember { mutableStateOf(uiState.power == "on") }
 
@@ -143,7 +147,7 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                 .padding(16.dp)
                         )
                         Button(
-                            onClick = { setOvenStateLocal(ovenState) },
+                            onClick = {  },
                             elevation = ButtonDefaults.buttonElevation(
                                 defaultElevation = 12.dp,
                                 pressedElevation = 0.0.dp,
@@ -155,7 +159,7 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                             )
                         ) {
                             Text(
-                                text = "${getButtonLabel(ovenState.value)}",
+                                text = "PUtaku",
                                 color = MaterialTheme.colorScheme.background,
                             )
                         }
@@ -397,26 +401,26 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
 
                             Button(
                                 onClick = {
-                                    viewModel.setOvenTemperature(ovenTemperature.value)
-                                    viewModel.togglePower()
+                                    ovenVM.setOvenTemperature(ovenTemperature.value)
+                                    ovenVM.togglePower()
 
                                     when (grillMode.value) {
-                                        GrillMode.OFF -> viewModel.setGrillMode("apagado")
-                                        GrillMode.ECONOMIC -> viewModel.setGrillMode("economico")
-                                        GrillMode.COMPLETE -> viewModel.setGrillMode("completo")
+                                        GrillMode.OFF -> ovenVM.setGrillMode("apagado")
+                                        GrillMode.ECONOMIC -> ovenVM.setGrillMode("economico")
+                                        GrillMode.COMPLETE -> ovenVM.setGrillMode("completo")
                                     }
 
 
                                     when (convectionMode.value) {
-                                        ConvectionMode.OFF -> viewModel.setConvectionMode("apagado")
-                                        ConvectionMode.ECONOMIC -> viewModel.setConvectionMode("economico")
-                                        ConvectionMode.CONVENTIONAL -> viewModel.setConvectionMode("convencional")
+                                        ConvectionMode.OFF -> ovenVM.setConvectionMode("apagado")
+                                        ConvectionMode.ECONOMIC -> ovenVM.setConvectionMode("economico")
+                                        ConvectionMode.CONVENTIONAL -> ovenVM.setConvectionMode("convencional")
                                     }
 
                                     when (sourceMode.value) {
-                                        SourceMode.CONVENTIONAL -> viewModel.setHeatMode("convencional")
-                                        SourceMode.ABOVE -> viewModel.setHeatMode("arriba")
-                                        SourceMode.BELOW -> viewModel.setHeatMode("abajo")
+                                        SourceMode.CONVENTIONAL -> ovenVM.setHeatMode("convencional")
+                                        SourceMode.ABOVE -> ovenVM.setHeatMode("arriba")
+                                        SourceMode.BELOW -> ovenVM.setHeatMode("abajo")
                                     }
 
 
@@ -438,7 +442,6 @@ fun OvenScreen(navController: NavController, innerPadding: PaddingValues?, viewM
                                     color = Color(0xEE2B4E5C)
                                 )
                             }
-
                         }
                     }
                 }

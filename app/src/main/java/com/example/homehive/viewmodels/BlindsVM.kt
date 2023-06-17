@@ -22,19 +22,15 @@ class BlindsVM(
     ))
     val uiState: StateFlow<BlindsUIState> = _uiState.asStateFlow()
 
-    fun setOpen(){
-        _uiState.update{currentState ->
-            currentState.copy(status = "opening")
+    fun toggleBlinds() {
+        _uiState.update { currentState ->
+            val newStatus = if (currentState.status == "opening") "closing" else "opening"
+            currentState.copy(status = newStatus)
         }
-        devicesVM.editADevice(uiState.value.id, "open", listOf())
+        val action = if (uiState.value.status == "opening") "open" else "close"
+        devicesVM.editADevice(uiState.value.id, action, listOf())
+    }
 
-    }
-    fun setClose(){
-        _uiState.update{currentState ->
-            currentState.copy(status = "closing")
-        }
-        devicesVM.editADevice(uiState.value.id, "close", listOf())
-    }
 
     fun setPosition( newPosition : Int ){
         _uiState.update{currentState ->

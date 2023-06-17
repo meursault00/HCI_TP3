@@ -42,7 +42,10 @@ import com.example.homehive.viewmodels.FridgeVM
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FridgeBox(onClick: () -> Unit , fridgeVM : FridgeVM = viewModel()) {
+fun FridgeBox(
+    onClick: () -> Unit,
+    fridgeVM : FridgeVM = viewModel()
+) {
 
     val uiState by fridgeVM.uiState.collectAsState();
 

@@ -1,6 +1,7 @@
 package com.example.homehive
 
 
+import android.os.Bundle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
@@ -25,6 +26,8 @@ import com.example.homehive.screens.TapScreen
 import com.example.homehive.screens.TestScreen
 import com.example.homehive.viewmodels.DevicesVM
 import com.example.homehive.viewmodels.FridgeVM
+import com.example.homehive.viewmodels.OvenVM
+import com.example.homehive.viewmodels.SpeakerVM
 
 
 @Composable
@@ -39,7 +42,7 @@ fun NavHost(
     LaunchedEffect(Unit) {
         devicesVM.fetchDevices()
     }
-    // Access the list of devices from devicesState.devices
+
     val devices = devicesState.devices
     SideEffect {
         println("List of devices: $devices")
@@ -83,11 +86,6 @@ fun NavHost(
 //        composable(
 //            "devices/{devicename}/{id}",
 //        ) {}
-        composable("devices/fridge/1234") {
-            App(navController = navController) { navController, innerPadding ->
-                // FridgeScreen(navController = navController, innerPadding = innerPadding)
-            }
-        }
         composable("devices/tap/1234") {
             App(navController = navController) { navController, innerPadding ->
                 TapScreen(navController = navController, innerPadding = innerPadding)
@@ -98,14 +96,33 @@ fun NavHost(
                 BlindsScreen(navController = navController, innerPadding = innerPadding)
             }
         }
-        composable("devices/speaker/1234") {
+        composable("devices/speaker/{id}") {
             App(navController = navController) { navController, innerPadding ->
                 SpeakerScreen(navController = navController, innerPadding = innerPadding)
             }
         }
-        composable("devices/oven/1234") {
+        composable(
+            "devices/oven/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val id = backStackEntry.arguments?.getString("id")
             App(navController = navController) { navController, innerPadding ->
-                OvenScreen(navController = navController, innerPadding = innerPadding)
+                val deviceViewModelMap = DeviceViewModelMap.map
+                val viewModel = deviceViewModelMap[id.toString()]
+                val ovenVM = viewModel as? OvenVM
+                OvenScreen(navController = navController, innerPadding = innerPadding, ovenVM = ovenVM!!)
+            }
+        }
+        composable(
+            "devices/speaker/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.StringType })
+        ) {backStackEntry ->
+            val id = backStackEntry.arguments?.getString("id")
+            App(navController = navController) { navController, innerPadding ->
+                val deviceViewModelMap = DeviceViewModelMap.map
+                val viewModel = deviceViewModelMap[id.toString()]
+                val speakerVM = viewModel as? SpeakerVM
+                SpeakerScreen(navController = navController, innerPadding = innerPadding, speakerVM = speakerVM!!)
             }
         }
         composable(
