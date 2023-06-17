@@ -87,7 +87,7 @@ fun NavHost(
         }
         composable("home") {
             App(navController = navController) { navController, innerPadding ->
-                HomeScreen(navController = navController, innerPadding = innerPadding , devicesVM = devicesVM )
+                HomeScreen(navController = navController, innerPadding = innerPadding , devicesVM = devicesVM , routinesVM = routinesVM)
             }
         }
         composable("settings") {
