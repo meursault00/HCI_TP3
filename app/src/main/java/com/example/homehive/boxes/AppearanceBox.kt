@@ -86,18 +86,26 @@ fun AppearanceBox(viewModel : SettingsVM = viewModel()) {
             modifier = Modifier
                 .fillMaxWidth(),
             shape = RoundedCornerShape(15.dp),
-            color = Color(0xFFEFE5C5)
+            color = MaterialTheme.colorScheme.onSecondaryContainer
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
+                Image(
+                    painter = painterResource(id = R.drawable.dunes),
+                    contentDescription = null,
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier
+                        .offset { IntOffset(x = 0  , y = -140) }
+                )
                 Text(
                     text = "Appearance",
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
-                    color = Color(0xFF114225),
+                    color = MaterialTheme.colorScheme.onPrimary,
+
                     modifier = Modifier
                         .padding(16.dp)
                         .align(Alignment.TopCenter)
@@ -118,13 +126,13 @@ fun AppearanceBox(viewModel : SettingsVM = viewModel()) {
                         .fillMaxWidth()
                         .align(Alignment.BottomCenter),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xB4EFE5C5)
+                        containerColor = MaterialTheme.colorScheme.secondary
                     ),
                 ) {
                     Icon(
                         painter = if (isOpen.value) painterResource(id = R.drawable.upicon) else painterResource(id = R.drawable.downicon),
                         contentDescription = null,
-                        tint = Color(0xFFAFA586),
+                        tint = MaterialTheme.colorScheme.background,
                         modifier = Modifier
                             .size(60.dp)
                     )

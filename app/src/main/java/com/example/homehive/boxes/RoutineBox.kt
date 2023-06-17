@@ -94,7 +94,7 @@ fun RoutineBox() {
                     text = "Routine",
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
-                    color = Color(0xFF2c432d),
+                    color = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier
                         .padding(16.dp)
                         .align(Alignment.TopCenter)
@@ -150,7 +150,7 @@ fun RoutineBox() {
                     Icon(
                         painter = if (isOpen.value) painterResource(id = R.drawable.upicon) else painterResource(id = R.drawable.downicon),
                         contentDescription = "Arrow that opens up routine box showing its actions",
-                        tint = MaterialTheme.colorScheme.background,
+                        tint = MaterialTheme.colorScheme.secondary,
                         modifier = Modifier
                             .size(60.dp)
                     )

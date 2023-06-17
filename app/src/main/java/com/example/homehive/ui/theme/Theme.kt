@@ -14,30 +14,33 @@ import androidx.core.view.WindowCompat
 import com.example.homehive.viewmodels.isDarkTheme
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Color(0xFF1A3830), //FF203831 // INTERESANTE = FF4F7469
+    primary = Color(0xFF26362A), //FF203831 // INTERESANTE = FF4F7469
     secondary = Color(0xFF202020), // HAY OPACOS
+    onSecondaryContainer = Color(0xFF202020),
     tertiary = Color(0xFF526863),
     background = Color(0xFFA8A495), // BOTONES APAGADOS Y COSASS ASI
     surface = Color(0xFFFFFBFE),
     onPrimary = Color(0xFFDADFDD),
-    onSecondary = Color.White,
-    onTertiary = Color.White,
+    onSecondary = Color(0xFF98B891),
+    onTertiary = Color(0xFF2B4E5C),
     onBackground = Color(0xFF325052),
     onSurface = Color(0xFFFFFFFF),
+    onTertiaryContainer = Color(0xFFA0CCCF),
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = Color(0xFF4F7469), //FF203831 // INTERESANTE = FF4F7469 // FF84A89D
     secondary = Color(0xFFEFE5C5), // HAY OPACOS
+    onSecondaryContainer = Color(0xFFAFAB9F),
     tertiary = Color(0xFFF4CF6D),
     background = Color(0xFF918A76), // BOTONES APAGADOS Y COSASS ASI
     surface = Color(0xFFFFFBFE), // BLANCO SPEAKER
     onPrimary = Color(0xFF203831),
-    onSecondary = Color(0xFF795454), // ROUTINES
-    onTertiary = Color.White,
+    onSecondary = Color(0xFF98B891), // ROUTINES
+    onTertiary = Color(0xFF2B4E5C), // FRIDGE BLUE
     onBackground = Color(0xFFA0CCCF), // TAP BACKGROUND
     onSurface = Color(0xFF000000),
-
+    onTertiaryContainer = Color(0xFF2B4E5C),
 )
 
 @Composable

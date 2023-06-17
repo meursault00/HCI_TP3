@@ -48,7 +48,6 @@ fun FridgeBox(onClick: () -> Unit , fridgeVM : FridgeVM = viewModel()) {
     val uiState by fridgeVM.uiState.collectAsState();
 
     var isOpen = remember { mutableStateOf(false) };
-
     var currentMode = uiState.mode;
     var auxTemperature  = remember { mutableStateOf(uiState.temperature)};
     var auxFreezerTemperature = remember { mutableStateOf(uiState.freezerTemperature)};
@@ -88,7 +87,7 @@ fun FridgeBox(onClick: () -> Unit , fridgeVM : FridgeVM = viewModel()) {
                     text = "Fridge",
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
-                    color = Color(0xFF2B4E5C),
+                    color = MaterialTheme.colorScheme.onTertiary,
                     modifier = Modifier
                         .padding(16.dp)
                         .align(Alignment.TopCenter)
@@ -132,7 +131,7 @@ fun FridgeBox(onClick: () -> Unit , fridgeVM : FridgeVM = viewModel()) {
                         Text(
                             text = "Fridge at ${auxTemperature.value}ºC",
                             style = MaterialTheme.typography.bodyMedium,
-                            color = Color(0xFF2B4E5C),
+                            color = MaterialTheme.colorScheme.onTertiary,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier
                         )
@@ -156,7 +155,7 @@ fun FridgeBox(onClick: () -> Unit , fridgeVM : FridgeVM = viewModel()) {
                         Text(
                             text = "Freezer at ${auxFreezerTemperature.value}ºC",
                             style = MaterialTheme.typography.bodyMedium,
-                            color = Color(0xFF2B4E5C),
+                            color = MaterialTheme.colorScheme.onTertiary,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier
                         )
@@ -181,7 +180,7 @@ fun FridgeBox(onClick: () -> Unit , fridgeVM : FridgeVM = viewModel()) {
                         Text(
                             text = "Mode",
                             style = MaterialTheme.typography.bodyMedium,
-                            color = Color(0xFF2B4E5C),
+                            color = MaterialTheme.colorScheme.onTertiary,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(bottom = 10.dp)
                         )
@@ -208,7 +207,7 @@ fun FridgeBox(onClick: () -> Unit , fridgeVM : FridgeVM = viewModel()) {
                                 text = "Default",
                                 fontWeight = FontWeight.Bold,
                                 style = MaterialTheme.typography.bodyMedium,
-                                color = Color(0xFF2B4E5C),
+                                color = if (currentMode == "default") MaterialTheme.colorScheme.onTertiaryContainer else MaterialTheme.colorScheme.onTertiary,
                                 modifier = Modifier
                             )
                         }
@@ -235,7 +234,7 @@ fun FridgeBox(onClick: () -> Unit , fridgeVM : FridgeVM = viewModel()) {
                                 text = "Party",
                                 fontWeight = FontWeight.Bold,
                                 style = MaterialTheme.typography.bodyMedium,
-                                color = Color(0xFF2B4E5C),
+                                color = if (currentMode == "party") MaterialTheme.colorScheme.onTertiaryContainer else MaterialTheme.colorScheme.onTertiary,
                                 modifier = Modifier
                             )
                         }
@@ -262,7 +261,7 @@ fun FridgeBox(onClick: () -> Unit , fridgeVM : FridgeVM = viewModel()) {
                                 text = "Vacation",
                                 fontWeight = FontWeight.Bold,
                                 style = MaterialTheme.typography.bodyMedium,
-                                color = Color(0xFF2B4E5C),
+                                color = if (currentMode == "vacation") MaterialTheme.colorScheme.onTertiaryContainer else MaterialTheme.colorScheme.onTertiary,
                                 modifier = Modifier
                             )
                         }

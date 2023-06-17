@@ -59,6 +59,10 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
 
     var isBlindOpen = blindState.position > 0f;
     var isClosing = blindState.status == "closing" || blindState.status == "closed";
+    var auxBlindsPosition = remember {
+        mutableStateOf(blindState.position)
+    }
+
 
     var isOpen = remember { mutableStateOf(false) }
 
@@ -93,7 +97,7 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier
-                        .offset { IntOffset(x = blindState.position  , y = 0) }
+                        .offset { IntOffset(x = auxBlindsPosition.value  , y = 0) }
                 )
                 Text(
                     text = "Blinds",
@@ -106,7 +110,7 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                 )
 
                 Text(
-                    text = "${blindState.position}%",
+                    text = "${auxBlindsPosition.value}%",
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary,
@@ -178,8 +182,13 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                 if(isOpen.value) {
 
                     Slider(
-                        value = blindState.position.toFloat(),
-                        onValueChange = { newPosition -> blindsVM.setPosition(newPosition.toInt()) },
+                        value = auxBlindsPosition.value.toFloat(),
+                        onValueChange = { newPosition ->
+                            auxBlindsPosition.value = newPosition.toInt()
+                        },
+                        onValueChangeFinished = {
+                            blindsVM.setPosition(auxBlindsPosition.value)
+                        },
                         valueRange = 0f..100f,
                         modifier = Modifier
                             .padding(bottom = 50.dp, start = 10.dp, end = 10.dp)
