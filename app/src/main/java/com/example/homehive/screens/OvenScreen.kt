@@ -147,7 +147,10 @@ fun OvenScreen(
                                 .padding(16.dp)
                         )
                         Button(
-                            onClick = {  },
+                            onClick = {
+                                ovenVM.togglePower()
+                                setOvenStateLocal(ovenState)
+                            },
                             elevation = ButtonDefaults.buttonElevation(
                                 defaultElevation = 12.dp,
                                 pressedElevation = 0.0.dp,
@@ -190,6 +193,7 @@ fun OvenScreen(
                                     newTemperature.toInt(),
                                     ovenTemperature
                                 )
+                                ovenVM.setOvenTemperature(newTemperature.toInt())
                             },
                             valueRange = 90f..230f,
 
@@ -211,7 +215,10 @@ fun OvenScreen(
                         )
                         Row(Modifier.padding(vertical = 8.dp)) {
                             Button(
-                                onClick = { setGrillModeLocal(GrillMode.OFF, grillMode) },
+                                // ------------------------------------------UPDATE DIRECTO----------------------------------------------
+                                onClick = {
+                                    setGrillModeLocal(GrillMode.OFF, grillMode)
+                                },
                                 shape = RoundedCornerShape(topStart = 15.dp, topEnd = 0.dp, bottomStart = 15.dp, bottomEnd = 0.dp),
                                 modifier = Modifier
                                     .height(45.dp)
@@ -244,7 +251,10 @@ fun OvenScreen(
                                 )
                             }
                             Button(
-                                onClick = { setGrillModeLocal(GrillMode.COMPLETE, grillMode) },
+                                onClick = {
+                                    // ------------------------------------------UPDATE DIRECTO----------------------------------------------
+                                    setGrillModeLocal(GrillMode.COMPLETE, grillMode)
+                                },
                                 shape = RoundedCornerShape(topStart = 0.dp, topEnd = 15.dp, bottomStart = 0.dp, bottomEnd = 15.dp),
                                 modifier = Modifier
                                     .height(45.dp)
@@ -402,25 +412,25 @@ fun OvenScreen(
                             Button(
                                 onClick = {
                                     ovenVM.setOvenTemperature(ovenTemperature.value)
-                                    ovenVM.togglePower()
+                                    ovenVM.setPower(ovenState.value)
 
                                     when (grillMode.value) {
-                                        GrillMode.OFF -> ovenVM.setGrillMode("apagado")
-                                        GrillMode.ECONOMIC -> ovenVM.setGrillMode("economico")
-                                        GrillMode.COMPLETE -> ovenVM.setGrillMode("completo")
+                                        GrillMode.OFF -> ovenVM.setGrillMode("off")
+                                        GrillMode.ECONOMIC -> ovenVM.setGrillMode("eco")
+                                        GrillMode.COMPLETE -> ovenVM.setGrillMode("large")
                                     }
 
 
                                     when (convectionMode.value) {
-                                        ConvectionMode.OFF -> ovenVM.setConvectionMode("apagado")
-                                        ConvectionMode.ECONOMIC -> ovenVM.setConvectionMode("economico")
-                                        ConvectionMode.CONVENTIONAL -> ovenVM.setConvectionMode("convencional")
+                                        ConvectionMode.OFF -> ovenVM.setConvectionMode("off")
+                                        ConvectionMode.ECONOMIC -> ovenVM.setConvectionMode("eco")
+                                        ConvectionMode.CONVENTIONAL -> ovenVM.setConvectionMode("normal")
                                     }
 
                                     when (sourceMode.value) {
-                                        SourceMode.CONVENTIONAL -> ovenVM.setHeatMode("convencional")
-                                        SourceMode.ABOVE -> ovenVM.setHeatMode("arriba")
-                                        SourceMode.BELOW -> ovenVM.setHeatMode("abajo")
+                                        SourceMode.CONVENTIONAL -> ovenVM.setHeatMode("conventional")
+                                        SourceMode.ABOVE -> ovenVM.setHeatMode("top")
+                                        SourceMode.BELOW -> ovenVM.setHeatMode("bottom")
                                     }
 
 
