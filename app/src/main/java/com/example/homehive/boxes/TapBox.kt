@@ -99,15 +99,13 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .height(height)
-            .clickable(onClick = onClick),
+            .height(height),
         contentAlignment = Alignment.Center,
     ) {
         Surface(
             modifier = Modifier
                 .width(200.dp)
-
-                .clickable(onClick = onClick),
+                .clickable{ isOpen.value = !isOpen.value },
             shape = RoundedCornerShape(15.dp),
             color = MaterialTheme.colorScheme.onBackground,
         ) {

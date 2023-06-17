@@ -50,6 +50,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.R
 import com.example.homehive.viewmodels.BlindsVM
 import com.example.homehive.viewmodels.FridgeVM
+import com.example.homehive.viewmodels.isDarkTheme
 
 
 @Composable
@@ -76,14 +77,14 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .height(blindsHeight)
-            .clickable(onClick = onClick),
+            .height(blindsHeight),
         contentAlignment = Alignment.Center,
     ) {
         Surface(
             modifier = Modifier
                 .width(200.dp)
-                .clickable(onClick = onClick),
+                .clickable{ isOpen.value = !isOpen.value },
+
             shape = RoundedCornerShape(15.dp),
             color = MaterialTheme.colorScheme.tertiary
         ) {
@@ -93,7 +94,7 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                 contentAlignment = Alignment.Center
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.blinds),
+                    painter = painterResource(id = if(!isDarkTheme.value) R.drawable.blinds else R.drawable.blindsdark),
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier

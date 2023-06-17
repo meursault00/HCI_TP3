@@ -86,8 +86,9 @@ fun RoutineBox(
     ) {
         Surface(
             modifier = Modifier
-                .width(200.dp),
-            shape = RoundedCornerShape(15.dp),
+                .width(200.dp)
+            .clickable{ isOpen.value = !isOpen.value },
+        shape = RoundedCornerShape(15.dp),
             color = MaterialTheme.colorScheme.secondary
         ) {
             Box(

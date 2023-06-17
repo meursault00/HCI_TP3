@@ -40,18 +40,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.R
+import com.example.homehive.viewmodels.SettingsVM
 import com.example.homehive.viewmodels.SpeakerVM
+import com.example.homehive.viewmodels.isDarkTheme
 
 
 @Composable
 fun SpeakerBox(onClick: () -> Unit, speakerVM : SpeakerVM = viewModel()) {
-    var isOpen = remember { mutableStateOf(false) };
 
 
     Box(
         modifier = Modifier
-            .fillMaxSize()
-            .clickable(onClick = onClick),
+            .fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
         Surface(
@@ -67,7 +67,7 @@ fun SpeakerBox(onClick: () -> Unit, speakerVM : SpeakerVM = viewModel()) {
                 contentAlignment = Alignment.Center
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.spot),
+                    painter = painterResource(id = if(!isDarkTheme.value) R.drawable.spot else R.drawable.spotdark),
                     contentDescription = null,
                     modifier = Modifier
                         .padding(top = 16.dp)
@@ -143,7 +143,7 @@ fun SpeakerBox(onClick: () -> Unit, speakerVM : SpeakerVM = viewModel()) {
                 }
 
                 Button(
-                    onClick = { isOpen.value = !isOpen.value },
+                    onClick = onClick,
                     elevation = ButtonDefaults.buttonElevation(
                         defaultElevation = 30.dp,
                         pressedElevation = 0.0.dp,

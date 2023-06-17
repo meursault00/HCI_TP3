@@ -63,15 +63,15 @@ fun FridgeBox(
 
     Box(
         modifier = Modifier
-            .fillMaxSize()
-            .clickable(onClick = onClick),
+            .fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
         Surface(
             modifier = Modifier
                 .height(height)
                 .width(200.dp)
-                .clickable(onClick = onClick),
+                .clickable{ isOpen.value = !isOpen.value },
+
             shape = RoundedCornerShape(15.dp),
         ) {
             Box(

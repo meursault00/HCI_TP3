@@ -78,7 +78,9 @@ fun PrivacyBox() {
     ) {
         Surface(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .clickable{ isOpen.value = !isOpen.value },
+
             shape = RoundedCornerShape(15.dp),
             color = MaterialTheme.colorScheme.onSecondaryContainer
         ) {
