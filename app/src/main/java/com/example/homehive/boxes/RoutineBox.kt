@@ -46,11 +46,16 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.R
 import com.example.homehive.library.AnimatedTextOverflow
+import com.example.homehive.viewmodels.FridgeVM
+import com.example.homehive.viewmodels.RoutineVM
 
 @Composable
-fun RoutineBox() {
+fun RoutineBox(
+    routineVM : RoutineVM = viewModel()
+) {
     var isOpen = remember { mutableStateOf(false) }
 
     val blindsHeight: Dp by animateDpAsState(

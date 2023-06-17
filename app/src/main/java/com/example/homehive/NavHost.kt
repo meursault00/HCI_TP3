@@ -27,6 +27,7 @@ import com.example.homehive.screens.TestScreen
 import com.example.homehive.viewmodels.DevicesVM
 import com.example.homehive.viewmodels.FridgeVM
 import com.example.homehive.viewmodels.OvenVM
+import com.example.homehive.viewmodels.RoutinesVM
 import com.example.homehive.viewmodels.SpeakerVM
 
 
@@ -37,16 +38,34 @@ fun NavHost(
     startDestination: String = "routines",
 ) {
 
+    // Creacion de Singleton VM para los Dipositivos y Fetch de Devices
+    
     val devicesVM = remember { DevicesVM() }
     val devicesState by devicesVM.uiState.collectAsState()
     LaunchedEffect(Unit) {
         devicesVM.fetchDevices()
     }
-
+    
     val devices = devicesState.devices
     SideEffect {
         println("List of devices: $devices")
+    }    
+    
+    // Creacion de Singleton VM para las Rutinas y Fetch de Routines
+    
+    val routinesVM = remember { RoutinesVM() }
+    val routinesState by routinesVM.uiState.collectAsState()
+    LaunchedEffect(Unit) {
+        routinesVM.fetchRoutines()
     }
+    
+    val routines = routinesState.routines
+    SideEffect {
+        println("List of devices: $routines")
+    }
+    
+    // ---------------------------------------------------------------------------------------------------------------------------------
+
 
     val uri = "http://www.example.com"
     val secureUri = "https://www.example.com"
@@ -63,7 +82,7 @@ fun NavHost(
         }
         composable("routines") {
             App(navController = navController) { navController, innerPadding ->
-                RoutinesScreen(navController = navController, innerPadding = innerPadding)
+                RoutinesScreen(navController = navController, innerPadding = innerPadding, routinesVM)
             }
         }
         composable("home") {
