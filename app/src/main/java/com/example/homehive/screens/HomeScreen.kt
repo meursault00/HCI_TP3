@@ -81,7 +81,13 @@ fun HomeScreen(
                                 }
                             }
                             "faucet" -> {
-                                 deviceViewModelMap.getOrPut(device.id.toString()) { TapVM() }
+                                 deviceViewModelMap.getOrPut(device.id.toString()) {
+                                     TapVM(
+                                         device.id,
+                                         device.state?.status,
+                                         devicesVM
+                                    )
+                                 }
                             }
 
                             "blinds" -> {
@@ -89,7 +95,16 @@ fun HomeScreen(
                             }
 
                             "speaker" -> {
-                                deviceViewModelMap.getOrPut(device.id.toString()) { SpeakerVM() }
+                                deviceViewModelMap.getOrPut(device.id.toString()) {
+                                    SpeakerVM(
+                                        device.id,
+                                        device.state?.status,
+                                        device.state?.volume,
+                                        device.state?.song,
+                                        device.state?.genre,
+                                        devicesVM,
+                                    )
+                                }
                             }
                             // Add more cases for other device types
                             else -> {
