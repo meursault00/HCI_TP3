@@ -30,7 +30,7 @@ class TapVM(
             val updatedDevice = devicesVM.fetchADevice(id = uiState.value.id)
             _uiState.update{currentState ->
                 currentState.copy(
-                    state = updatedDevice.result?.state?.status ?: "",
+                    status = updatedDevice.result?.state?.status ?: "",
                 )
             }
         }
