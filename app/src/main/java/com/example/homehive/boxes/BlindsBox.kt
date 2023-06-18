@@ -126,7 +126,7 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                         .align(Alignment.Center)
                 )
 
-                if (!isBlindOpen.value) {
+                if (blindState.status == "closed") {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -166,12 +166,12 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                         pressedElevation = 0.0.dp,
                     ),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if(!isClosing.value) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.background,
+                        containerColor = if(!(blindState.status == "closing" || blindState.status == "closed")) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.background,
                     )
                 ) {
                     Text(
-                        text = if(!isClosing.value) stringResource(id = R.string.close) else stringResource(id = R.string.open),
-                        color = if(!isClosing.value) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.secondary
+                        text = if(!(blindState.status == "closing" || blindState.status == "closed")) stringResource(id = R.string.close) else stringResource(id = R.string.open),
+                        color = if(!(blindState.status == "closing" || blindState.status == "closed")) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.secondary
 
                     )
                 }
