@@ -77,6 +77,7 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .padding(10.dp)
             .height(blindsHeight),
         contentAlignment = Alignment.Center,
     ) {

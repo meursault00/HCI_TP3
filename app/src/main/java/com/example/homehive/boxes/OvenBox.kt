@@ -61,6 +61,8 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .padding(10.dp)
+
             .height(height)
             .clickable(onClick = onClick),
         contentAlignment = Alignment.Center,

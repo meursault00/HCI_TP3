@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.homehive.network.RetrofitClient
 import com.example.homehive.states.RoutinesUIState
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,9 +24,9 @@ class RoutinesVM : ViewModel() {
     }
 
     fun fetchRoutines() {
+        _uiState.update { it.copy(isLoading = true) }
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
             runCatching {
                 Log.d("homehivestatus", " Llegue hasta aca")
                 val apiService = RetrofitClient.getApiService()
@@ -33,12 +34,14 @@ class RoutinesVM : ViewModel() {
                 apiService?.getAllRoutines() ?: throw Exception("API Service is null")
             }.onSuccess { response ->
                 Log.d("homehivestatus", "Success: Inside Success Block")
+                delay(3000)
                 _uiState.update { it.copy(
                     routines = response.body(),
                     isLoading = false
                 ) }
             }.onFailure { e ->
                 Log.d("homehivestatus", "Failure: Inside Failure Block \nError message  ${e.message}")
+                delay(3000)
                 _uiState.update { it.copy(
                     message = e.message,
                     isLoading = false
@@ -47,9 +50,10 @@ class RoutinesVM : ViewModel() {
         }
     }
     fun fetchARoutine(id : String) {
+        _uiState.update { it.copy(isLoading = true) }
+
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
             runCatching {
                 Log.d("homehivestatus", " Llegue hasta aca")
                 val apiService = RetrofitClient.getApiService()

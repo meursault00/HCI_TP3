@@ -63,6 +63,7 @@ fun FridgeBox(
 
     Box(
         modifier = Modifier
+            .padding(10.dp)
             .fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {

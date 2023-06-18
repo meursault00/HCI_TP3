@@ -98,6 +98,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
 
     Box(
         modifier = Modifier
+            .padding(10.dp)
             .fillMaxSize()
             .height(height),
         contentAlignment = Alignment.Center,

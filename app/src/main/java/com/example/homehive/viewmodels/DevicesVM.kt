@@ -7,6 +7,7 @@ import com.example.homehive.network.ArrayValue
 import com.example.homehive.network.RetrofitClient
 import com.example.homehive.states.DevicesUIState
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -36,12 +37,14 @@ class DevicesVM : ViewModel() {
             }.onSuccess { response ->
                 Log.d("homehivestatus", "Success: Inside Success Block")
                 Log.d("homehivestatus", response.body().toString())
+                delay(3000)
                 _uiState.update { it.copy(
                     devices = response.body(),
                     isLoading = false
                 ) }
             }.onFailure { e ->
                 Log.d("homehivestatus", "Failure: Inside Failure Block \nError message  ${e.message}")
+                delay(3000)
                 _uiState.update { it.copy(
                     message = e.message,
                     isLoading = false

@@ -51,6 +51,7 @@ fun SpeakerBox(onClick: () -> Unit, speakerVM : SpeakerVM = viewModel()) {
 
     Box(
         modifier = Modifier
+            .padding(10.dp)
             .fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
@@ -58,6 +59,7 @@ fun SpeakerBox(onClick: () -> Unit, speakerVM : SpeakerVM = viewModel()) {
             color = MaterialTheme.colorScheme.secondary,
             modifier = Modifier
                 .height(200.dp)
+
                 .width(200.dp)
                 .clickable(onClick = onClick),
             shape = RoundedCornerShape(15.dp),
