@@ -85,4 +85,6 @@
     <string name="conventional">CONVENTIONAL</string>
     <string name="above">ABOVE</string>
     <string name="below">BELOW</string>
+    <string name="will">will</string>
+    <string name="to">to</string>
 </resources>

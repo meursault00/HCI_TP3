@@ -51,6 +51,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.R
 import com.example.homehive.library.AnimatedTextOverflow
+import com.example.homehive.network.routineModels.NetworkActions
 import com.example.homehive.viewmodels.FridgeVM
 import com.example.homehive.viewmodels.RoutineVM
 
@@ -66,10 +67,12 @@ fun RoutineBox(
         targetValue = if (isOpen.value) 400.dp else 200.dp,
         animationSpec = tween(durationMillis = 100)
     )
-    var items = listOf(
-        "Action 1 This is a task that probably occupies mutliple char spaces",
-        "Action 2 This idds a task that probably occupies mutliple char spaces",
-    )
+
+    val routineActions: ArrayList<NetworkActions> = uiState.actions
+
+    val actionExplanations: List<String> = routineActions.map { action ->
+        formatActionString(action.device?.name, action.actionName ?: "", action.params)
+    }
 
     Box(
         modifier = Modifier
@@ -80,7 +83,7 @@ fun RoutineBox(
         Surface(
             modifier = Modifier
                 .width(200.dp)
-            .clickable{ isOpen.value = !isOpen.value },
+                .clickable { isOpen.value = !isOpen.value },
             shape = RoundedCornerShape(15.dp),
             color = MaterialTheme.colorScheme.secondary
         ) {
@@ -119,7 +122,7 @@ fun RoutineBox(
                     )
                 }
                 Text(
-                    text = stringResource(id = R.string.actions),
+                    text = "${actionExplanations.size} " + if(actionExplanations.size == 1) stringResource(id = R.string.action) else stringResource(id = R.string.actions),
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary,
@@ -164,18 +167,19 @@ fun RoutineBox(
                         shadowElevation = 12.dp,
                         shape = RoundedCornerShape(15.dp),
                         modifier = if(isMinimalist) Modifier
+                            .padding(10.dp)
                             .fillMaxSize()
                         else
-                        Modifier
-                            .alpha(0.9f)
-                            .padding(top = 90.dp, start = 5.dp, end = 5.dp)
-                            .height(170.dp)
-                            .fillMaxWidth()
+                            Modifier
+                                .alpha(0.9f)
+                                .padding(top = 90.dp, start = 5.dp, end = 5.dp)
+                                .height(170.dp)
+                                .fillMaxWidth()
                     ){
 
                         RoutineList(
-                            items = items,
-                            routineName = "Routine Name"
+                            items = actionExplanations,
+                            routineName = uiState.name
                         )
 
                     }
@@ -196,6 +200,7 @@ fun RoutineList(items: List<String>, routineName: String = "Routine Name") {
     ) {
         Row(
             modifier = Modifier
+                .background(MaterialTheme.colorScheme.onPrimary)
                 .padding(5.dp)
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
@@ -236,6 +241,7 @@ fun RTaskRow(task: String = "This is a task that probably occupies mutliple char
         ){
             Column(
                 modifier = Modifier
+                    .padding(start = 3.dp, end = 3.dp)
                     .weight(1f)
             ) {
                 AnimatedTextOverflow(
@@ -247,5 +253,48 @@ fun RTaskRow(task: String = "This is a task that probably occupies mutliple char
             }
         }
 
+    }
+}
+
+@Composable
+fun formatActionString(deviceName: String?, actionName: String, params: ArrayList<String>): String {
+    val formattedString = StringBuilder()
+
+    formattedString.append(deviceName ?: "Unknown device")
+    formattedString.append(" " + stringResource(id = R.string.will)+ " " )
+    formattedString.append(getActionString(actionName))
+
+    if (params.isNotEmpty()) {
+        if(getActionString(actionName) != "dispense") formattedString.append(" " + stringResource(id = R.string.to) + " ");
+        formattedString.append(params.joinToString(" "))
+    }
+
+    return formattedString.toString()
+}
+@Composable
+fun getActionString(actionName: String): String {
+    return when (actionName) {
+        "setVolume" -> "set volume"
+        "play" -> "play"
+        "stop" -> "stop"
+        "pause" -> "pause"
+        "resume" -> "resume"
+        "nextSong" -> "play next song"
+        "previousSong" -> "play previous song"
+        "setGenre" -> "set genre"
+        "getPlaylist" -> "get playlist"
+        "turnOn" -> "turn on"
+        "turnOff" -> "turn off"
+        "setTemperature" -> "set temperature"
+        "setHeat" -> "set heat"
+        "setGrill" -> "set grill"
+        "setConvection" -> "set convection"
+        "open" -> "open"
+        "close" -> "close"
+        "setLevel" -> "set level"
+        "setMode" -> "set mode"
+        "setFreezerTemperature" -> "set freezer temperature"
+        "dispense" -> "dispense"
+        else -> "Unknown action"
     }
 }

@@ -98,20 +98,18 @@ fun SpeakerBox(
                         .padding(start = 10.dp, end = 10.dp)
                         .align(Alignment.Center),
                 ) {
-                    Text(
-                        text = stringResource(id = R.string.current_song),
-                        color = MaterialTheme.colorScheme.onPrimary,
-                    )
+
                     Row(
                         horizontalArrangement = Arrangement.SpaceEvenly,
                         verticalAlignment = Alignment.CenterVertically, // Center vertically
                         modifier = Modifier
+                            .padding(bottom = 20.dp)
                             .fillMaxWidth()
                     ){
                         FloatingActionButton(
                             onClick = { /*TODO*/ },
                             shape = CircleShape,
-                            elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp),
+                            elevation = FloatingActionButtonDefaults.elevation(16.dp),
                             containerColor = MaterialTheme.colorScheme.secondary,
                             modifier = Modifier.size(30.dp) // Adjust the size as desired
                         ) {
@@ -125,9 +123,9 @@ fun SpeakerBox(
                         FloatingActionButton(
                             onClick = { /*TODO*/ },
                             shape = CircleShape,
-                            elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp),
+                            elevation = FloatingActionButtonDefaults.elevation(16.dp),
                             containerColor = MaterialTheme.colorScheme.secondary,
-                            modifier = Modifier.size(40.dp) // Adjust the size as desired
+                            modifier = Modifier.size(40.dp), // Adjust the size as desired
                         ) {
                             Icon(
                                 painter = painterResource(id = R.drawable.play),
@@ -139,7 +137,7 @@ fun SpeakerBox(
                         FloatingActionButton(
                             onClick = { /*TODO*/ },
                             shape = CircleShape,
-                            elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp),
+                            elevation = FloatingActionButtonDefaults.elevation(16.dp),
                             containerColor = MaterialTheme.colorScheme.secondary,
                             modifier = Modifier.size(30.dp) // Adjust the size as desired
                         ) {
@@ -151,6 +149,10 @@ fun SpeakerBox(
                             )
                         }
                     }
+                    Text(
+                        text = stringResource(id = R.string.current_song),
+                        color = MaterialTheme.colorScheme.onPrimary,
+                    )
                 }
 
                 Button(
