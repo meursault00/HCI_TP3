@@ -76,6 +76,16 @@
     <string name="no_routines">Nincsenek rutinok</string>
     <string name="home">Kezdőlap</string>
     <string name="routines">Rutinok</string>
+    <string name="english">Angol</string>
+    <string name="spanish">Spanyol</string>
+    <string name="french">Francia</string>
+    <string name="german">Német</string>
+    <string name="off">KI</string>
+    <string name="economic">Gazdaságos</string>
+    <string name="complete">Teljes</string>
+    <string name="conventional">Hagyományos</string>
+    <string name="above">Felett</string>
+    <string name="below">Alatt</string>
 </resources>
 
 

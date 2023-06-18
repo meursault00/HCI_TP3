@@ -76,4 +76,14 @@
     <string name="no_routines">Keine Routinen gefunden</string>
     <string name="home">Startseite</string>
     <string name="routines">Routinen</string>
+    <string name="english">Englisch</string>
+    <string name="spanish">Spanisch</string>
+    <string name="french">Französisch</string>
+    <string name="german">Deutsch</string>
+    <string name="off">AUS</string>
+    <string name="economic">WIRTSCHAFTLICH</string>
+    <string name="complete">VOLLSTÄNDIG</string>
+    <string name="conventional">KONVENTIONELL</string>
+    <string name="above">OBERHALB</string>
+    <string name="below">UNTERHALB</string>
 </resources>

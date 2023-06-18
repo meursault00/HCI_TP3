@@ -76,4 +76,14 @@
     <string name="no_routines">No se encontraron rutinas</string>
     <string name="home">Inicio</string>
     <string name="routines">Rutinas</string>
+    <string name="english">Inglés</string>
+    <string name="spanish">Español</string>
+    <string name="french">Francés</string>
+    <string name="german">Alemán</string>
+    <string name="off">Apagado</string>
+    <string name="economic">Económico</string>
+    <string name="complete">Completo</string>
+    <string name="conventional">Convencional</string>
+    <string name="above">Arriba</string>
+    <string name="below">Abajo</string>
 </resources>
