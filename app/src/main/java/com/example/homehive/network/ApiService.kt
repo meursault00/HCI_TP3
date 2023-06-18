@@ -2,6 +2,7 @@ package com.example.homehive.network
 
 import com.example.homehive.network.deviceModels.NetworkDevicesList
 import com.example.homehive.network.deviceModels.NetworkResult
+import com.example.homehive.network.deviceModels.NetworkUnaryDevice
 import com.example.homehive.network.routineModels.NetworkRoutinesList
 import retrofit2.Response
 import retrofit2.http.Body
@@ -20,7 +21,7 @@ interface ApiService {
     suspend fun getAllDevices(): Response<NetworkDevicesList>
 
     @GET("devices/{deviceId}")
-    suspend fun getADevice(@Path("deviceId")deviceId: String): Response<NetworkResult>
+    suspend fun getADevice(@Path("deviceId")deviceId: String): Response<NetworkUnaryDevice>
 
     @PUT("/api/devices/{deviceId}/{actionName}")
     @JvmSuppressWildcards

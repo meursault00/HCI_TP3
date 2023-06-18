@@ -5,6 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.homehive.network.ArrayValue
 import com.example.homehive.network.RetrofitClient
+import com.example.homehive.network.deviceModels.NetworkDevicesList
+import com.example.homehive.network.deviceModels.NetworkResult
+import com.example.homehive.network.deviceModels.NetworkUnaryDevice
 import com.example.homehive.states.DevicesUIState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -13,6 +16,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 
 class DevicesVM : ViewModel() {
@@ -49,28 +53,26 @@ class DevicesVM : ViewModel() {
             }
         }
     }
-    fun fetchADevice(id : String) {
+    fun fetchADevice(id: String): NetworkUnaryDevice {
         fetchJob?.cancel()
-        fetchJob = viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
+        _uiState.update { it.copy(isLoading = true) }
+
+        var toReturn: NetworkUnaryDevice? = null // Declare the variable to hold the result
+
+        runBlocking {
             runCatching {
                 val apiService = RetrofitClient.getApiService()
-                apiService?.getADevice(id) ?: throw Exception("API Service is null")
-            }.onSuccess { response ->
-                Log.d("homehivestatus", "Success: Inside Success Block")
-                _uiState.update { it.copy(
-                    // Deberia retornar el objeto del device
-                    // devices = response.body(),
-                    isLoading = false
-                ) }
+                val response = apiService?.getADevice(id) ?: throw Exception("API Service is null")
+                response.body() ?: throw Exception("Empty response body")
+            }.onSuccess { body ->
+                _uiState.update { it.copy(isLoading = false) }
+                toReturn = body // Assign the result to the variable
             }.onFailure { e ->
-                Log.d("homehivestatus", "Failure: Inside Failure Block \nError message  ${e.message}")
-                _uiState.update { it.copy(
-                    message = e.message,
-                    isLoading = false
-                ) }
+                _uiState.update { it.copy(message = e.message, isLoading = false) }
             }
         }
+
+        return toReturn ?: NetworkUnaryDevice() // Return the result or an empty NetworkResult
     }
 
 
@@ -128,5 +130,9 @@ class DevicesVM : ViewModel() {
                 _uiState.update { it.copy(message = e.message, isLoading = false) }
             }
         }
+    }
+
+    fun qDevices(): Int {
+        return _uiState.value.devices?.result?.size ?: 0
     }
 }

@@ -1,11 +1,13 @@
 package com.example.homehive.viewmodels
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.homehive.states.OvenUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class OvenVM(
     deviceID: String?,
@@ -27,6 +29,20 @@ class OvenVM(
 
     val uiState: StateFlow<OvenUIState> = _uiState.asStateFlow()
 
+    fun sync(){
+        viewModelScope.launch {
+            val updatedDevice = devicesVM.fetchADevice(id = uiState.value.id)
+            _uiState.update{currentState ->
+                currentState.copy(
+                    power = updatedDevice.result?.state?.status ?: "",
+                    ovenTemperature = updatedDevice.result?.state?.temperature ?: 0,
+                    grillMode = updatedDevice.result?.state?.grill ?: "",
+                    heatMode = updatedDevice.result?.state?.heat ?: "",
+                    convectionMode = updatedDevice.result?.state?.convection ?: "",
+                )
+            }
+        }
+    }
     fun setPower(newPower: Boolean) {
         val deviceId = uiState.value.id
         val command = if (newPower) "turnOn" else "turnOff"

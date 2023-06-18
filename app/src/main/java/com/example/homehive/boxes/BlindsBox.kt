@@ -48,6 +48,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.homehive.Globals
 import com.example.homehive.R
 import com.example.homehive.viewmodels.BlindsVM
 import com.example.homehive.viewmodels.FridgeVM
@@ -65,6 +66,10 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
         mutableStateOf(blindState.position)
     }
 
+    if ( Globals.updates > 0 ){
+        blindsVM.sync()
+        Globals.updates--
+    }
 
     var isOpen = remember { mutableStateOf(false) }
 
