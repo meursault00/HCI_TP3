@@ -115,7 +115,7 @@ fun AppearanceBox(viewModel : SettingsVM = viewModel()) {
                         .offset { IntOffset(x = 0  , y = -140) }
                 )
                 Text(
-                    text = "Appearance",
+                    text = stringResource(id = R.string.appearance),
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.onPrimary,
