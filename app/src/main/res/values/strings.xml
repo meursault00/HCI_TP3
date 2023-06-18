@@ -72,4 +72,14 @@
     <string name="no_devices_or_routines">There is a problem with the API</string>
     <string name="no_devices">No Devices found</string>
     <string name="no_routines">No Routines found</string>
+    <string name="english">English</string>
+    <string name="spanish">Spanish</string>
+    <string name="french">French</string>
+    <string name="german">German</string>
+    <string name="off">OFF</string>
+    <string name="economic">ECONOMIC</string>
+    <string name="complete">COMPLETE</string>
+    <string name="conventional">CONVENTIONAL</string>
+    <string name="above">ABOVE</string>
+    <string name="below">BELOW</string>
 </resources>

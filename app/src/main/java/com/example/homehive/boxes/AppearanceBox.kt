@@ -68,7 +68,11 @@ fun AppearanceBox(viewModel : SettingsVM = viewModel()) {
 
     val uiState by viewModel.uiState.collectAsState()
 
-    val languages = listOf("English", "Spanish", "French", "German")
+    val languages = listOf(stringResource(id = R.string.english),
+        stringResource(id = R.string.spanish),
+        stringResource(id = R.string.french),
+        stringResource(id = R.string.german)
+    )
     var selectedLanguage = remember { mutableStateOf(languages[0]) }
 
     var expanded = remember {
@@ -115,7 +119,7 @@ fun AppearanceBox(viewModel : SettingsVM = viewModel()) {
                         .offset { IntOffset(x = 0  , y = -140) }
                 )
                 Text(
-                    text = "Appearance",
+                    text = stringResource(id = R.string.appearance),
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.onPrimary,
