@@ -40,12 +40,12 @@
     <string name="mode">Mode</string>
     <string name="default_s">Default</string>
     <string name="routine">Routine</string>
-    <string name="run">Run\n</string>
+    <string name="run">Run</string>
     <string name="actions">Actions</string>
     <string name="homehive">HomeHive</string>
     <string name="chrishome">Chris\' Home</string>
     <string name="blinds">Blinds</string>
-    <string name="open">Open\n</string>
+    <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="party">Party</string>
     <string name="vacation">vacation</string>
@@ -69,4 +69,7 @@
     <string name="loading_routines_and_devices">Loading Routines and Devices</string>
     <string name="loading_devices">Loading Devices</string>
     <string name="dispense">Dispense</string>
+    <string name="no_devices_or_routines">There is a problem with the API</string>
+    <string name="no_devices">No Devices found</string>
+    <string name="no_routines">No Routines found</string>
 </resources>

@@ -25,22 +25,15 @@ class DevicesVM : ViewModel() {
         _uiState.update { it.copy(message = null) }
     }
 
-    fun loadDevices(){
-        fetchDevices();
-    }
 
     fun fetchDevices() {
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             runCatching {
-                Log.d("homehivestatus", " Llegue hasta aca")
                 val apiService = RetrofitClient.getApiService()
-                Log.d("homehivestatus", " Nunca llego hasta aca!")
                 apiService?.getAllDevices() ?: throw Exception("API Service is null")
             }.onSuccess { response ->
-                Log.d("homehivestatus", "Success: Inside Success Block")
-                Log.d("homehivestatus", response.body().toString())
                 delay(2000)
                 _uiState.update { it.copy(
                     devices = response.body(),

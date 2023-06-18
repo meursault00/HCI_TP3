@@ -140,7 +140,6 @@ fun AppBar(
                         .background(
                             color = MaterialTheme.colorScheme.secondary,
                         )
-                        .blur(4.dp, 3.dp)
                 ) {
                     options.forEach { option ->
                         DropdownMenuItem(
