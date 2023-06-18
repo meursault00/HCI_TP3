@@ -31,6 +31,7 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -56,6 +57,7 @@ import com.example.homehive.viewmodels.RoutineVM
 fun RoutineBox(
     routineVM : RoutineVM = viewModel()
 ) {
+    val uiState by routineVM.uiState.collectAsState()
     var isOpen = remember { mutableStateOf(false) }
 
     val blindsHeight: Dp by animateDpAsState(
@@ -65,17 +67,6 @@ fun RoutineBox(
     var items = listOf(
         "Action 1 This is a task that probably occupies mutliple char spaces",
         "Action 2 This idds a task that probably occupies mutliple char spaces",
-        "Action 3 This is a task that probably occupies mutliple char spaces",
-        "Action 4 This is a task that probably occupies mutliple char spaces",
-        "Action 5 This is a task that probably occupies mutliple char spaces",
-        "Action 6 This is a task that probably occupies mutliple char spaces",
-        "Action 7 This is a task that probably occupies mutliple char spaces",
-        "Action 8 This is a task that probably occupies mutliple char spaces",
-        "Action 9 This is a task that probably occupies mutliple char spaces",
-        "Action 10 This is a task that probably occupies mutliple char spaces",
-        "Action 11 This is a task that probably occupies mutliple char spaces",
-        "Action 12 This is a task that probably occupies mutliple char spaces",
-        "Action 13 This is a task that probably occupies mutliple char spaces",
     )
 
     Box(
@@ -88,7 +79,7 @@ fun RoutineBox(
             modifier = Modifier
                 .width(200.dp)
             .clickable{ isOpen.value = !isOpen.value },
-        shape = RoundedCornerShape(15.dp),
+            shape = RoundedCornerShape(15.dp),
             color = MaterialTheme.colorScheme.secondary
         ) {
             Box(
@@ -106,7 +97,7 @@ fun RoutineBox(
                         .align(Alignment.TopCenter)
                 )
                 Button( // CHECKEAR CONDICIONES DE ESTADO
-                    onClick = {  },
+                    onClick = { routineVM.executeRoutine(uiState.id) },
                     elevation = ButtonDefaults.buttonElevation(
                         defaultElevation = 30.dp,
                         pressedElevation = 0.0.dp,

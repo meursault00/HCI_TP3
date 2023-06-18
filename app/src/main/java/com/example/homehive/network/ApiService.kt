@@ -52,6 +52,11 @@ interface ApiService {
         @Body requestBody: List<Any>
     ): String
 
+    @PUT("/api/routines/{routineId}/execute")
+    suspend fun executeARoutine(
+        @Path("routineId") routineId: String
+    ) : String
+
     @GET("/api/routines")
     suspend fun getAllRoutines(): Response<NetworkRoutinesList>
 

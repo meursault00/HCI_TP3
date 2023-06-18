@@ -74,4 +74,24 @@ class RoutinesVM : ViewModel() {
             }
         }
     }
+
+    fun executeARoutine(id: String) {
+        fetchJob?.cancel()
+        fetchJob = viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+            runCatching {
+                val apiService = RetrofitClient.getApiService()
+                apiService?.executeARoutine(id)
+            }.onSuccess { response ->
+                Log.d("homehivestatus", "routine execute successful")
+                if (response != null) {
+                    Log.d("debug", response)
+                }
+                _uiState.update { it.copy(isLoading = false) }
+            }.onFailure { e ->
+                Log.d("debug", "Api Call was Unsuccessful \nError message  ${e.message}")
+                _uiState.update { it.copy(message = e.message, isLoading = false) }
+            }
+        }
+    }
 }

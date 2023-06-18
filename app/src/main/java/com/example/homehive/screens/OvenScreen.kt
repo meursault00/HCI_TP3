@@ -215,9 +215,10 @@ fun OvenScreen(
                         )
                         Row(Modifier.padding(vertical = 8.dp)) {
                             Button(
-                                // ------------------------------------------UPDATE DIRECTO----------------------------------------------
                                 onClick = {
+                                    // ------------------------------------------UPDATE DIRECTO DE GRILL----------------------------------------------
                                     setGrillModeLocal(GrillMode.OFF, grillMode)
+                                    ovenVM.setGrillMode("off")
                                 },
                                 shape = RoundedCornerShape(topStart = 15.dp, topEnd = 0.dp, bottomStart = 15.dp, bottomEnd = 0.dp),
                                 modifier = Modifier
@@ -235,7 +236,11 @@ fun OvenScreen(
 
                             }
                             Button(
-                                onClick = { setGrillModeLocal(GrillMode.ECONOMIC, grillMode) },
+                                // ------------------------------------------UPDATE DIRECTO DE GRILL----------------------------------------------
+                                onClick = {
+                                    setGrillModeLocal(GrillMode.ECONOMIC, grillMode)
+                                    ovenVM.setGrillMode("eco")
+                                },
                                 shape = RoundedCornerShape(topStart = 0.dp, topEnd = 0.dp, bottomStart = 0.dp, bottomEnd = 0.dp),
                                 modifier = Modifier
                                     .height(45.dp)
@@ -252,8 +257,9 @@ fun OvenScreen(
                             }
                             Button(
                                 onClick = {
-                                    // ------------------------------------------UPDATE DIRECTO----------------------------------------------
+                                    // ------------------------------------------UPDATE DIRECTO DE GRILL----------------------------------------------
                                     setGrillModeLocal(GrillMode.COMPLETE, grillMode)
+                                    ovenVM.setGrillMode("large")
                                 },
                                 shape = RoundedCornerShape(topStart = 0.dp, topEnd = 15.dp, bottomStart = 0.dp, bottomEnd = 15.dp),
                                 modifier = Modifier
@@ -281,7 +287,11 @@ fun OvenScreen(
                         )
                         Row(Modifier.padding(vertical = 8.dp)) {
                             Button(
-                                onClick = { setConvectionModeLocal(ConvectionMode.OFF, convectionMode) },
+                                // ------------------------------------------UPDATE DIRECTO DE CONVECTION----------------------------------------------
+                                onClick = {
+                                    setConvectionModeLocal(ConvectionMode.OFF, convectionMode)
+                                    ovenVM.setConvectionMode("off")
+                                          },
                                 shape = RoundedCornerShape(topStart = 15.dp, topEnd = 0.dp, bottomStart = 15.dp, bottomEnd = 0.dp),
                                 modifier = Modifier
                                     .height(45.dp)
@@ -297,7 +307,11 @@ fun OvenScreen(
                                 )
                             }
                             Button(
-                                onClick = { setConvectionModeLocal(ConvectionMode.ECONOMIC, convectionMode) },
+                                // ------------------------------------------UPDATE DIRECTO DE CONVECTION----------------------------------------------
+                                onClick = {
+                                    setConvectionModeLocal(ConvectionMode.ECONOMIC, convectionMode)
+                                    ovenVM.setConvectionMode("eco")
+                                },
                                 shape = RoundedCornerShape(topStart = 0.dp, topEnd = 0.dp, bottomStart = 0.dp, bottomEnd = 0.dp),
                                 modifier = Modifier
                                     .height(45.dp)
@@ -313,7 +327,11 @@ fun OvenScreen(
                                 )
                             }
                             Button(
-                                onClick = { setConvectionModeLocal(ConvectionMode.CONVENTIONAL, convectionMode) },
+                                // ------------------------------------------UPDATE DIRECTO DE CONVECTION----------------------------------------------
+                                onClick = {
+                                    setConvectionModeLocal(ConvectionMode.CONVENTIONAL, convectionMode)
+                                    ovenVM.setConvectionMode("normal")
+                                },
                                 shape = RoundedCornerShape(topStart = 0.dp, topEnd = 15.dp, bottomStart = 0.dp, bottomEnd = 15.dp),
                                 modifier = Modifier
                                     .height(45.dp)
@@ -340,7 +358,11 @@ fun OvenScreen(
                         )
                         Row(Modifier.padding(vertical = 8.dp)) {
                             Button(
-                                onClick = { setSourceModeLocal(SourceMode.CONVENTIONAL, sourceMode) },
+                                // ------------------------------------------UPDATE DIRECTO DE HEAT----------------------------------------------
+                                onClick = {
+                                    setSourceModeLocal(SourceMode.CONVENTIONAL, sourceMode)
+                                    ovenVM.setHeatMode("normal")
+                                },
                                 shape = RoundedCornerShape(topStart = 15.dp, topEnd = 0.dp, bottomStart = 15.dp, bottomEnd = 0.dp),
                                 modifier = Modifier
                                     .height(45.dp)
@@ -356,7 +378,11 @@ fun OvenScreen(
                                 )
                             }
                             Button(
-                                onClick = { setSourceModeLocal(SourceMode.ABOVE, sourceMode) },
+                                // ------------------------------------------UPDATE DIRECTO DE HEAT----------------------------------------------
+                                onClick = {
+                                    setSourceModeLocal(SourceMode.ABOVE, sourceMode)
+                                    ovenVM.setHeatMode("top")
+                                },
                                 shape = RoundedCornerShape(topStart = 0.dp, topEnd = 0.dp, bottomStart = 0.dp, bottomEnd = 0.dp),
                                 modifier = Modifier
                                     .height(45.dp)
@@ -372,7 +398,11 @@ fun OvenScreen(
                                 )
                             }
                             Button(
-                                onClick = { setSourceModeLocal(SourceMode.BELOW, sourceMode) },
+                                // ------------------------------------------UPDATE DIRECTO DE HEAT----------------------------------------------
+                                onClick = {
+                                    setSourceModeLocal(SourceMode.BELOW, sourceMode)
+                                    ovenVM.setHeatMode("bottom")
+                                },
                                 shape = RoundedCornerShape(topStart = 0.dp, topEnd = 15.dp, bottomStart = 0.dp, bottomEnd = 15.dp),
                                 modifier = Modifier
                                     .height(45.dp)
