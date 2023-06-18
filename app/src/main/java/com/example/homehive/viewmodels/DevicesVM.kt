@@ -25,6 +25,10 @@ class DevicesVM : ViewModel() {
         _uiState.update { it.copy(message = null) }
     }
 
+    fun loadDevices(){
+        fetchDevices();
+    }
+
     fun fetchDevices() {
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
@@ -37,14 +41,14 @@ class DevicesVM : ViewModel() {
             }.onSuccess { response ->
                 Log.d("homehivestatus", "Success: Inside Success Block")
                 Log.d("homehivestatus", response.body().toString())
-                delay(3000)
+                delay(2000)
                 _uiState.update { it.copy(
                     devices = response.body(),
                     isLoading = false
                 ) }
             }.onFailure { e ->
                 Log.d("homehivestatus", "Failure: Inside Failure Block \nError message  ${e.message}")
-                delay(3000)
+                delay(2000)
                 _uiState.update { it.copy(
                     message = e.message,
                     isLoading = false

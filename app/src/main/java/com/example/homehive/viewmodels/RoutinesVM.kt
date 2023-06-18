@@ -34,14 +34,14 @@ class RoutinesVM : ViewModel() {
                 apiService?.getAllRoutines() ?: throw Exception("API Service is null")
             }.onSuccess { response ->
                 Log.d("homehivestatus", "Success: Inside Success Block")
-                delay(3000)
+                delay(2000)
                 _uiState.update { it.copy(
                     routines = response.body(),
                     isLoading = false
                 ) }
             }.onFailure { e ->
                 Log.d("homehivestatus", "Failure: Inside Failure Block \nError message  ${e.message}")
-                delay(3000)
+                delay(2000)
                 _uiState.update { it.copy(
                     message = e.message,
                     isLoading = false
