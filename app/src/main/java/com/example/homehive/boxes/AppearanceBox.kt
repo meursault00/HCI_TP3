@@ -1,18 +1,15 @@
 package com.example.homehive.boxes
 
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.animateOffsetAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,16 +17,23 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Slider
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
@@ -38,22 +42,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.DrawStyle
-import androidx.compose.ui.graphics.drawscope.clipPath
-import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInRoot
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -62,17 +59,32 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.R
 import com.example.homehive.viewmodels.SettingsVM
 import com.example.homehive.viewmodels.isDarkTheme
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppearanceBox(viewModel : SettingsVM = viewModel()) {
 
     val uiState by viewModel.uiState.collectAsState()
 
-    var isOpen = remember { mutableStateOf(false) }
+    val languages = listOf("English", "Spanish", "French", "German")
+    var selectedLanguage = remember { mutableStateOf(languages[0]) }
+
+    var expanded = remember {
+        mutableStateOf(false)
+    }
+    val icon = if(expanded.value){
+        painterResource(id = R.drawable.upicon)
+    }else{
+        painterResource(id = R.drawable.downicon)
+
+    }
+
+    var isOpen = remember { mutableStateOf(true) }
 
     val height: Dp by animateDpAsState(
-        targetValue = if (isOpen.value) 225.dp else 100.dp,
+        targetValue = if (isOpen.value) 240.dp else 100.dp,
         animationSpec = tween(durationMillis = 100)
     )
 
@@ -85,7 +97,7 @@ fun AppearanceBox(viewModel : SettingsVM = viewModel()) {
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable{ isOpen.value = !isOpen.value },
+                .clickable { isOpen.value = !isOpen.value },
 
             shape = RoundedCornerShape(15.dp),
             color = MaterialTheme.colorScheme.onSecondaryContainer
@@ -96,7 +108,7 @@ fun AppearanceBox(viewModel : SettingsVM = viewModel()) {
                 contentAlignment = Alignment.Center
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.dunes),
+                    painter = painterResource(id = if(isDarkTheme.value) R.drawable.dunesdark else R.drawable.dunes),
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier
@@ -141,132 +153,95 @@ fun AppearanceBox(viewModel : SettingsVM = viewModel()) {
                 }
 
                 if(isOpen.value) {
-                    Column(verticalArrangement = Arrangement.SpaceBetween){
+                    Column(
+                        verticalArrangement = Arrangement.SpaceBetween,
+                    ){
                         Row(
                             modifier = Modifier
-                                .padding(start = 22.dp, end = 27.dp)
+                                .padding(start = 15.dp, end = 15.dp, top = 5.dp, bottom = 5.dp)
                                 .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .background(
-                                        color = if ( uiState.language)  Color(0xFFF4CF6D) else Color(0xCCF3F3F0),
-
-                                        shape = RoundedCornerShape(
-                                            topStart = 15.dp,
-                                            topEnd = 0.dp,
-                                            bottomStart = 15.dp,
-                                            bottomEnd = 0.dp
+                        ){
+                            Surface(
+                                color = MaterialTheme.colorScheme.secondary,
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(15.dp),
+                                shadowElevation = 16.dp
+                            ){
+                                Row(
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                ){
+                                    Text(text = "Dark Mode",
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = MaterialTheme.colorScheme.onPrimary,
+                                        modifier = Modifier
+                                            .padding(start = 22.dp)
+                                            .align(Alignment.CenterVertically)
+                                    )
+                                    Switch(
+                                        checked = isDarkTheme.value,
+                                        onCheckedChange = { isDarkTheme.value = !isDarkTheme.value },
+                                        modifier = Modifier
+                                            .padding(end = 22.dp)
+                                            .align(Alignment.CenterVertically),
+                                        colors = SwitchDefaults.colors(
+                                            checkedThumbColor = MaterialTheme.colorScheme.secondary,
+                                            uncheckedThumbColor = MaterialTheme.colorScheme.background,
+                                            checkedTrackColor = Color(0xFF7FAD74),
+                                            uncheckedTrackColor = MaterialTheme.colorScheme.secondary
                                         )
                                     )
-                                    .clickable {
-                                        viewModel.toggleLanguage()
-                                    }
-                            ) {
-                                Text(
-                                    text = buildAnnotatedString {
-                                        append(stringResource(R.string.en))
-                                    },
-                                    fontSize = 16.sp,
-                                    color = if ( !uiState.language) Color(0xFF7E9694)  else Color.DarkGray ,
-                                    modifier = Modifier.padding(8.dp),
-                                    fontWeight = FontWeight.Bold
-                                )
+                                }
 
                             }
-                            Box(
+                        }
+                        Row(
+                            modifier = Modifier
+                                .padding(start = 15.dp, end = 15.dp, top = 5.dp, bottom = 5.dp)
+                                .fillMaxWidth(),
+                        ){
+                            Surface(
+                                color = MaterialTheme.colorScheme.secondary,
                                 modifier = Modifier
-                                    .background(
-                                        color = if ( !uiState.language)  Color(0xFFF4CF6D) else Color(0xCCF3F3F0),
+                                    .height(50.dp)
+                                    .clickable { expanded.value = !expanded.value }
+                                    .fillMaxWidth(),
+                                shape = RoundedCornerShape(15.dp),
+                                shadowElevation = 16.dp
+                            ){
+                                Row(
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier
+                                        .padding(start = 22.dp, end = 22.dp)
+                                        .fillMaxWidth()
+                                ) {
+                                    LanguageDropdownMenu(
+                                        languages = languages,
+                                        selectedLanguage = selectedLanguage.value,
+                                        onLanguageSelected = { language ->
+                                            selectedLanguage.value = language;
+                                            viewModel.toggleLanguage()
+                                        },
 
-                                        shape = RoundedCornerShape(
-                                            topStart = 0.dp,
-                                            topEnd = 15.dp,
-                                            bottomStart = 0.dp,
-                                            bottomEnd = 15.dp
-                                        )
+                                        expanded = expanded,
+
                                     )
-                                    .clickable {
-                                        viewModel.toggleLanguage()
-                                    }
-                            ) {
-                                Text(
-                                    text = buildAnnotatedString {
-                                        append(stringResource(R.string.sp))
-                                    },
-                                    fontSize = 16.sp,
-                                    color = if ( uiState.language) Color(0xFF7E9694)  else Color.DarkGray ,
-                                    modifier = Modifier.padding(8.dp),
-                                    fontWeight = FontWeight.Bold
-
-                                )
+                                    Icon(
+                                        painter = icon,
+                                        contentDescription = null,
+                                        tint = MaterialTheme.colorScheme.onPrimary,
+                                    )
+                                }
                             }
                         }
 
-                        Row(
-                            modifier = Modifier
-                                .padding(start = 22.dp, end = 27.dp, bottom = 8.dp, top = 16.dp)
-                                .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .background(
-                                        color = if (!isDarkTheme.value) Color(0xFFF4CF6D) else Color(0xCCF3F3F0),
 
-                                        shape = RoundedCornerShape(
-                                            topStart = 15.dp,
-                                            topEnd = 0.dp,
-                                            bottomStart = 15.dp,
-                                            bottomEnd = 0.dp
-                                        )
-                                    )
-                                    .clickable {
-                                        viewModel.toggleTheme()
-                                    }
-                            ) {
-                                Text(
-                                    text = buildAnnotatedString {
-                                        append(stringResource(R.string.light_mode))
-                                    },
-                                    fontSize = 16.sp,
-                                    color = if (isDarkTheme.value) Color(0xFF7E9694) else Color.DarkGray,
-                                    modifier = Modifier.padding(8.dp),
-                                    fontWeight = FontWeight.Bold
-                                )
+                        // --------------
 
-                            }
-                            Box(
-                                modifier = Modifier
-                                    .background(
-                                        color = if (isDarkTheme.value) Color(0xFFF4CF6D) else Color(0xCCF3F3F0),
 
-                                        shape = RoundedCornerShape(
-                                            topStart = 0.dp,
-                                            topEnd = 15.dp,
-                                            bottomStart = 0.dp,
-                                            bottomEnd = 15.dp
-                                        )
-                                    )
-                                    .clickable {
-                                        viewModel.toggleTheme()
-                                    }
-                            ) {
-                                Text(
-                                    text = buildAnnotatedString {
-                                        append(stringResource(R.string.dark_mode))
-                                    },
-                                    fontSize = 16.sp,
-                                    color = if (!isDarkTheme.value) Color(0xFF7E9694) else Color.DarkGray,
-                                    modifier = Modifier.padding(8.dp),
-                                    fontWeight = FontWeight.Bold
 
-                                )
-                            }
-                        }
                     }
 
                 }
@@ -275,4 +250,53 @@ fun AppearanceBox(viewModel : SettingsVM = viewModel()) {
     }
 }
 
+@Composable
+fun LanguageDropdownMenu(
+    languages: List<String>,
+    selectedLanguage: String,
+    onLanguageSelected: (String) -> Unit,
+    expanded: MutableState<Boolean>
+) {
 
+    Box {
+        Text(
+            text = selectedLanguage,
+            modifier = Modifier,
+            color = MaterialTheme.colorScheme.onPrimary,
+            style = MaterialTheme.typography.bodyMedium,
+
+            )
+
+        DropdownMenu(
+            expanded = expanded.value,
+            onDismissRequest = { expanded.value = false },
+            modifier = Modifier
+                .background(
+                    color = MaterialTheme.colorScheme.secondary,
+                )
+                .width(200.dp)
+        ) {
+            languages.forEach { language ->
+                DropdownMenuItem(
+                    text  = {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = language,
+                                color = MaterialTheme.colorScheme.onPrimary,
+                                style = MaterialTheme.typography.bodyMedium,
+
+                                )
+                        }
+                    },
+                    onClick = {
+                        expanded.value = false
+                        onLanguageSelected(language)
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
+    }
+}

@@ -26,7 +26,9 @@ private val DarkColorScheme = darkColorScheme(
     onBackground = Color(0xFF325052),
     onSurface = Color(0xFFFFFFFF),
     onTertiaryContainer = Color(0xFFA0CCCF),
-)
+    inversePrimary = Color(0xFFEFE5C5),
+    inverseSurface = Color(0xFF202020),
+    )
 
 private val LightColorScheme = lightColorScheme(
     primary = Color(0xFF1C4E3F), //FF203831 // INTERESANTE = FF4F7469 // FF84A89D // FF1C4E3F
@@ -41,7 +43,9 @@ private val LightColorScheme = lightColorScheme(
     onBackground = Color(0xFFA0CCCF), // TAP BACKGROUND
     onSurface = Color(0xFF000000),
     onTertiaryContainer = Color(0xFF2B4E5C),
-)
+    inversePrimary = Color(0xFFEFE5C5),
+    inverseSurface = Color(0xFF555555),
+    )
 
 @Composable
 fun HomeHiveTheme(
