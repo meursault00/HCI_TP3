@@ -52,7 +52,6 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
     val uiState by ovenVM.uiState.collectAsState()
     val context = LocalContext.current;
     
-    val ovenState = remember { mutableStateOf(uiState.power == "on") }
     val isOpen = remember { mutableStateOf(false) }
 
     val height: Dp by animateDpAsState(
@@ -107,14 +106,14 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
 
 
 
-                if (!ovenState.value) {
+                if (uiState.power != "on") {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
                             .background(Color.Black.copy(alpha = 0.3f))
                     )
                 }
-                if(ovenState.value){
+                if(uiState.power == "on"){
                     Text(
                         text = "${uiState.ovenTemperature}ºC",
                         fontWeight = FontWeight.Bold,
@@ -125,8 +124,7 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
                 }
                 Button(
                     onClick = { 
-                                ovenState.value = !ovenState.value
-                                sendCustomNotification(context, "Oven", if(ovenState.value) "Turned On" else "Turned Off")
+                                sendCustomNotification(context, "Oven", if(uiState.power == "on") "Turned On" else "Turned Off")
                                 ovenVM.togglePower() 
                               },
                     elevation = ButtonDefaults.buttonElevation(
@@ -134,13 +132,13 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
                         pressedElevation = 0.0.dp,
                     ),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if(ovenState.value) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.background,
+                        containerColor = if(uiState.power == "on") MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.background,
                     ),
                     modifier = Modifier.padding(top = 70.dp)
                     ) {
-                    Text(text = if (ovenState.value) stringResource(id = R.string.turn_off) else stringResource(id = R.string.turn_on),
+                    Text(text = if (uiState.power == "on") stringResource(id = R.string.turn_off) else stringResource(id = R.string.turn_on),
                         style = MaterialTheme.typography.bodySmall,
-                        color = if(ovenState.value) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.secondary,
+                        color = if(uiState.power == "on") MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.secondary,
                         )
                 }
 
