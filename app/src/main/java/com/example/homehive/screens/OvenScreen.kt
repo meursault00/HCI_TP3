@@ -163,7 +163,7 @@ fun OvenScreen(
                             )
                         ) {
                             Text(
-                                text = "PUtaku",
+                                text = if(ovenState.value) stringResource(id = R.string.turn_off) else stringResource(id = R.string.turn_on),
                                 color = MaterialTheme.colorScheme.background,
                             )
                         }
@@ -230,7 +230,7 @@ fun OvenScreen(
                                 )
                             ) {
                                 AnimatedTextOverflow(
-                                    text = "OFF",
+                                    text = stringResource(id = R.string.off),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = Color(0xFF2B4E5C)
                                 )
@@ -251,7 +251,7 @@ fun OvenScreen(
                                 )
                             ) {
                                 AnimatedTextOverflow(
-                                    text = "ECONOMIC",
+                                    text = stringResource(id = R.string.economic),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = Color(0xFF2B4E5C)
                                 )
@@ -271,7 +271,7 @@ fun OvenScreen(
                                 )
                             ) {
                                 AnimatedTextOverflow(
-                                    text = "COMPLETE",
+                                    text = stringResource(id = R.string.complete),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = Color(0xFF2B4E5C)
                                 )
@@ -302,7 +302,7 @@ fun OvenScreen(
                                 )
                             ) {
                                 AnimatedTextOverflow(
-                                    text = "OFF",
+                                    text = stringResource(id = R.string.off),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = Color(0xFF2B4E5C)
                                 )
@@ -322,7 +322,7 @@ fun OvenScreen(
                                 )
                             ) {
                                 AnimatedTextOverflow(
-                                    text = "ECONOMIC",
+                                    text = stringResource(id = R.string.economic),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = Color(0xFF2B4E5C)
                                 )
@@ -342,7 +342,7 @@ fun OvenScreen(
                                 )
                             ) {
                                 AnimatedTextOverflow(
-                                    text = "CONVECTION",
+                                    text = stringResource(id = R.string.conventional),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = Color(0xFF2B4E5C)
                                 )
@@ -373,7 +373,7 @@ fun OvenScreen(
                                 )
                             ) {
                                 AnimatedTextOverflow(
-                                    text = "CONVECTION",
+                                    text = stringResource(id = R.string.conventional),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = Color(0xFF2B4E5C)
                                 )
@@ -393,7 +393,7 @@ fun OvenScreen(
                                 )
                             ) {
                                 AnimatedTextOverflow(
-                                    text = "ABOVE",
+                                    text = stringResource(id = R.string.above),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = Color(0xFF2B4E5C)
                                 )
@@ -413,74 +413,9 @@ fun OvenScreen(
                                 )
                             ) {
                                 AnimatedTextOverflow(
-                                    text = "BELOW",
+                                    text = stringResource(id = R.string.below),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = Color(0xFF2B4E5C)
-                                )
-                            }
-                        }
-                        Row(Modifier.padding(vertical = 16.dp)){
-
-                            Button(
-                                onClick = { navController.navigate("home") },
-                                shape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp, bottomStart = 15.dp, bottomEnd = 15.dp),
-                                modifier = Modifier
-                                    .height(45.dp)
-                                    .weight(1f)
-                                    .padding(horizontal = 8.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color(0xEEF3F3F0)
-                                )
-                            ) {
-                                Text(
-                                    text = stringResource(id = R.string.cancel),
-                                    fontWeight = FontWeight.Bold,
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = Color(0xEE2B4E5C)
-                                )
-                            }
-
-                            Button(
-                                onClick = {
-                                    ovenVM.setOvenTemperature(ovenTemperature.value)
-                                    ovenVM.setPower(ovenState.value)
-
-                                    when (grillMode.value) {
-                                        GrillMode.OFF -> ovenVM.setGrillMode("off")
-                                        GrillMode.ECONOMIC -> ovenVM.setGrillMode("eco")
-                                        GrillMode.COMPLETE -> ovenVM.setGrillMode("large")
-                                    }
-
-
-                                    when (convectionMode.value) {
-                                        ConvectionMode.OFF -> ovenVM.setConvectionMode("off")
-                                        ConvectionMode.ECONOMIC -> ovenVM.setConvectionMode("eco")
-                                        ConvectionMode.CONVENTIONAL -> ovenVM.setConvectionMode("normal")
-                                    }
-
-                                    when (sourceMode.value) {
-                                        SourceMode.CONVENTIONAL -> ovenVM.setHeatMode("conventional")
-                                        SourceMode.ABOVE -> ovenVM.setHeatMode("top")
-                                        SourceMode.BELOW -> ovenVM.setHeatMode("bottom")
-                                    }
-
-
-                                    navController.navigate("home")
-                                },
-                                shape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp, bottomStart = 15.dp, bottomEnd = 15.dp),
-                                modifier = Modifier
-                                    .height(45.dp)
-                                    .weight(1f)
-                                    .padding(horizontal = 8.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color(0xEEF3F3F0)
-                                )
-                            ) {
-                                Text(
-                                    text = stringResource(id = R.string.save),
-                                    fontWeight = FontWeight.Bold,
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = Color(0xEE2B4E5C)
                                 )
                             }
                         }
