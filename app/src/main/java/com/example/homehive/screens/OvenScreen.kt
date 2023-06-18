@@ -45,6 +45,7 @@ import com.example.homehive.viewmodels.OvenVM
 import java.io.Console
 
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.stringResource
 import com.example.homehive.library.AnimatedTextOverflow
 
 enum class GrillMode {
@@ -139,7 +140,7 @@ fun OvenScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = "Oven",
+                            text = stringResource(id = R.string.oven),
                             fontWeight = FontWeight.Bold,
                             style = MaterialTheme.typography.headlineLarge,
                             color = MaterialTheme.colorScheme.onPrimary,
@@ -180,7 +181,7 @@ fun OvenScreen(
                         verticalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = "Temperature: ${ovenTemperature.value}ºC",
+                            text =  stringResource(id = R.string.temperature) + " ${ovenTemperature.value}ºC",
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color(0xFF2B4E5C),
                             fontWeight = FontWeight.Bold,
@@ -207,7 +208,7 @@ fun OvenScreen(
 
                         // GRILL MODE BUTTONS
                         Text(
-                            text = "Grill Mode",
+                            text = stringResource(id = R.string.grill_mode),
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color(0xFF2B4E5C),
                             fontWeight = FontWeight.Bold,
@@ -279,7 +280,7 @@ fun OvenScreen(
 
                         // CONVECTION MODE BUTTONS
                         Text(
-                            text = "Convection Mode",
+                            text = stringResource(id = R.string.convection_mode),
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color(0xFF2B4E5C),
                             fontWeight = FontWeight.Bold,
@@ -350,7 +351,7 @@ fun OvenScreen(
 
                         // SOURCE MODE BUTTONS
                         Text(
-                            text = "Source Mode",
+                            text = stringResource(id = R.string.heat_mode),
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color(0xFF2B4E5C),
                             fontWeight = FontWeight.Bold,
@@ -432,7 +433,7 @@ fun OvenScreen(
                                 )
                             ) {
                                 Text(
-                                    text = "CANCEL",
+                                    text = stringResource(id = R.string.cancel),
                                     fontWeight = FontWeight.Bold,
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = Color(0xEE2B4E5C)
@@ -476,7 +477,7 @@ fun OvenScreen(
                                 )
                             ) {
                                 Text(
-                                    text = "SAVE",
+                                    text = stringResource(id = R.string.save),
                                     fontWeight = FontWeight.Bold,
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = Color(0xEE2B4E5C)

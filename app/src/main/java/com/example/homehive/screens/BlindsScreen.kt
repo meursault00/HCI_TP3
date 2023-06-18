@@ -32,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -65,7 +66,7 @@ fun BlindsScreen(navController: NavController, innerPadding: PaddingValues?) {
             color = MaterialTheme.colorScheme.tertiary
         ) {
             Text(
-                text = "Blinds",
+                text = stringResource(id = R.string.blinds),
                 fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.headlineLarge,
                 color = MaterialTheme.colorScheme.onPrimary,

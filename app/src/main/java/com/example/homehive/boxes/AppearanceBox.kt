@@ -172,7 +172,7 @@ fun AppearanceBox(viewModel : SettingsVM = viewModel()) {
                                     modifier = Modifier
                                         .fillMaxWidth()
                                 ){
-                                    Text(text = "Dark Mode",
+                                    Text(text = stringResource(id = R.string.dark_mode),
                                         style = MaterialTheme.typography.bodyMedium,
                                         color = MaterialTheme.colorScheme.onPrimary,
                                         modifier = Modifier

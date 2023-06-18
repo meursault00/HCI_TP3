@@ -82,7 +82,7 @@ fun ProfileBox() {
                         .offset { IntOffset(x = 0  , y = -140) }
                 )
                 Text(
-                    text = "Profile",
+                    text = stringResource(id = R.string.profile),
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.onPrimary,
@@ -166,18 +166,15 @@ fun ProfileBox() {
 
                             ) {
                                 Text(
-                                    text = buildAnnotatedString {
-                                        append(stringResource(R.string.username))
-                                    },
+                                    text = stringResource(R.string.username),
+
                                     fontSize = 24.sp,
                                     color = MaterialTheme.colorScheme.onPrimary,
 
                                     fontWeight = FontWeight.Bold
                                 )
                                 Text(
-                                    text = buildAnnotatedString {
-                                        append(stringResource(R.string.household))
-                                    },
+                                    text = stringResource(R.string.household),
                                     fontSize = 16.sp,
                                     color = MaterialTheme.colorScheme.onPrimary,
                                     fontWeight = FontWeight.Bold

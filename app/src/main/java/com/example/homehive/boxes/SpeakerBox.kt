@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -75,7 +76,7 @@ fun SpeakerBox(onClick: () -> Unit, speakerVM : SpeakerVM = viewModel()) {
                         .padding(top = 16.dp)
                 )
                 Text(
-                    text = "Speaker",
+                    text = stringResource(id = R.string.speaker),
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.onPrimary,
@@ -90,7 +91,7 @@ fun SpeakerBox(onClick: () -> Unit, speakerVM : SpeakerVM = viewModel()) {
                         .align(Alignment.Center),
                 ) {
                     Text(
-                        text = "CurrentSong",
+                        text = stringResource(id = R.string.current_song),
                         color = MaterialTheme.colorScheme.onPrimary,
                     )
                     Row(

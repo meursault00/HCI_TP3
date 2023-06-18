@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -57,7 +58,7 @@ fun DrawerHeader() {
             )
             Column() {
                 Text(text = "Gabor", fontSize = 20.sp)
-                Text(text = "Chris' Home", fontSize = 15.sp, color = Color(0xFF777777))
+                Text(text = stringResource(id = R.string.chrishome), fontSize = 15.sp, color = Color(0xFF777777))
             }
         }
     }

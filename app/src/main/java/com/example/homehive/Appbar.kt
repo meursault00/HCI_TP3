@@ -55,6 +55,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
@@ -108,7 +109,7 @@ fun AppBar(
                     modifier = Modifier.clickable { navController.navigate("home") }
                 ) {
                     Text(
-                        text = "HomeHive",
+                        text = stringResource(id = R.string.homehive),
                         fontSize = 30.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFFEECC66)

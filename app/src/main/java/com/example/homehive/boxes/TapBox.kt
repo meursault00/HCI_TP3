@@ -57,6 +57,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -121,7 +122,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                     modifier = Modifier
                 )
                 Text(
-                    text = "Tap",
+                    text = stringResource(id = R.string.tap),
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.onPrimary,
@@ -183,7 +184,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                             color = Color(0xFFD3DEE0)
                         )
                         Text(
-                            text = "Dispensing ${ dispenseValue.value } ${ dispenseUnit.value }",
+                            text = stringResource(id = R.string.dispensing)+ "${ dispenseValue.value } ${ dispenseUnit.value }",
                             style = MaterialTheme.typography.bodySmall,
                             color = Color(0xFFD3DEE0),
                             modifier = Modifier
@@ -212,7 +213,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                         containerColor = if(isOn.value) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.background,
                     )
                 ) {
-                    Text(text = if (isOn.value) "Turn Off" else "Turn On",
+                    Text(text = if (isOn.value) stringResource(id = R.string.turn_off) else stringResource(id = R.string.turn_on),
                         style = MaterialTheme.typography.bodySmall,
                         color = if(isOn.value) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.secondary,
 
@@ -245,7 +246,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                                 cursorColor = Color(0xFFD3DEE0),
                                 textColor = Color(0xFFD3DEE0),
                             ),
-                            label = { Text(text = "Value", color = Color(0xFFD3DEE0)) },
+                            label = { Text(text = stringResource(id = R.string.value), color = Color(0xFFD3DEE0)) },
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Number,
                                 imeAction = ImeAction.Done
@@ -347,7 +348,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
 
                             )
                         ) {
-                            Text(text = "Dispense",
+                            Text(text = stringResource(id = R.string.dispense),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.background,
 

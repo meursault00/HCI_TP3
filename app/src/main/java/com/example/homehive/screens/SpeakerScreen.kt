@@ -65,6 +65,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -129,7 +130,7 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                         )
                                 ) {
                                     Text(
-                                        text = "Speaker",
+                                        text = stringResource(id = R.string.speaker),
                                         color = Color(0xFFFFFFFF),
                                         style = MaterialTheme.typography.headlineLarge,
                                         fontWeight = FontWeight.Bold,
@@ -431,7 +432,7 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                         .width(430.dp),
                     shape = RoundedCornerShape(15.dp),
                 ){
-                    Text(text = "MEDIUM")
+                    Text(text = stringResource(id = R.string.medium))
                 }
             }
 
@@ -469,7 +470,7 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                         )
                                 ) {
                                     Text(
-                                        text = "Speaker",
+                                        text = stringResource(id = R.string.speaker),
                                         color = Color(0xFFFFFFFF),
                                         style = MaterialTheme.typography.headlineLarge,
                                         fontWeight = FontWeight.Bold,

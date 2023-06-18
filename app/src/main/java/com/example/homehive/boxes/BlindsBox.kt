@@ -40,6 +40,7 @@ import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -102,7 +103,7 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                         .offset { IntOffset(x = auxBlindsPosition.value  , y = 0) }
                 )
                 Text(
-                    text = "Blinds",
+                    text = stringResource(id = R.string.blinds),
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.onPrimary,
@@ -166,7 +167,7 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                         )
                 ) {
                     Text(
-                        text = if(!isClosing) "Open" else "Close",
+                        text = if(!isClosing) stringResource(id = R.string.open) else stringResource(id = R.string.close),
                         color = if(!isClosing) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.secondary
 
                     )

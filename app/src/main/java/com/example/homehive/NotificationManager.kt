@@ -77,17 +77,6 @@ private fun getDefaultPendingIntent(context: Context): PendingIntent {
     return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 }
 
-// Todavia no esta en uso
-@Composable
-fun NotificationContent() {
-    Log.d("HomeHiveLog","Notification Content Built")
-    Column {
-        Text(text = "Wubbadubbadubdub")
-        Button(onClick = { /* Perform action */ }) {
-            Text(text = "Please Kill Me")
-        }
-    }
-}
 
 // Todavia no esta en uso, no funciona correctamente
 @Composable

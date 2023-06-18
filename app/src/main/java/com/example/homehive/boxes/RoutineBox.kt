@@ -41,6 +41,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
@@ -88,7 +89,7 @@ fun RoutineBox(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "Routine",
+                    text = stringResource(id = R.string.routine),
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.onPrimary,
@@ -111,13 +112,13 @@ fun RoutineBox(
                         )
                 ) {
                     Text(
-                        "RUN",
+                        stringResource(id = R.string.run),
                         color = MaterialTheme.colorScheme.secondary
 
                     )
                 }
                 Text(
-                    text = "3 Actions",
+                    text = stringResource(id = R.string.actions),
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary,

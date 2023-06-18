@@ -57,7 +57,7 @@ fun AccountBox() {
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable{ isOpen.value = !isOpen.value },
+                .clickable { isOpen.value = !isOpen.value },
 
             shape = RoundedCornerShape(15.dp),
             color = MaterialTheme.colorScheme.onSecondaryContainer
@@ -75,7 +75,7 @@ fun AccountBox() {
                         .offset { IntOffset(x = 0  , y = -140) }
                 )
                 Text(
-                    text = "Account",
+                    text = stringResource(id = R.string.account),
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.onPrimary,
@@ -119,9 +119,7 @@ fun AccountBox() {
                             .padding(top = 25.dp, start = 25.dp)
                         ) {
                             Text(
-                                text = buildAnnotatedString {
-                                    append(stringResource(R.string.manage_account))
-                                },
+                                text = stringResource(R.string.manage_account),
                                 fontSize = MaterialTheme.typography.bodyMedium.fontSize,
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onPrimary,

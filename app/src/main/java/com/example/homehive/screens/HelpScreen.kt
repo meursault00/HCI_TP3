@@ -47,9 +47,8 @@ fun HelpScreen(
                     .padding(start = 22.dp, end = 22.dp, top = 12.dp)
             ) {
                 Text(
-                    text = buildAnnotatedString {
-                        append(stringResource(R.string.help))
-                    },
+                    text =stringResource(R.string.help),
+
                     fontSize = 20.sp,
                     color = Color(0xFFEECC66),
                     fontWeight = FontWeight.Bold
@@ -70,9 +69,8 @@ fun HelpScreen(
                     .padding(start = 22.dp, end = 22.dp,  bottom = 10.dp)
             ) {
                 Text(
-                    text = buildAnnotatedString {
-                        append(stringResource(R.string.text_help))
-                    },
+                    text = stringResource(R.string.text_help),
+
                     fontSize = 12.sp,
                     color = Color(0xFF7E9694),
                 )
@@ -83,9 +81,8 @@ fun HelpScreen(
                 .padding(start = 22.dp, end = 22.dp, bottom = 8.dp)
             ) {
                 Text(
-                    text = buildAnnotatedString {
-                        append(stringResource(R.string.mail_1))
-                    },
+                    text = stringResource(R.string.mail_1),
+
                     fontSize = 12.sp,
                     color = Color(0xFF7E9694),
                     fontWeight = FontWeight.Bold
@@ -96,9 +93,8 @@ fun HelpScreen(
                 .padding(start = 22.dp, end = 22.dp, bottom = 8.dp)
             ) {
                 Text(
-                    text = buildAnnotatedString {
-                        append(stringResource(R.string.mail_2))
-                    },
+                    text = stringResource(R.string.mail_2),
+
                     fontSize = 12.sp,
                     color = Color(0xFF7E9694),
                     fontWeight = FontWeight.Bold
@@ -109,9 +105,8 @@ fun HelpScreen(
                 .padding(start = 22.dp, end = 22.dp, bottom = 8.dp)
             ) {
                 Text(
-                    text = buildAnnotatedString {
-                        append(stringResource(R.string.mail_3))
-                    },
+                    text = stringResource(R.string.mail_3),
+
                     fontSize = 12.sp,
                     color = Color(0xFF7E9694),
                     fontWeight = FontWeight.Bold
@@ -122,9 +117,8 @@ fun HelpScreen(
                 .padding(start = 22.dp, end = 22.dp, bottom = 8.dp)
             ) {
                 Text(
-                    text = buildAnnotatedString {
-                        append(stringResource(R.string.mail_4))
-                    },
+                    text = stringResource(R.string.mail_4),
+
                     fontSize = 12.sp,
                     color = Color(0xFF7E9694),
                     fontWeight = FontWeight.Bold

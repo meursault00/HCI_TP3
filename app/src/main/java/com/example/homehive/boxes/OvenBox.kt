@@ -33,6 +33,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
@@ -87,7 +88,7 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
                     modifier = Modifier
                 )
                 Text(
-                    text = "Oven",
+                    text = stringResource(id = R.string.oven),
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.onPrimary,
@@ -131,7 +132,7 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
                     ),
                     modifier = Modifier.padding(top = 70.dp)
                     ) {
-                    Text(text = if (ovenState.value) "Turn Off" else "Turn On",
+                    Text(text = if (ovenState.value) stringResource(id = R.string.turn_off) else stringResource(id = R.string.turn_on),
                         style = MaterialTheme.typography.bodySmall,
                         color = if(ovenState.value) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.secondary,
                         )
@@ -159,7 +160,7 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
                                 .align(Alignment.Center)
                         ){
                             Text(
-                                text = "Grill Mode " ,
+                                text = stringResource(id = R.string.grill_mode) ,
                                 fontSize = MaterialTheme.typography.bodyMedium.fontSize,
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.background,
@@ -177,7 +178,7 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
                                     .fillMaxWidth()
                             )
                             Text(
-                                text = "Convection Mode " ,
+                                text = stringResource(id = R.string.convection_mode) ,
                                 fontSize = MaterialTheme.typography.bodyMedium.fontSize,
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.background,
@@ -195,7 +196,7 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
                                     .fillMaxWidth()
                             )
                             Text(
-                                text = "Heat Mode " ,
+                                text = stringResource(id = R.string.heat_mode) ,
                                 fontSize = MaterialTheme.typography.bodyMedium.fontSize,
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.background,

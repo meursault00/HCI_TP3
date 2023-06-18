@@ -4,7 +4,6 @@
     <string name="goto_other_screen">Go To Other Screen</string>
     <string name="goto_myapp2_screen">Go To Myapp2</string>
     <string name="received_id">Received id %1$d</string>
-
     <string name="loading">Loading devices…</string>
     <string name="load_devices">LOAD DEVICES</string>
     <string name="dismiss">DISMISS</string>
@@ -35,4 +34,39 @@
     <string name="mail_3">flopezmenardi@itba.edu.ar</string>
     <string name="mail_4">jgirod@itba.edu.ar</string>
     <string name="text_help">We developed this app with all of our love and devotion so if you find any bugs in this app please contact any of the following mails as soon as possible :</string>
+    <string name="firdge">Fridge</string>
+    <string name="fridge_at">Fridge at</string>
+    <string name="freezer_at">Freezer at</string>
+    <string name="mode">Mode</string>
+    <string name="default_s">Default</string>
+    <string name="routine">Routine</string>
+    <string name="run">Run\n</string>
+    <string name="actions">Actions</string>
+    <string name="homehive">HomeHive</string>
+    <string name="chrishome">Chris\' Home</string>
+    <string name="blinds">Blinds</string>
+    <string name="open">Open\n</string>
+    <string name="close">Close</string>
+    <string name="party">Party</string>
+    <string name="vacation">vacation</string>
+    <string name="oven">Oven</string>
+    <string name="turn_off">Turn Off</string>
+    <string name="turn_on">Turn On</string>
+    <string name="grill_mode">Grill Mode</string>
+    <string name="convection_mode">Convection Mode</string>
+    <string name="heat_mode">Heat Mode</string>
+    <string name="profile">Profile</string>
+    <string name="speaker">Speaker</string>
+    <string name="current_song">Current Song</string>
+    <string name="tap">Tap</string>
+    <string name="dispensing">Dispensing</string>
+    <string name="value">Value</string>
+    <string name="medium">Medium</string>
+    <string name="loading_routines">Loading Routines</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="temperature">Temperature</string>
+    <string name="loading_routines_and_devices">Loading Routines and Devices</string>
+    <string name="loading_devices">Loading Devices</string>
+    <string name="dispense">Dispense</string>
 </resources>

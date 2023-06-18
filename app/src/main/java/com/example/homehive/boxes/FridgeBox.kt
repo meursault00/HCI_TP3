@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -49,7 +50,6 @@ fun FridgeBox(
 ) {
 
     val uiState by fridgeVM.uiState.collectAsState();
-
     var isOpen = remember { mutableStateOf(false) };
     var currentMode = uiState.mode;
     var auxTemperature  = remember { mutableStateOf(uiState.temperature)};
@@ -71,7 +71,7 @@ fun FridgeBox(
             modifier = Modifier
                 .height(height)
                 .width(200.dp)
-                .clickable{ isOpen.value = !isOpen.value },
+                .clickable { isOpen.value = !isOpen.value },
 
             shape = RoundedCornerShape(15.dp),
         ) {
@@ -88,7 +88,7 @@ fun FridgeBox(
                 )
 
                 Text(
-                    text = "Fridge",
+                    text = stringResource(id = R.string.firdge),
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.onTertiary,
@@ -129,11 +129,11 @@ fun FridgeBox(
                 else{
                     Column(
                         modifier = Modifier
-                            .padding(start = 10.dp,top = 5.dp,  end = 10.dp)
+                            .padding(start = 10.dp, top = 5.dp, end = 10.dp)
                             .align(Alignment.Center)
                     ) {
                         Text(
-                            text = "Fridge at ${auxTemperature.value}ºC",
+                            text =  stringResource(id = R.string.fridge_at ) + "${auxTemperature.value}ºC",
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onTertiary,
                             fontWeight = FontWeight.Bold,
@@ -157,7 +157,7 @@ fun FridgeBox(
                             modifier = Modifier
                         )
                         Text(
-                            text = "Freezer at ${auxFreezerTemperature.value}ºC",
+                            text =  stringResource(id = R.string.freezer_at) +" ${auxFreezerTemperature.value}ºC",
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onTertiary,
                             fontWeight = FontWeight.Bold,
@@ -182,7 +182,7 @@ fun FridgeBox(
 
                         // MODE BUTTONS
                         Text(
-                            text = "Mode",
+                            text = stringResource(id = R.string.mode),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onTertiary,
                             fontWeight = FontWeight.Bold,
@@ -208,7 +208,7 @@ fun FridgeBox(
                             ),
                         ) {
                             Text(
-                                text = "Default",
+                                text = stringResource(id = R.string.default_s),
                                 fontWeight = FontWeight.Bold,
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = if (currentMode == "default") MaterialTheme.colorScheme.onTertiaryContainer else MaterialTheme.colorScheme.onTertiary,
@@ -235,7 +235,7 @@ fun FridgeBox(
                             ),
                         ) {
                             Text(
-                                text = "Party",
+                                text = stringResource(id = R.string.party),
                                 fontWeight = FontWeight.Bold,
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = if (currentMode == "party") MaterialTheme.colorScheme.onTertiaryContainer else MaterialTheme.colorScheme.onTertiary,
@@ -262,7 +262,7 @@ fun FridgeBox(
                             ),
                         ) {
                             Text(
-                                text = "Vacation",
+                                text = stringResource(id = R.string.vacation),
                                 fontWeight = FontWeight.Bold,
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = if (currentMode == "vacation") MaterialTheme.colorScheme.onTertiaryContainer else MaterialTheme.colorScheme.onTertiary,

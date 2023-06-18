@@ -40,6 +40,7 @@ import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -93,7 +94,7 @@ fun DoorBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                         .offset { IntOffset(x = blindState.position  , y = 0) }
                 )
                 Text(
-                    text = "Blinds",
+                    text = stringResource(id = R.string.blinds),
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.primary,
@@ -157,7 +158,7 @@ fun DoorBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                             )
                     ) {
                         Text(
-                            text = "Open",
+                            text = stringResource(id = R.string.open),
                             color = MaterialTheme.colorScheme.background
 
                         )
