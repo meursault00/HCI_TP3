@@ -14,13 +14,13 @@ import kotlinx.coroutines.launch
 
 class TapVM(
     deviceID : String?,
-    initialState: String?,
+    initialStatus: String?,
     val devicesVM: DevicesVM
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(
         TapUIState(
         id = deviceID ?: "",
-        state = initialState ?: "closed",
+        status = initialStatus ?: "closed",
     )
     )
     val uiState: StateFlow<TapUIState> = _uiState.asStateFlow()
@@ -30,7 +30,7 @@ class TapVM(
             val updatedDevice = devicesVM.fetchADevice(id = uiState.value.id)
             _uiState.update{currentState ->
                 currentState.copy(
-                    state = updatedDevice.result?.state?.status ?: "",
+                    status = updatedDevice.result?.state?.status ?: "",
                 )
             }
         }
@@ -38,20 +38,20 @@ class TapVM(
 
     fun setOpen(){
         _uiState.update{currentState ->
-            currentState.copy(state = "open")
+            currentState.copy(status = "opened")
         }
         devicesVM.editADevice(uiState.value.id, "open", listOf())
     }
     fun setClose(){
         _uiState.update{currentState ->
-            currentState.copy(state = "closed")
+            currentState.copy(status = "closed")
         }
         devicesVM.editADevice(uiState.value.id, "close", listOf())
     }
 
     fun dispense( amount : Int, unit : String ){
         _uiState.update{currentState ->
-            currentState.copy(state = "open")
+            currentState.copy(status = "opened")
         }
         devicesVM.editADevice(uiState.value.id, "dispense", listOf(amount, unit))
 

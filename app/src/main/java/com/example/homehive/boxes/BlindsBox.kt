@@ -60,11 +60,10 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
 
     val blindState by blindsVM.uiState.collectAsState();
 
-    var isBlindOpen = blindState.position > 0f;
-    var isClosing = blindState.status == "closing" || blindState.status == "closed";
-    var auxBlindsPosition = remember {
-        mutableStateOf(blindState.position)
-    }
+    var isBlindOpen = remember { mutableStateOf(blindState.status == "opened")}
+    var isBlindClosed = remember { mutableStateOf(blindState.status == "closed") }
+    var isClosing = remember { mutableStateOf(blindState.status == "closing" || blindState.status == "closed")}
+    var auxBlindsPosition = remember { mutableStateOf(blindState.position) }
 
     if ( Globals.updates > 0 ){
         blindsVM.sync()
@@ -127,7 +126,7 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                         .align(Alignment.Center)
                 )
 
-                if (!isBlindOpen) {
+                if (blindState.status == "closed") {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -161,19 +160,18 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                     )
                 }
                 Button( // CHECKEAR CONDICIONES DE ESTADO
-                    onClick = { /*TODO*/ },
+                    onClick = { blindsVM.toggleBlinds() },
                     elevation = ButtonDefaults.buttonElevation(
                         defaultElevation = 30.dp,
                         pressedElevation = 0.0.dp,
                     ),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if(!isClosing) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.background,
-
-                        )
+                        containerColor = if(!(blindState.status == "closing" || blindState.status == "closed")) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.background,
+                    )
                 ) {
                     Text(
-                        text = if(!isClosing) stringResource(id = R.string.open) else stringResource(id = R.string.close),
-                        color = if(!isClosing) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.secondary
+                        text = if(!(blindState.status == "closing" || blindState.status == "closed")) stringResource(id = R.string.close) else stringResource(id = R.string.open),
+                        color = if(!(blindState.status == "closing" || blindState.status == "closed")) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.secondary
 
                     )
                 }

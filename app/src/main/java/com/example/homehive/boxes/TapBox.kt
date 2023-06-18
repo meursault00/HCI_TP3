@@ -80,7 +80,8 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
     val context = LocalContext.current;
 
     var isOpen = remember { mutableStateOf(false) };
-    var isOn = remember { mutableStateOf(false) };
+    var isOn  = remember { mutableStateOf(tapState.status == "opened") };
+//    var isOn = remember { mutableStateOf(false) };
     var isDispensing = remember { mutableStateOf(false) };
 
     var dispenseValue = remember { mutableStateOf("") };
