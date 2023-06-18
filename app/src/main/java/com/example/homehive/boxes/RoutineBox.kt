@@ -56,7 +56,8 @@ import com.example.homehive.viewmodels.RoutineVM
 
 @Composable
 fun RoutineBox(
-    routineVM : RoutineVM = viewModel()
+    routineVM : RoutineVM = viewModel(),
+    isMinimalist : Boolean = false,
 ) {
     val uiState by routineVM.uiState.collectAsState()
     var isOpen = remember { mutableStateOf(false) }
@@ -89,7 +90,7 @@ fun RoutineBox(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = stringResource(id = R.string.routine),
+                    text = uiState.name,
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.onPrimary,
@@ -127,40 +128,45 @@ fun RoutineBox(
                         .align(Alignment.TopCenter)
                 )
 
-                Button(
-                    onClick = { isOpen.value = !isOpen.value },
-                    elevation = ButtonDefaults.buttonElevation(
-                        defaultElevation = 30.dp,
-                        pressedElevation = 0.0.dp,
-                    ),
-                    shape = RoundedCornerShape(topStart = 15.dp,
-                        topEnd = 15.dp,
-                        bottomStart = 0.dp,
-                        bottomEnd = 0.dp),
-                    modifier = Modifier
-                        .height(45.dp)
-                        .width(200.dp)
-                        .align(Alignment.BottomCenter),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.onSecondary
-                    ),
-                ) {
-                    Icon(
-                        painter = if (isOpen.value) painterResource(id = R.drawable.upicon) else painterResource(id = R.drawable.downicon),
-                        contentDescription = "Arrow that opens up routine box showing its actions",
-                        tint = MaterialTheme.colorScheme.secondary,
+                if(!isMinimalist){
+                    Button(
+                        onClick = { isOpen.value = !isOpen.value },
+                        elevation = ButtonDefaults.buttonElevation(
+                            defaultElevation = 30.dp,
+                            pressedElevation = 0.0.dp,
+                        ),
+                        shape = RoundedCornerShape(topStart = 15.dp,
+                            topEnd = 15.dp,
+                            bottomStart = 0.dp,
+                            bottomEnd = 0.dp),
                         modifier = Modifier
-                            .size(60.dp)
-                    )
+                            .height(45.dp)
+                            .width(200.dp)
+                            .align(Alignment.BottomCenter),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.onSecondary
+                        ),
+                    ) {
+                        Icon(
+                            painter = if (isOpen.value) painterResource(id = R.drawable.upicon) else painterResource(id = R.drawable.downicon),
+                            contentDescription = "Arrow that opens up routine box showing its actions",
+                            tint = MaterialTheme.colorScheme.secondary,
+                            modifier = Modifier
+                                .size(60.dp)
+                        )
+                    }
                 }
+
                 if(isOpen.value) {
-                    //iterar sobre las actions de la rutina
 
                     Surface(
                         color = MaterialTheme.colorScheme.onSecondary,
                         shadowElevation = 12.dp,
                         shape = RoundedCornerShape(15.dp),
-                        modifier = Modifier
+                        modifier = if(isMinimalist) Modifier
+                            .fillMaxSize()
+                        else
+                        Modifier
                             .alpha(0.9f)
                             .padding(top = 90.dp, start = 5.dp, end = 5.dp)
                             .height(170.dp)

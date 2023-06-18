@@ -325,7 +325,7 @@ fun LazyRoutineRow(routinesVM: RoutinesVM){
                         routinesVM
                     )
                 }
-                RoutineBox(routineVM = routineVM)
+                RoutineBox(routineVM = routineVM, isMinimalist = true)
             }
         }
     }

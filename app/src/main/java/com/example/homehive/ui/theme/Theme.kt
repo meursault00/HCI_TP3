@@ -14,8 +14,8 @@ import androidx.core.view.WindowCompat
 import com.example.homehive.viewmodels.isDarkTheme
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Color(0xFF1C4E3F), //FF203831 // INTERESANTE = FF4F7469
-    secondary = Color(0xFF202020), // HAY OPACOS
+    primary = Color(0xFF333333), //FF203831 // INTERESANTE = FF4F7469
+    secondary = Color(0xFF374542), // HAY OPACOS
     onSecondaryContainer = Color(0xFF202020),
     tertiary = Color(0xFF526863),
     background = Color(0xFFA8A495), // BOTONES APAGADOS Y COSASS ASI
