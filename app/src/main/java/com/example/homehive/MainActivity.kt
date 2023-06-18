@@ -57,6 +57,8 @@ import androidx.compose.ui.unit.sp
 import com.example.homehive.ui.theme.HomeHiveTheme
 import com.example.homehive.ui.theme.gris
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.resolveDefaults
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 
@@ -123,25 +125,25 @@ fun App(
                         items = listOf(
                             MenuItem(
                                 id = "home",
-                                title = "Home",
+                                title = stringResource(id = R.string.home),
                                 contentDescription = "Go to home screen",
                                 painter = painterResource(id = R.drawable.home),
                             ),
                             MenuItem(
                                 id = "routines",
-                                title = "Routines",
+                                title = stringResource(id = R.string.routines),
                                 contentDescription = "Go to routines screen",
                                 painter = painterResource(id = R.drawable.routine),
                             ),
                             MenuItem(
                                 id = "settings",
-                                title = "Settings",
+                                title = stringResource(id = R.string.settings),
                                 contentDescription = "Go to settings screen",
                                 painter = painterResource(id = R.drawable.settings),
                             ),
                             MenuItem(
                                 id = "help",
-                                title = "Help",
+                                title = stringResource(id = R.string.help),
                                 contentDescription = "Get help",
                                 painter = painterResource(id = R.drawable.info),
                             ),

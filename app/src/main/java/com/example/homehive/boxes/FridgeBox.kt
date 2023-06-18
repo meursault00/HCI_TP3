@@ -138,7 +138,7 @@ fun FridgeBox(
                             .align(Alignment.Center)
                     ) {
                         Text(
-                            text =  stringResource(id = R.string.fridge_at ) + "${auxTemperature.value}ºC",
+                            text =  stringResource(id = R.string.fridge_at ) + " ${auxTemperature.value}ºC",
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onTertiary,
                             fontWeight = FontWeight.Bold,
@@ -162,7 +162,7 @@ fun FridgeBox(
                             modifier = Modifier
                         )
                         Text(
-                            text =  stringResource(id = R.string.freezer_at) +" ${auxFreezerTemperature.value}ºC",
+                            text =  stringResource(id = R.string.freezer_at) + " ${auxFreezerTemperature.value}ºC",
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onTertiary,
                             fontWeight = FontWeight.Bold,
