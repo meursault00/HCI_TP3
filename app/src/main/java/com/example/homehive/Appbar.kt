@@ -73,9 +73,16 @@ fun AppBar(
     var expanded = remember { mutableStateOf(false) }
 
     val options = listOf(
-        DropdownOption("Settings", painterResource(id = R.drawable.settings)
-        ) { navController.navigate("settings") },
-        DropdownOption("Language", painterResource(id = R.drawable.language)),
+        DropdownOption(
+            stringResource(id = R.string.settings),
+            painterResource(id = R.drawable.settings),
+            id = R.drawable.settings
+        ),
+        DropdownOption(
+            stringResource(id = R.string.language),
+            painterResource(id = R.drawable.language),
+            id= R.drawable.language
+        ) ,
     )
 
     Surface(
@@ -140,28 +147,36 @@ fun AppBar(
                         .background(
                             color = MaterialTheme.colorScheme.secondary,
                         )
-                        .blur(4.dp, 3.dp)
                 ) {
                     options.forEach { option ->
                         DropdownMenuItem(
                             onClick = {
-                                navController.navigate(option.title)
+                                actionBasedOnIcon(
+                                    navController = navController,
+                                    id = option.id ,
+                                )
                                 expanded.value = false
-                                      },
+                            },
                             text =  {
+
                                 Row(
-                                    verticalAlignment = Alignment.CenterVertically
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    modifier = Modifier.fillMaxWidth()
                                 ) {
-                                    Text(text = option.title, color = MaterialTheme.colorScheme.onPrimary)
-                                    Spacer(modifier = Modifier.width(8.dp))
+                                    Text(
+                                        text = option.title,
+                                        color = MaterialTheme.colorScheme.onPrimary
+                                    )
+                                    Spacer(modifier = Modifier.width(20.dp))
                                     Icon(
                                         painter = option.painter,
                                         contentDescription = null,
                                         tint = MaterialTheme.colorScheme.onPrimary,
                                         modifier = Modifier.size(20.dp)
                                     )
-
                                 }
+
                             }
                         )
                     }
@@ -172,6 +187,17 @@ fun AppBar(
     }
 }
 
+private fun actionBasedOnIcon(navController: NavController,id: Int){
+    when(id){
+        R.drawable.settings -> {
+            navController.navigate("settings")
+        }
+        R.drawable.language -> {
+            navController.navigate("ssad")
+
+        }
+    }
+}
 
 
 @Composable
@@ -189,4 +215,8 @@ fun BottomShadow(alpha: Float = 0.1f, height: Dp = 8.dp) {
         )
     )
 }
-data class DropdownOption(val title: String, val painter: Painter, val onClick: () -> Unit = {})
+data class DropdownOption(
+    val title: String,
+    val painter: Painter,
+    val id: Int,
+)

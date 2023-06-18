@@ -2,12 +2,15 @@ package com.example.homehive.viewmodels
 
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.homehive.network.deviceModels.NetworkSong
 import com.example.homehive.states.FridgeUIState
 import com.example.homehive.states.TapUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class TapVM(
     deviceID : String?,
@@ -21,6 +24,17 @@ class TapVM(
     )
     )
     val uiState: StateFlow<TapUIState> = _uiState.asStateFlow()
+
+    fun sync(){
+        viewModelScope.launch {
+            val updatedDevice = devicesVM.fetchADevice(id = uiState.value.id)
+            _uiState.update{currentState ->
+                currentState.copy(
+                    state = updatedDevice.result?.state?.status ?: "",
+                )
+            }
+        }
+    }
 
     fun setOpen(){
         _uiState.update{currentState ->

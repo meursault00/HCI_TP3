@@ -15,15 +15,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.homehive.screens.BlindsScreen
 import com.example.homehive.screens.HelpScreen
 import com.example.homehive.screens.HomeScreen
 import com.example.homehive.screens.OvenScreen
 import com.example.homehive.screens.RoutinesScreen
 import com.example.homehive.screens.SettingsScreen
 import com.example.homehive.screens.SpeakerScreen
-import com.example.homehive.screens.TapScreen
-import com.example.homehive.screens.TestScreen
 import com.example.homehive.viewmodels.DevicesVM
 import com.example.homehive.viewmodels.FridgeVM
 import com.example.homehive.viewmodels.OvenVM
@@ -53,7 +50,7 @@ fun NavHost(
     
     // Creacion de Singleton VM para las Rutinas y Fetch de Routines
     
-    val routinesVM = remember { RoutinesVM() }
+    val routinesVM = remember { RoutinesVM( devicesVM ) }
     val routinesState by routinesVM.uiState.collectAsState()
     LaunchedEffect(Unit) {
         routinesVM.fetchRoutines()
@@ -75,11 +72,7 @@ fun NavHost(
         startDestination = startDestination,
         modifier = modifier
     ) {
-        composable("test") {
-            App(navController = navController) { navController, innerPadding ->
-                TestScreen(navController = navController, innerPadding = innerPadding, devicesVM = viewModel())
-            }
-        }
+
         composable("routines") {
             App(navController = navController) { navController, innerPadding ->
                 RoutinesScreen(navController = navController, innerPadding = innerPadding, routinesVM)
@@ -96,25 +89,7 @@ fun NavHost(
                 SettingsScreen(navController = navController, innerPadding = innerPadding)
             }
         }
-        composable("help") {
-            println("List of devices: $devices")
-            App(navController = navController) { navController, innerPadding ->
-                TestScreen(navController = navController, innerPadding = innerPadding, devicesVM = viewModel())
-            }
-        }
-//        composable(
-//            "devices/{devicename}/{id}",
-//        ) {}
-        composable("devices/tap/1234") {
-            App(navController = navController) { navController, innerPadding ->
-                TapScreen(navController = navController, innerPadding = innerPadding)
-            }
-        }
-        composable("devices/blinds/1234") {
-            App(navController = navController) { navController, innerPadding ->
-                BlindsScreen(navController = navController, innerPadding = innerPadding)
-            }
-        }
+
         composable("devices/speaker/{id}") {
             App(navController = navController) { navController, innerPadding ->
                 SpeakerScreen(navController = navController, innerPadding = innerPadding)

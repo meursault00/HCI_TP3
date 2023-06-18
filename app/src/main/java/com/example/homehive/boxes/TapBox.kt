@@ -65,6 +65,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.homehive.Globals
 import com.example.homehive.R
 import com.example.homehive.sendCustomNotification
 import com.example.homehive.viewmodels.FridgeVM
@@ -91,6 +92,11 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
     var dispenseUnit = remember { mutableStateOf("") };
     var dispenseUnitError = remember { mutableStateOf("") };
     var dispenseUnitHasError = remember { mutableStateOf(false) };
+
+    if ( Globals.updates > 0 ){
+        tapVM.sync()
+        Globals.updates--
+    }
 
     val height: Dp by animateDpAsState(
         targetValue = if (isOpen.value) 415.dp else 200.dp,

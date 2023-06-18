@@ -3,6 +3,7 @@ package com.example.homehive.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.homehive.Globals
 import com.example.homehive.network.RetrofitClient
 import com.example.homehive.states.RoutinesUIState
 import kotlinx.coroutines.Job
@@ -13,7 +14,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class RoutinesVM : ViewModel() {
+class RoutinesVM(
+    private val devicesVM : DevicesVM
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(RoutinesUIState())
     val uiState: StateFlow<RoutinesUIState> = _uiState.asStateFlow()
@@ -93,5 +96,7 @@ class RoutinesVM : ViewModel() {
                 _uiState.update { it.copy(message = e.message, isLoading = false) }
             }
         }
+        Log.d("putaku", "${devicesVM.qDevices()}")
+        Globals.updates += devicesVM.qDevices()
     }
 }
