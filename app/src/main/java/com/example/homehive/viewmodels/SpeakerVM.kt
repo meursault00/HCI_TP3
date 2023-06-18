@@ -1,5 +1,6 @@
 package com.example.homehive.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.homehive.network.deviceModels.NetworkSong
@@ -65,8 +66,9 @@ class SpeakerVM(
     }
 
     fun play(){
+        Log.d("homehivestatus", "about to play")
         _uiState.update{currentState ->
-            currentState.copy(status = "playing")
+            currentState.copy(status = "resume")
         }
         devicesVM.editADevice(uiState.value.id, "play", listOf())
     }
