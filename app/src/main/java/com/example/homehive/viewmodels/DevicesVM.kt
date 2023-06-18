@@ -67,6 +67,7 @@ class DevicesVM : ViewModel() {
             }.onSuccess { body ->
                 _uiState.update { it.copy(isLoading = false) }
                 toReturn = body // Assign the result to the variable
+//                Log.d("fetchADeviceDebug", "Response: $body") // Add this line to log the response
             }.onFailure { e ->
                 _uiState.update { it.copy(message = e.message, isLoading = false) }
             }

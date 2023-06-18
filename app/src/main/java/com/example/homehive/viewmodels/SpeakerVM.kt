@@ -31,6 +31,9 @@ class SpeakerVM(
     )
     val uiState: StateFlow<SpeakerUIState> = _uiState.asStateFlow()
 
+    @Volatile
+    var isLoopActive = false
+
     fun sync(){
         viewModelScope.launch {
             val updatedDevice = devicesVM.fetchADevice(id = uiState.value.id)
@@ -43,6 +46,7 @@ class SpeakerVM(
                 )
             }
         }
+        Log.d("luegosync", _uiState.toString())
     }
 
     fun incrementVolume(){
@@ -71,36 +75,71 @@ class SpeakerVM(
             currentState.copy(status = "resume")
         }
         devicesVM.editADevice(uiState.value.id, "play", listOf())
+
+        //polling
+        isLoopActive = true
+        polling()
     }
     fun resume(){
         _uiState.update{currentState ->
             currentState.copy(status = "playing")
         }
         devicesVM.editADevice(uiState.value.id, "resume", listOf())
+
+        //polling
+        isLoopActive = true
+        polling()
     }
     fun pause(){
         _uiState.update{currentState ->
             currentState.copy(status = "paused")
         }
         devicesVM.editADevice(uiState.value.id, "pause", listOf())
+
+        //polling
+        isLoopActive = false
     }
     fun stop(){
         _uiState.update{currentState ->
             currentState.copy(status = "stopped")
         }
         devicesVM.editADevice(uiState.value.id, "stop", listOf())
+
+        //polling
+        isLoopActive = false
     }
 
     fun nextSong(){
+
+        //inicialmente cargamos con loading
         _uiState.update{currentState ->
-            currentState.copy(song = NetworkSong())      //?????????
+            currentState.copy(song = NetworkSong())      //carga con loading.. todos los strings
         }
+
+        //pasamos a proxima cancion en api
         devicesVM.editADevice(uiState.value.id, "nextSong", listOf())
+
+        //actualizamos estado local con cancion que aparece en api
+
+//            sync()
+
+//        viewModelScope.launch {
+//            val updatedDevice = devicesVM.fetchADevice(id = uiState.value.id)
+//            _uiState.update{currentState ->
+//                currentState.copy(
+//                    song = updatedDevice.result?.state?.song ?: NetworkSong()
+//                )
+//            }
+//        }
+
+//        _uiState.update{currentState ->
+//            currentState.copy(song = NetworkSong())      //?????????
+//        }
     }
 
     fun previousSong(){
         _uiState.update{currentState ->
-            currentState.copy(song = NetworkSong())      //?????????
+            currentState.copy(song = NetworkSong())
         }
         devicesVM.editADevice(uiState.value.id, "previousSong", listOf())
     }
@@ -110,6 +149,19 @@ class SpeakerVM(
             currentState.copy(genre = newGenre)
         }
         devicesVM.editADevice(uiState.value.id, "setGenre", listOf(newGenre))
+    }
+
+    // Cuando se hace play => isLoopActive = true ^ llamo a la funcion polling
+    // Cuando se hace stop => isLoopActive = false
+
+    fun polling() {
+        val thread = Thread {
+            while (isLoopActive) {
+                sync()
+                Thread.sleep(1000)
+            }
+        }
+        thread.start()
     }
 
 }

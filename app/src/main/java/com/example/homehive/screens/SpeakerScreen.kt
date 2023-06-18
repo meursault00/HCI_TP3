@@ -326,12 +326,12 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
 
                                 //Nombre de la cancion
                                 AnimatedTextOverflow(
-                                    text = "Peso Pluma: Bzrp Music Sessions, Vol. 39"
+                                    text = speakerState.song.title?: "la dukineta"
                                 )
 
                                 // artista
                                 Text(
-                                    text = "BZRP Music Sessions, Vol. 39",
+                                    text = speakerState.song.artist?: "unavailable",
                                     color = Color(0xB9FFFFFF),
                                     style = MaterialTheme.typography.bodyMedium,
                                     fontWeight = FontWeight.Bold,
@@ -397,7 +397,10 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                         )
                                     }
                                     IconButton(
-                                        onClick = { speakerVM.nextSong() },
+                                        onClick = {
+                                            if (speakerVM.uiState.value.status == "playing") {
+                                                speakerVM.nextSong()
+                                        } },
                                         modifier = Modifier.size(40.dp) // Adjust the size as desired
                                     ) {
                                         Icon(
@@ -698,7 +701,10 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                         )
                                     }
                                     IconButton(
-                                        onClick = { speakerVM.previousSong() },
+                                        onClick = {
+                                            if (speakerVM.uiState.value.status == "playing") {
+                                            speakerVM.previousSong()
+                                        } },
                                         modifier = Modifier.size(40.dp) // Adjust the size as desired
                                     ) {
                                         Icon(

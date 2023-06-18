@@ -114,7 +114,10 @@ fun SpeakerBox(
                             .fillMaxWidth()
                     ){
                         FloatingActionButton(
-                            onClick = { speakerVM.previousSong() },
+                            onClick = {
+                                if (speakerVM.uiState.value.status == "playing") {
+                                    speakerVM.previousSong()
+                                } },
                             shape = CircleShape,
                             elevation = FloatingActionButtonDefaults.elevation(16.dp),
                             containerColor = MaterialTheme.colorScheme.secondary,
@@ -128,7 +131,10 @@ fun SpeakerBox(
                             )
                         }
                         FloatingActionButton(
-                            onClick = { if(speakerState.status == "stopped") speakerVM.play() else if(speakerState.status == "paused") speakerVM.resume() else speakerVM.pause() },
+                            onClick = { if(speakerState.status == "stopped") {
+                                speakerVM.play()
+
+                            } else if(speakerState.status == "paused") speakerVM.resume() else speakerVM.pause() },
                             shape = CircleShape,
                             elevation = FloatingActionButtonDefaults.elevation(16.dp),
                             containerColor = MaterialTheme.colorScheme.secondary,
@@ -142,7 +148,10 @@ fun SpeakerBox(
                             )
                         }
                         FloatingActionButton(
-                            onClick = { speakerVM.nextSong() },
+                            onClick = {
+                                if (speakerVM.uiState.value.status == "playing") {
+                                    speakerVM.nextSong()
+                            } },
                             shape = CircleShape,
                             elevation = FloatingActionButtonDefaults.elevation(16.dp),
                             containerColor = MaterialTheme.colorScheme.secondary,
