@@ -110,12 +110,13 @@ fun SpeakerBox(
                         horizontalArrangement = Arrangement.SpaceEvenly,
                         verticalAlignment = Alignment.CenterVertically, // Center vertically
                         modifier = Modifier
+                            .padding(bottom = 20.dp)
                             .fillMaxWidth()
                     ){
                         FloatingActionButton(
                             onClick = { speakerVM.previousSong() },
                             shape = CircleShape,
-                            elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp),
+                            elevation = FloatingActionButtonDefaults.elevation(16.dp),
                             containerColor = MaterialTheme.colorScheme.secondary,
                             modifier = Modifier.size(30.dp) // Adjust the size as desired
                         ) {
@@ -129,9 +130,9 @@ fun SpeakerBox(
                         FloatingActionButton(
                             onClick = { if(speakerState.status == "stopped") speakerVM.play() else if(speakerState.status == "paused") speakerVM.resume() else speakerVM.pause() },
                             shape = CircleShape,
-                            elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp),
+                            elevation = FloatingActionButtonDefaults.elevation(16.dp),
                             containerColor = MaterialTheme.colorScheme.secondary,
-                            modifier = Modifier.size(40.dp) // Adjust the size as desired
+                            modifier = Modifier.size(40.dp), // Adjust the size as desired
                         ) {
                             Icon(
                                 painter = painterResource(id = if(speakerState.status == "paused" || speakerState.status == "stopped") R.drawable.play else R.drawable.pause),
@@ -143,7 +144,7 @@ fun SpeakerBox(
                         FloatingActionButton(
                             onClick = { speakerVM.nextSong() },
                             shape = CircleShape,
-                            elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp),
+                            elevation = FloatingActionButtonDefaults.elevation(16.dp),
                             containerColor = MaterialTheme.colorScheme.secondary,
                             modifier = Modifier.size(30.dp) // Adjust the size as desired
                         ) {
@@ -155,6 +156,10 @@ fun SpeakerBox(
                             )
                         }
                     }
+                    Text(
+                        text = stringResource(id = R.string.current_song),
+                        color = MaterialTheme.colorScheme.onPrimary,
+                    )
                 }
 
                 Button(

@@ -57,7 +57,7 @@ fun AnimatedTextOverflow(text: String, modifier: Modifier = Modifier, color: Col
             color = color,
             style = style,
             overflow = TextOverflow.Clip,
-            maxLines = 1
+            maxLines = 3
         )
     }
 }
