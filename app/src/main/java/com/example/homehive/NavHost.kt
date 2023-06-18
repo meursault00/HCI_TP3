@@ -53,7 +53,7 @@ fun NavHost(
     
     // Creacion de Singleton VM para las Rutinas y Fetch de Routines
     
-    val routinesVM = remember { RoutinesVM() }
+    val routinesVM = remember { RoutinesVM( devicesVM ) }
     val routinesState by routinesVM.uiState.collectAsState()
     LaunchedEffect(Unit) {
         routinesVM.fetchRoutines()

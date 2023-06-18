@@ -1,11 +1,13 @@
 package com.example.homehive.viewmodels
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.homehive.states.BlindsUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class BlindsVM(
     deviceID: String?,
@@ -21,6 +23,19 @@ class BlindsVM(
         position = initialPosition ?: 0
     ))
     val uiState: StateFlow<BlindsUIState> = _uiState.asStateFlow()
+
+    fun sync(){
+        viewModelScope.launch {
+            val updatedDevice = devicesVM.fetchADevice(id = uiState.value.id)
+            _uiState.update{currentState ->
+                currentState.copy(
+                    status = updatedDevice.result?.state?.status ?: "",
+                    level = updatedDevice.result?.state?.level ?: 0,
+                    position = updatedDevice.result?.state?.currentLevel ?: 0
+                )
+            }
+        }
+    }
 
     fun toggleBlinds() {
         _uiState.update { currentState ->

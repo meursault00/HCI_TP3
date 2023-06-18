@@ -39,6 +39,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.homehive.Globals
 import com.example.homehive.R
 import com.example.homehive.library.AnimatedTextOverflow
 import com.example.homehive.sendCustomNotification
@@ -58,6 +59,11 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
         targetValue = if (isOpen.value) 415.dp else 200.dp,
         animationSpec = tween(durationMillis = 100)
     )
+
+    if ( Globals.updates > 0 ){
+        ovenVM.sync()
+        Globals.updates--
+    }
 
     Box(
         modifier = Modifier

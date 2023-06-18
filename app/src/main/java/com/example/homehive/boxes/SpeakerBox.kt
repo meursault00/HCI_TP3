@@ -40,6 +40,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.homehive.Globals
 import com.example.homehive.R
 import com.example.homehive.viewmodels.SettingsVM
 import com.example.homehive.viewmodels.SpeakerVM
@@ -47,8 +48,15 @@ import com.example.homehive.viewmodels.isDarkTheme
 
 
 @Composable
-fun SpeakerBox(onClick: () -> Unit, speakerVM : SpeakerVM = viewModel()) {
+fun SpeakerBox(
+    onClick: () -> Unit,
+    speakerVM : SpeakerVM = viewModel()
+) {
 
+    if ( Globals.updates > 0 ){
+        speakerVM.sync()
+        Globals.updates--
+    }
 
     Box(
         modifier = Modifier

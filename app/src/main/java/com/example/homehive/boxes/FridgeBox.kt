@@ -38,6 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.homehive.Globals
 import com.example.homehive.R
 import com.example.homehive.viewmodels.FridgeVM
 
@@ -50,11 +51,15 @@ fun FridgeBox(
 ) {
 
     val uiState by fridgeVM.uiState.collectAsState();
-    var isOpen = remember { mutableStateOf(false) };
-    var currentMode = uiState.mode;
-    var auxTemperature  = remember { mutableStateOf(uiState.temperature)};
-    var auxFreezerTemperature = remember { mutableStateOf(uiState.freezerTemperature)};
+    val isOpen = remember { mutableStateOf(false) };
+    val currentMode = uiState.mode;
+    val auxTemperature  = remember { mutableStateOf(uiState.temperature)};
+    val auxFreezerTemperature = remember { mutableStateOf(uiState.freezerTemperature)};
 
+    if ( Globals.updates > 0 ){
+        fridgeVM.sync()
+        Globals.updates--
+    }
 
     val height: Dp by animateDpAsState(
         targetValue = if (isOpen.value) 415.dp else 200.dp,
