@@ -86,8 +86,16 @@
     <string name="conventional">Hagyományos</string>
     <string name="above">Felett</string>
     <string name="below">Alatt</string>
-    <string name="will">will</string>
-    <string name="to">to</string>
+    <string name="will">fog</string>
+    <string name="to">-ra/-re</string>
+    <string name="turned_on">Bekapcsolva</string>
+    <string name="turned_off">Kikapcsolva</string>
+    <string name="opened">kinyitva</string>
+    <string name="closed">becsukva</string>
+    <string name="value_is_required">Az érték kötelező</string>
+    <string name="unit_is_required">Az egység kötelező</string>
+    <string name="try_refreshing">Probáljón mégegyszer!</string>
+    <string name="check_connection">Néze meg a WIFI kapcsolatot</string>
 </resources>
 
 

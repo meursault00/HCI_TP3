@@ -87,4 +87,12 @@
     <string name="below">BELOW</string>
     <string name="will">will</string>
     <string name="to">to</string>
+    <string name="turned_on">Turned On</string>
+    <string name="turned_off">Turned Off</string>
+    <string name="opened">opened</string>
+    <string name="closed">closed</string>
+    <string name="value_is_required">Value is required</string>
+    <string name="unit_is_required">Unit is required</string>
+    <string name="try_refreshing">Try refreshing!</string>
+    <string name="check_connection">Check your wifi connection and</string>
 </resources>

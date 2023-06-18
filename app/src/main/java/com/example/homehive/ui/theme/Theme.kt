@@ -17,7 +17,7 @@ private val DarkColorScheme = darkColorScheme(
     primary = Color(0xFF333333), //FF203831 // INTERESANTE = FF4F7469
     secondary = Color(0xFF374542), // HAY OPACOS
     onSecondaryContainer = Color(0xFF202020),
-    tertiary = Color(0xFF526863),
+    tertiary = Color(0xFF374542),
     background = Color(0xFFA8A495), // BOTONES APAGADOS Y COSASS ASI
     surface = Color(0xFFFFFBFE),
     onPrimary = Color(0xFFDADFDD),
@@ -26,7 +26,7 @@ private val DarkColorScheme = darkColorScheme(
     onBackground = Color(0xFF325052),
     onSurface = Color(0xFFFFFFFF),
     onTertiaryContainer = Color(0xFFA0CCCF),
-    inversePrimary = Color(0xFFEFE5C5),
+    inversePrimary = Color(0xFFDADFDD),
     inverseSurface = Color(0xFF202020),
     )
 

@@ -125,7 +125,7 @@ fun RoutineBox(
                     text = "${actionExplanations.size} " + if(actionExplanations.size == 1) stringResource(id = R.string.action) else stringResource(id = R.string.actions),
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary,
+                    color = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier
                         .padding(top = 120.dp)
                         .align(Alignment.TopCenter)

@@ -126,7 +126,7 @@ fun AppBar(
 
             OutlinedIconButton(
                 onClick = { expanded.value = true },
-                border= BorderStroke(2.dp, MaterialTheme.colorScheme.secondary),
+                border= BorderStroke(2.dp, MaterialTheme.colorScheme.inversePrimary),
                 shape = CircleShape,
                 colors = IconButtonDefaults.iconButtonColors(
                     containerColor = Color.Transparent,
@@ -136,9 +136,9 @@ fun AppBar(
                  Icon(
                     painter = painterResource(id = R.drawable.moreh ),
                     contentDescription = null,
+                    tint = MaterialTheme.colorScheme.inversePrimary,
                     modifier = Modifier.size(30.dp)
                 )
-
                 DropdownMenu(
                     expanded = expanded.value,
                     onDismissRequest = { expanded.value = false },

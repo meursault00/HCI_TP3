@@ -26,7 +26,9 @@ import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -40,6 +42,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -67,6 +70,7 @@ import com.example.homehive.viewmodels.TapVM
 import kotlinx.coroutines.delay
 import androidx.lifecycle.viewModelScope
 import com.example.homehive.R
+import com.example.homehive.viewmodels.isDarkTheme
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -98,7 +102,7 @@ fun HomeScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            LoadingAnimation()
+            LoadingAnimation(circleColor =  if(isDarkTheme.value) MaterialTheme.colorScheme.inversePrimary else MaterialTheme.colorScheme.secondary)
             Spacer(modifier = Modifier.height(10.dp))
             Text(
                 text =
@@ -109,7 +113,7 @@ fun HomeScreen(
                 } else {
                     stringResource(id = R.string.loading_routines)
                 },
-                color = MaterialTheme.colorScheme.secondary
+                color =  if(isDarkTheme.value) MaterialTheme.colorScheme.inversePrimary else MaterialTheme.colorScheme.secondary,
             )
 
         }
@@ -153,13 +157,20 @@ fun HomeScreen(
                                 verticalArrangement = Arrangement.Center,
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                LoadingAnimation()
-                                Spacer(modifier = Modifier.height(10.dp))
+                                Icon(
+                                    painter = painterResource(id = R.drawable.error_notice),
+                                    contentDescription = "Error",
+                                    tint = if(isDarkTheme.value) MaterialTheme.colorScheme.inversePrimary else MaterialTheme.colorScheme.secondary,
+                                    modifier = Modifier.size(100.dp)
+                                )
                                 Text(
                                     text = stringResource(id = R.string.no_devices) + "\n"
-                                            + "Error: " + devicesState.message.toString()
+                                            + "Error: " + devicesState.message.toString() + "\n" + "\n"
+                                            + stringResource(id = R.string.check_connection) + "\n"
+                                            + stringResource(id = R.string.try_refreshing)
                                     ,
-                                    color = MaterialTheme.colorScheme.secondary,
+
+                                    color =  if(isDarkTheme.value) MaterialTheme.colorScheme.inversePrimary else MaterialTheme.colorScheme.secondary,
                                     textAlign = TextAlign.Center
                                 )
                             }

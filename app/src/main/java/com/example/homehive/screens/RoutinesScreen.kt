@@ -10,8 +10,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,7 +27,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
@@ -32,6 +38,7 @@ import com.example.homehive.R
 import com.example.homehive.boxes.RoutineBox
 import com.example.homehive.viewmodels.RoutineVM
 import com.example.homehive.viewmodels.RoutinesVM
+import com.example.homehive.viewmodels.isDarkTheme
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -66,56 +73,93 @@ fun RoutinesScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            LoadingAnimation()
+            LoadingAnimation(circleColor = if(isDarkTheme.value) MaterialTheme.colorScheme.inversePrimary else MaterialTheme.colorScheme.secondary)
             Spacer(modifier = Modifier.height(10.dp))
             Text(
                 text = stringResource(id = R.string.loading_routines),
-                color = MaterialTheme.colorScheme.secondary
+                color = if(isDarkTheme.value) MaterialTheme.colorScheme.inversePrimary else MaterialTheme.colorScheme.secondary,
             )
 
         }
     }
     else{
-
-        Box(
-            modifier = Modifier
-                .padding(innerPadding ?: PaddingValues())
-        ) {
-            SwipeRefresh(
-                state = swipeRefreshState,
-                onRefresh = { routinesVM.fetchRoutines()},
-                indicator = { state, refreshTrigger ->
-                    SwipeRefreshIndicator(
-                        state = state,
-                        refreshTriggerDistance = refreshTrigger,
-                        contentColor = MaterialTheme.colorScheme.background,
-                        backgroundColor = MaterialTheme.colorScheme.secondary
-                    )
-                }
+        if(routinesState.routines?.result?.isNotEmpty() == null){
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(1),
+                modifier = Modifier
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
             ) {
-                LazyVerticalStaggeredGrid(
-                    columns = StaggeredGridCells.Adaptive(150.dp),
-                    contentPadding = PaddingValues(16.dp),
-                    modifier = Modifier.fillMaxSize(),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                item(){
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(start = 10.dp, end = 10.dp),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.error_notice),
+                            contentDescription = "Error",
+                            tint = if(isDarkTheme.value) MaterialTheme.colorScheme.inversePrimary else MaterialTheme.colorScheme.secondary,
+                            modifier = Modifier.size(100.dp)
+                        )
+                        Text(
+                            text = stringResource(id = R.string.no_routines) + "\n"
+                                    + "Error: " + routinesState.message.toString() + "\n" + "\n"
+                                    + stringResource(id = R.string.check_connection) + "\n"
+                                    + stringResource(id = R.string.try_refreshing)
+                            ,
+
+                            color =  if(isDarkTheme.value) MaterialTheme.colorScheme.inversePrimary else MaterialTheme.colorScheme.secondary,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                }
+            }
+        }
+        else{
+            Box(
+                modifier = Modifier
+                    .padding(innerPadding ?: PaddingValues())
+            ) {
+                SwipeRefresh(
+                    state = swipeRefreshState,
+                    onRefresh = { routinesVM.fetchRoutines()},
+                    indicator = { state, refreshTrigger ->
+                        SwipeRefreshIndicator(
+                            state = state,
+                            refreshTriggerDistance = refreshTrigger,
+                            contentColor = MaterialTheme.colorScheme.background,
+                            backgroundColor = MaterialTheme.colorScheme.secondary
+                        )
+                    }
                 ) {
-                    routinesState.routines?.result?.forEach { routine ->
-                        item {
-                            val routineVM = routinesViewModelMap.getOrPut(routine.id.toString()) {
-                                RoutineVM(
-                                    routine.id ?: "",
-                                    routine.name ?: "",
-                                    routine.actions,
-                                    routinesVM
-                                )
+                    LazyVerticalStaggeredGrid(
+                        columns = StaggeredGridCells.Adaptive(150.dp),
+                        contentPadding = PaddingValues(16.dp),
+                        modifier = Modifier.fillMaxSize(),
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        routinesState.routines?.result?.forEach { routine ->
+                            item {
+                                val routineVM = routinesViewModelMap.getOrPut(routine.id.toString()) {
+                                    RoutineVM(
+                                        routine.id ?: "",
+                                        routine.name ?: "",
+                                        routine.actions,
+                                        routinesVM
+                                    )
+                                }
+                                RoutineBox(routineVM = routineVM)
                             }
-                            RoutineBox(routineVM = routineVM)
                         }
                     }
                 }
             }
         }
+
     }
 
 }

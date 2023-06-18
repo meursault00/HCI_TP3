@@ -72,7 +72,7 @@ fun PrivacyBox() {
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier
-                        .offset { IntOffset(x = 0  , y = -140) }
+                        .offset { IntOffset(x = 0  , y = -100) }
                 )
                 Text(
                     text = "Privacy",

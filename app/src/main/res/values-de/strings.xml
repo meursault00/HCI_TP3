@@ -86,6 +86,14 @@
     <string name="conventional">KONVENTIONELL</string>
     <string name="above">OBERHALB</string>
     <string name="below">UNTERHALB</string>
-    <string name="will">will</string>
-    <string name="to">to</string>
+    <string name="will">wird</string>
+    <string name="to">zu</string>
+    <string name="turned_on">Eingeschaltet</string>
+    <string name="turned_off">Ausgeschaltet</string>
+    <string name="opened">geöffnet</string>
+    <string name="closed">geschlossen</string>
+    <string name="value_is_required">Wert ist erforderlich</string>
+    <string name="unit_is_required">Einheit ist erforderlich</string>
+    <string name="try_refreshing">Probieren sie wieder laden!</string>
+    <string name="check_connection">Checken Sie seine WIFI konnektion</string>
 </resources>

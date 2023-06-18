@@ -207,7 +207,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                         isDispensing.value = false;
                         dispenseValue.value = "";
                         dispenseUnit.value = "";
-                        sendCustomNotification(context, "Tap", "Tap is ${ if(isOn.value) "On" else "Off" }")
+                        sendCustomNotification(context, "Tap",  context.getString(R.string.tap) + " " + if(isOn.value) context.getString(R.string.opened) else context.getString(R.string.closed))
                     },
                     elevation = ButtonDefaults.buttonElevation(
                         defaultElevation = 30.dp,
@@ -327,11 +327,11 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                             onClick = {
                                   when{
                                       dispenseValue.value.isEmpty() -> {
-                                            dispenseValueError.value = "Value is required"
+                                            dispenseValueError.value = context.getString(R.string.value_is_required)
                                             dispenseValueHasError.value = true
                                       }
                                         dispenseUnit.value.isEmpty() -> {
-                                            dispenseUnitError.value = "Unit is required"
+                                            dispenseUnitError.value = context.getString(R.string.unit_is_required)
                                             dispenseUnitHasError.value = true
                                         }
                                         else -> {
