@@ -29,6 +29,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -52,6 +54,7 @@ fun SpeakerBox(
     onClick: () -> Unit,
     speakerVM : SpeakerVM = viewModel()
 ) {
+    val speakerState by speakerVM.uiState.collectAsState();
 
     if ( Globals.updates > 0 ){
         speakerVM.sync()
@@ -98,7 +101,11 @@ fun SpeakerBox(
                         .padding(start = 10.dp, end = 10.dp)
                         .align(Alignment.Center),
                 ) {
-
+                    Text(
+                        text = speakerState.song.title?: "Unavailable",
+//                        text = stringResource(id = R.string.current_song),
+                        color = MaterialTheme.colorScheme.onPrimary,
+                    )
                     Row(
                         horizontalArrangement = Arrangement.SpaceEvenly,
                         verticalAlignment = Alignment.CenterVertically, // Center vertically
@@ -107,7 +114,7 @@ fun SpeakerBox(
                             .fillMaxWidth()
                     ){
                         FloatingActionButton(
-                            onClick = { /*TODO*/ },
+                            onClick = { speakerVM.previousSong() },
                             shape = CircleShape,
                             elevation = FloatingActionButtonDefaults.elevation(16.dp),
                             containerColor = MaterialTheme.colorScheme.secondary,
@@ -121,21 +128,21 @@ fun SpeakerBox(
                             )
                         }
                         FloatingActionButton(
-                            onClick = { /*TODO*/ },
+                            onClick = { if(speakerState.status == "stopped") speakerVM.play() else if(speakerState.status == "paused") speakerVM.resume() else speakerVM.pause() },
                             shape = CircleShape,
                             elevation = FloatingActionButtonDefaults.elevation(16.dp),
                             containerColor = MaterialTheme.colorScheme.secondary,
                             modifier = Modifier.size(40.dp), // Adjust the size as desired
                         ) {
                             Icon(
-                                painter = painterResource(id = R.drawable.play),
+                                painter = painterResource(id = if(speakerState.status == "paused" || speakerState.status == "stopped") R.drawable.play else R.drawable.pause),
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.onSurface,
                                 modifier = Modifier.size(20.dp)
                             )
                         }
                         FloatingActionButton(
-                            onClick = { /*TODO*/ },
+                            onClick = { speakerVM.nextSong() },
                             shape = CircleShape,
                             elevation = FloatingActionButtonDefaults.elevation(16.dp),
                             containerColor = MaterialTheme.colorScheme.secondary,

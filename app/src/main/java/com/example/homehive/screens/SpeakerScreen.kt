@@ -380,7 +380,10 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                         )
                                     }
                                     FloatingActionButton(
-                                        onClick = { if(isPlaying) speakerVM.pause() else speakerVM.play() },
+                                        onClick = {
+                                            if(speakerState.status == "playing") speakerVM.pause()
+                                            else if(speakerState.status == "paused") speakerVM.resume()
+                                            else speakerVM.play() },
                                         elevation = FloatingActionButtonDefaults.elevation(0.dp),
                                         shape = CircleShape,
                                         containerColor = Color(0xFFFFFFFF),
