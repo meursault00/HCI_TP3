@@ -1,6 +1,7 @@
 package com.example.homehive.viewmodels
 
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.homehive.network.deviceModels.NetworkSong
@@ -56,5 +57,18 @@ class TapVM(
         devicesVM.editADevice(uiState.value.id, "dispense", listOf(amount, unit))
 
         //el amount y unit se pasan directo a api, no hay variables locales para estas
+    }
+
+    fun polling() {
+        val thread = Thread {
+            while (uiState.value.status == "opening" || uiState.value.status == "closing" ) {
+                Log.d("polling", "${_uiState.value}")
+                Thread.sleep(1000)
+                sync()
+                Log.d("polling", "${_uiState.value}")
+
+            }
+        }
+        thread.start()
     }
 }

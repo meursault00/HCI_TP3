@@ -157,8 +157,8 @@ class SpeakerVM(
     fun polling() {
         val thread = Thread {
             while (isLoopActive) {
-                sync()
                 Thread.sleep(1000)
+                sync()
             }
         }
         thread.start()

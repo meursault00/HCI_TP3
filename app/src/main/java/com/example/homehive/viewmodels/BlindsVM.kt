@@ -1,5 +1,6 @@
 package com.example.homehive.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.homehive.states.BlindsUIState
@@ -44,6 +45,7 @@ class BlindsVM(
         }
         val action = if (uiState.value.status == "opening") "open" else "close"
         devicesVM.editADevice(uiState.value.id, action, listOf())
+        polling()
     }
 
 
@@ -52,5 +54,19 @@ class BlindsVM(
             currentState.copy(position = newPosition)
         }
         devicesVM.editADevice(uiState.value.id, "setLevel", listOf(newPosition))
+        polling()
+    }
+
+    fun polling() {
+        val thread = Thread {
+            while (uiState.value.status == "opening" || uiState.value.status == "closing" ) {
+                Log.d("polling", "${_uiState.value}")
+                Thread.sleep(1000)
+                sync()
+                Log.d("polling", "${_uiState.value}")
+
+            }
+        }
+        thread.start()
     }
 }
