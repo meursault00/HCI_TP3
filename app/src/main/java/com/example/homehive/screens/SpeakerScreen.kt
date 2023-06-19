@@ -57,6 +57,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.toLowerCase
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
@@ -83,9 +84,9 @@ fun SpeakerScreen(
         mutableStateOf(false)
     }
 
-    var playlistSongs = speakerState.playlist.result // array de canciones
+    var playlistSongs = speakerState.playlist.result
 
-    val playlists = listOf("Playlist 1", "Playlist 2", "Playlist 3", "Playlist 4", "Playlist 5")
+    val playlists = listOf("Classical", "Pop", "Country", "Rock", "Dance", "Latina")
     var selectedPlaylist = remember { mutableStateOf(playlists[0]) }
 
     LaunchedEffect(Unit) {
@@ -148,8 +149,9 @@ fun SpeakerScreen(
                                         GenericDropdownMenuOnOutlinedButtonIcon(
                                             items = playlists,
                                             painter = painterResource(id = R.drawable.playlist),
-                                            onItemSelected = { playlist ->
-                                                selectedPlaylist.value = playlist
+                                            onItemSelected = { genre ->
+                                                selectedPlaylist.value = genre
+                                                speakerVM.setGenre(genre.toLowerCase())
                                             },
                                             expanded = expanded,
                                         )

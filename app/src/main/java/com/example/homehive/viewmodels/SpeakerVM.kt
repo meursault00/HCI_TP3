@@ -151,7 +151,6 @@ class SpeakerVM(
         }
         devicesVM.editADevice(uiState.value.id, "setGenre", listOf(newGenre))
         devicesVM.fetchPlaylist(uiState.value.id)
-
     }
 
     fun checkPolling(){
