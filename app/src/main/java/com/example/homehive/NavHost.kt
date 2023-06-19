@@ -18,6 +18,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.homehive.screens.HelpScreen
 import com.example.homehive.screens.HomeScreen
 import com.example.homehive.screens.OvenScreen
+import com.example.homehive.screens.QrScannerScreen
 import com.example.homehive.screens.RoutinesScreen
 import com.example.homehive.screens.SettingsScreen
 import com.example.homehive.screens.SpeakerScreen
@@ -89,7 +90,11 @@ fun NavHost(
                 SettingsScreen(navController = navController, innerPadding = innerPadding)
             }
         }
-
+        composable("scanner") {
+            App(navController = navController) { navController, innerPadding ->
+                QrScannerScreen(navController = navController, innerPadding = innerPadding)
+            }
+        }
         composable("devices/speaker/{id}") {
             App(navController = navController) { navController, innerPadding ->
                 SpeakerScreen(navController = navController, innerPadding = innerPadding)

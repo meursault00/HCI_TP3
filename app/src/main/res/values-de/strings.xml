@@ -96,4 +96,7 @@
     <string name="unit_is_required">Einheit ist erforderlich</string>
     <string name="try_refreshing">Probieren sie wieder laden!</string>
     <string name="check_connection">Checken Sie seine WIFI konnektion</string>
+    <string name="add_devices">Anscheinend haben Sie keine Geräte. Fügen Sie ein Gerät hinzu, um fortzufahren.</string>
+    <string name="add_device">Gerät hinzufügen</string>
+    <string name="scan_qr">Scannen Sie den QR-Code auf dem Gerät, indem Sie Ihre Kamera darauf richten.</string>
 </resources>

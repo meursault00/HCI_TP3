@@ -95,4 +95,7 @@
     <string name="unit_is_required">Unit is required</string>
     <string name="try_refreshing">Try refreshing!</string>
     <string name="check_connection">Check your wifi connection and</string>
+    <string name="add_devices">Seems like you dont have devices, add a device to continue.</string>
+    <string name="add_device">Add device</string>
+    <string name="scan_qr">Scan the QR code on the device by pointing your camera at it</string>
 </resources>

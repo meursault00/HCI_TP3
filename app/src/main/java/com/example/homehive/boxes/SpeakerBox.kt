@@ -133,7 +133,7 @@ fun SpeakerBox(
                         }
                         FloatingActionButton(
                             onClick = {
-                                when(speakerState.status ) {
+                                when(speakerState.status) {
                                     "stopped" -> speakerVM.play()
                                     "paused" -> speakerVM.resume()
                                     else -> speakerVM.pause()

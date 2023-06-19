@@ -69,7 +69,6 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
 
     val speakerState by speakerVM.uiState.collectAsState();
     val windowInfo = rememberWindowInfo();
-    var isPlaying  = speakerState.status == "playing"
 
 
     var songProgress = remember { mutableStateOf(0) }
@@ -390,14 +389,21 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                         )
                                     }
                                     FloatingActionButton(
-                                        onClick = { if (isPlaying) speakerVM.pause() else speakerVM.play() },
+                                        onClick = {
+                                            when(speakerState.status) {
+                                                "stopped" -> speakerVM.play()
+                                                "paused" -> speakerVM.resume()
+                                                else -> speakerVM.pause()
+                                            }
+
+                                      },
                                         elevation = FloatingActionButtonDefaults.elevation(0.dp),
                                         shape = CircleShape,
                                         containerColor = Color(0xFFFFFFFF),
                                         modifier = Modifier.size(50.dp) // Adjust the size as desired
                                     ) {
                                         Icon(
-                                            painter = painterResource(id = if (isPlaying) R.drawable.pause else R.drawable.play),
+                                            painter = painterResource(id = if (speakerState.status == "playing") R.drawable.pause else R.drawable.play),
                                             contentDescription = null,
                                             tint = Color(0xFF000000),
                                             modifier = Modifier.size(30.dp)
@@ -728,14 +734,18 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                         )
                                     }
                                     FloatingActionButton(
-                                        onClick = { if (isPlaying) speakerVM.pause() else speakerVM.play() },
+                                        onClick = { when(speakerState.status) {
+                                            "stopped" -> speakerVM.play()
+                                            "paused" -> speakerVM.resume()
+                                            else -> speakerVM.pause()
+                                        } },
                                         elevation = FloatingActionButtonDefaults.elevation(0.dp),
                                         shape = CircleShape,
                                         containerColor = Color(0xFFFFFFFF),
                                         modifier = Modifier.size(50.dp) // Adjust the size as desired
                                     ) {
                                         Icon(
-                                            painter = painterResource(id = if (isPlaying) R.drawable.pause else R.drawable.play),
+                                            painter = painterResource(id = if (speakerState.status == "playing") R.drawable.pause else R.drawable.play),
                                             contentDescription = null,
                                             tint = Color(0xFF000000),
                                             modifier = Modifier.size(30.dp)

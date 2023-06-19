@@ -177,7 +177,7 @@ fun HomeScreen(
                         }
                     }
                 }
-                else{
+                else if( devicesState.devices?.result?.isNotEmpty() == true){
                     LazyVerticalStaggeredGrid(
                         columns = StaggeredGridCells.Adaptive(170.dp),
                     ){
@@ -305,7 +305,36 @@ fun HomeScreen(
                         }
                     }
                 }
-
+                else {
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(1),
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                    ) {
+                        item(){
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(start = 10.dp, end = 10.dp),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.add_device),
+                                    contentDescription = "Error",
+                                    tint = if(isDarkTheme.value) MaterialTheme.colorScheme.inversePrimary else MaterialTheme.colorScheme.secondary,
+                                    modifier = Modifier.size(100.dp)
+                                )
+                                Text(
+                                    text = stringResource(id = R.string.add_devices) + "\n",
+                                    color =  if(isDarkTheme.value) MaterialTheme.colorScheme.inversePrimary else MaterialTheme.colorScheme.secondary,
+                                    textAlign = TextAlign.Center
+                                )
+                            }
+                        }
+                    }
+                }
             }
         }
     }
