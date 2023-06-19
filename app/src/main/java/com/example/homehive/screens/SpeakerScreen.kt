@@ -3,6 +3,7 @@ package com.example.homehive.screens
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,6 +23,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
@@ -34,6 +37,7 @@ import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -48,6 +52,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -59,6 +64,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.R
 import com.example.homehive.WindowInfo
+import com.example.homehive.boxes.GenericDropdownMenu
 import com.example.homehive.library.AnimatedTextOverflow
 import com.example.homehive.rememberWindowInfo
 import com.example.homehive.viewmodels.SpeakerVM
@@ -69,13 +75,12 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
 
     val speakerState by speakerVM.uiState.collectAsState();
     val windowInfo = rememberWindowInfo();
+    var expanded = remember { // Para el playlist dropdown
+        mutableStateOf(false)
+    }
 
-
-    var songProgress = remember { mutableStateOf(0) }
-    var songName = remember { mutableStateOf(speakerState.song.title ?: "DUKETO") }
-    var songArtist = remember { mutableStateOf(speakerState.song.artist ?: "BZRP") }
-    var songAlbum = remember { mutableStateOf(speakerState.song.album ?: "Clasicos") }
-
+    val playlists = listOf("Playlist 1", "Playlist 2", "Playlist 3", "Playlist 4", "Playlist 5")
+    var selectedPlaylist = remember { mutableStateOf(playlists[0]) }
     Column (
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -128,21 +133,15 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                         horizontalArrangement = Arrangement.spacedBy(10.dp),
                                     )
                                     {
-                                        OutlinedButton(
-                                            onClick = { },
-                                            modifier= Modifier.size(40.dp),  //avoid the oval shape
-                                            shape = CircleShape,
-                                            border= BorderStroke(1.dp, Color.White),
-                                            contentPadding = PaddingValues(0.dp),  //avoid the little icon
-                                            colors = ButtonDefaults.outlinedButtonColors(contentColor =  Color.White)
-                                        ) {
-                                            Icon(
-                                                painter = painterResource(id = R.drawable.playlist),
-                                                contentDescription = null,
-                                                tint = Color(0xFFFFFFFF),
-                                                modifier = Modifier.size(20.dp)
-                                            )
-                                        }
+                                        GenericDropdownMenuOnOutlinedButtonIcon(
+                                            items = playlists,
+                                            painter = painterResource(id = R.drawable.playlist),
+                                            onItemSelected = { playlist ->
+                                                selectedPlaylist.value = playlist;
+                                            },
+                                            expanded = expanded,
+                                        )
+
                                         OutlinedButton(
                                             onClick = { speakerVM.stop()},
                                             modifier= Modifier.size(40.dp),  //avoid the oval shape
@@ -797,7 +796,6 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
 }
 
 
-
 @Composable
 fun VolumeBar(
     modifier: Modifier = Modifier,
@@ -967,4 +965,62 @@ fun getProgress(progress: String, duration: String): Float {
     val progressPercent = (totalSecondsProgress / totalSeconds) * 100
     if(progressPercent.isNaN()) return 0f
     return progressPercent
+}
+
+
+@Composable
+fun GenericDropdownMenuOnOutlinedButtonIcon(
+    painter: Painter,
+    items: List<String>,
+    onItemSelected: (String) -> Unit,
+    expanded: MutableState<Boolean>
+) {
+
+    OutlinedButton(
+        onClick = { expanded.value = true},
+        modifier= Modifier.size(40.dp),  //avoid the oval shape
+        shape = CircleShape,
+        border= BorderStroke(1.dp, Color.White),
+        contentPadding = PaddingValues(0.dp),  //avoid the little icon
+        colors = ButtonDefaults.outlinedButtonColors(contentColor =  Color.White)
+    ) {
+        Icon(
+            painter = painter,
+            contentDescription = null,
+            tint = Color(0xFFFFFFFF),
+            modifier = Modifier.size(20.dp)
+        )
+
+        DropdownMenu(
+            expanded = expanded.value,
+            onDismissRequest = { expanded.value = false },
+            modifier = Modifier
+                .background(
+                    color = MaterialTheme.colorScheme.secondary,
+                )
+                .width(200.dp)
+        ) {
+            items.forEach { item ->
+                DropdownMenuItem(
+                    text  = {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = item,
+                                color = MaterialTheme.colorScheme.onPrimary,
+                                style = MaterialTheme.typography.bodyMedium,
+
+                                )
+                        }
+                    },
+                    onClick = {
+                        expanded.value = false
+                        onItemSelected(item)
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
+    }
 }

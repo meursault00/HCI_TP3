@@ -221,16 +221,14 @@ fun AppearanceBox(viewModel : SettingsVM = viewModel()) {
                                         .padding(start = 22.dp, end = 22.dp)
                                         .fillMaxWidth()
                                 ) {
-                                    LanguageDropdownMenu(
-                                        languages = languages,
-                                        selectedLanguage = selectedLanguage.value,
-                                        onLanguageSelected = { language ->
+                                    GenericDropdownMenu(
+                                        items = languages,
+                                        selectedItem = selectedLanguage.value,
+                                        onItemSelected = { language ->
                                             selectedLanguage.value = language;
                                             viewModel.toggleLanguage()
                                         },
-
                                         expanded = expanded,
-
                                     )
                                     Icon(
                                         painter = icon,
@@ -255,16 +253,16 @@ fun AppearanceBox(viewModel : SettingsVM = viewModel()) {
 }
 
 @Composable
-fun LanguageDropdownMenu(
-    languages: List<String>,
-    selectedLanguage: String,
-    onLanguageSelected: (String) -> Unit,
+fun GenericDropdownMenu(
+    items: List<String>,
+    selectedItem: String,
+    onItemSelected: (String) -> Unit,
     expanded: MutableState<Boolean>
 ) {
 
     Box {
         Text(
-            text = selectedLanguage,
+            text = selectedItem,
             modifier = Modifier,
             color = MaterialTheme.colorScheme.onPrimary,
             style = MaterialTheme.typography.bodyMedium,
@@ -280,7 +278,7 @@ fun LanguageDropdownMenu(
                 )
                 .width(200.dp)
         ) {
-            languages.forEach { language ->
+            items.forEach { language ->
                 DropdownMenuItem(
                     text  = {
                         Row(
@@ -296,7 +294,7 @@ fun LanguageDropdownMenu(
                     },
                     onClick = {
                         expanded.value = false
-                        onLanguageSelected(language)
+                        onItemSelected(language)
                     },
                     modifier = Modifier.fillMaxWidth()
                 )
