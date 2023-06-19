@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.Globals
 import com.example.homehive.R
+import com.example.homehive.library.AnimatedTextOverflow
 import com.example.homehive.viewmodels.SettingsVM
 import com.example.homehive.viewmodels.SpeakerVM
 import com.example.homehive.viewmodels.isDarkTheme
@@ -101,16 +102,16 @@ fun SpeakerBox(
                         .padding(start = 10.dp, end = 10.dp)
                         .align(Alignment.Center),
                 ) {
-                    Text(
+                    AnimatedTextOverflow(
                         text = speakerState.song.title?: "Unavailable",
-//                        text = stringResource(id = R.string.current_song),
+                        style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onPrimary,
                     )
                     Row(
                         horizontalArrangement = Arrangement.SpaceEvenly,
                         verticalAlignment = Alignment.CenterVertically, // Center vertically
                         modifier = Modifier
-                            .padding(bottom = 20.dp)
+                            .padding(top = 20.dp)
                             .fillMaxWidth()
                     ){
                         FloatingActionButton(
@@ -131,10 +132,13 @@ fun SpeakerBox(
                             )
                         }
                         FloatingActionButton(
-                            onClick = { if(speakerState.status == "stopped") {
-                                speakerVM.play()
-
-                            } else if(speakerState.status == "paused") speakerVM.resume() else speakerVM.pause() },
+                            onClick = {
+                                when(speakerState.status ) {
+                                    "stopped" -> speakerVM.play()
+                                    "paused" -> speakerVM.resume()
+                                    else -> speakerVM.pause()
+                                }
+                            } ,
                             shape = CircleShape,
                             elevation = FloatingActionButtonDefaults.elevation(16.dp),
                             containerColor = MaterialTheme.colorScheme.secondary,
@@ -165,10 +169,7 @@ fun SpeakerBox(
                             )
                         }
                     }
-                    Text(
-                        text = stringResource(id = R.string.current_song),
-                        color = MaterialTheme.colorScheme.onPrimary,
-                    )
+
                 }
 
                 Button(

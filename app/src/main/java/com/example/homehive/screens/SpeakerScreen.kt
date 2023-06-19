@@ -1,25 +1,15 @@
 package com.example.homehive.screens
 
-import android.content.ClipData
-import android.graphics.drawable.Animatable
-import android.widget.ProgressBar
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.tween
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -28,7 +18,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
@@ -45,12 +34,10 @@ import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.navigation.NavController
 import androidx.compose.ui.Modifier
@@ -61,30 +48,20 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.layout
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.homehive.BottomShadow
-import com.example.homehive.MenuItem
 import com.example.homehive.R
 import com.example.homehive.WindowInfo
 import com.example.homehive.library.AnimatedTextOverflow
 import com.example.homehive.rememberWindowInfo
 import com.example.homehive.viewmodels.SpeakerVM
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 
 @Composable
@@ -94,6 +71,11 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
     val windowInfo = rememberWindowInfo();
     var isPlaying  = speakerState.status == "playing"
 
+
+    var songProgress = remember { mutableStateOf(0) }
+    var songName = remember { mutableStateOf(speakerState.song.title ?: "DUKETO") }
+    var songArtist = remember { mutableStateOf(speakerState.song.artist ?: "BZRP") }
+    var songAlbum = remember { mutableStateOf(speakerState.song.album ?: "Clasicos") }
 
     Box(
         modifier = Modifier
@@ -336,23 +318,48 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                     style = MaterialTheme.typography.bodyMedium,
                                     fontWeight = FontWeight.Bold,
                                 )
-                                // slider de posicion en la cacin
-                                Slider(
-                                    value = 0.5f,
-                                    enabled = false,
-                                    onValueChange = { /*TODO*/ },
-                                    colors = SliderDefaults.colors(
-                                        thumbColor = Color(0xFFFFFFFF),
-                                        activeTrackColor = Color(0xFFFFFFFF),
-                                        inactiveTrackColor = Color(0x97FFFFFF),
-                                        disabledThumbColor = Color(0xFFFFFFFF),
-                                        disabledActiveTrackColor = Color(0xFFFFFFFF),
-                                        disabledInactiveTrackColor = Color(0x97FFFFFF),
-
-                                        ),
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                )
+                                // slider de posicion en la cancion
+                                Column(modifier = Modifier.fillMaxWidth()) {
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.spacedBy(5.dp),
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                    ) {
+                                        Text(
+                                            text = speakerState.song.progress ?: "0:00",
+                                            fontSize = 12.sp,
+                                            color = Color(0xB9FFFFFF),
+                                            style = MaterialTheme.typography.bodyMedium,
+                                        )
+                                        Slider(
+                                            value = getProgress(
+                                                progress = speakerState.song.progress ?: "0:00",
+                                                duration = speakerState.song.duration ?: "0:00"
+                                            ),
+                                            valueRange = 0f..100f,
+                                            enabled = false,
+                                            onValueChange = { /*TODO*/ },
+                                            colors = SliderDefaults.colors(
+                                                thumbColor = Color(0xFFFFFFFF),
+                                                activeTrackColor = Color(0xFFFFFFFF),
+                                                inactiveTrackColor = Color(0x97FFFFFF),
+                                                disabledThumbColor = Color(0xFFFFFFFF),
+                                                disabledActiveTrackColor = Color(0xFFFFFFFF),
+                                                disabledInactiveTrackColor = Color(0x97FFFFFF)
+                                            ),
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .weight(1f)
+                                        )
+                                        Text(
+                                            text = speakerState.song.duration ?: "0:00",
+                                            fontSize = 12.sp,
+                                            color = Color(0xB9FFFFFF),
+                                            style = MaterialTheme.typography.bodyMedium,
+                                        )
+                                    }
+                                }
 
                                 Row(
                                     horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -369,7 +376,10 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                         )
                                     }
                                     IconButton(
-                                        onClick = {speakerVM.previousSong()},
+                                        onClick = {
+                                            if (speakerVM.uiState.value.status == "playing") {
+                                                speakerVM.previousSong()
+                                            } },
                                         modifier = Modifier.size(40.dp) // Adjust the size as desired
                                     ) {
                                         Icon(
@@ -380,27 +390,21 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                         )
                                     }
                                     FloatingActionButton(
-                                        onClick = {
-                                            if(speakerState.status == "playing") speakerVM.pause()
-                                            else if(speakerState.status == "paused") speakerVM.resume()
-                                            else speakerVM.play() },
+                                        onClick = { if (isPlaying) speakerVM.pause() else speakerVM.play() },
                                         elevation = FloatingActionButtonDefaults.elevation(0.dp),
                                         shape = CircleShape,
                                         containerColor = Color(0xFFFFFFFF),
                                         modifier = Modifier.size(50.dp) // Adjust the size as desired
                                     ) {
                                         Icon(
-                                            painter = painterResource(id = if(isPlaying) R.drawable.pause else R.drawable.play),
+                                            painter = painterResource(id = if (isPlaying) R.drawable.pause else R.drawable.play),
                                             contentDescription = null,
                                             tint = Color(0xFF000000),
                                             modifier = Modifier.size(30.dp)
                                         )
                                     }
                                     IconButton(
-                                        onClick = {
-                                            if (speakerVM.uiState.value.status == "playing") {
-                                                speakerVM.nextSong()
-                                        } },
+                                        onClick = { speakerVM.nextSong() },
                                         modifier = Modifier.size(40.dp) // Adjust the size as desired
                                     ) {
                                         Icon(
@@ -429,7 +433,7 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                 }
             }
 
-            is WindowInfo.WindowType.Medium -> {
+  /*MEDIUM*/  is WindowInfo.WindowType.Medium -> {
                 Surface(
                     color = Color(0xFF8000FF),
                     modifier = Modifier
@@ -442,7 +446,7 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                 }
             }
 
-            else -> {
+   /*MARGE*/ else -> {
                 Surface(
                     color = Color(0xFF000000),
                     modifier = Modifier
@@ -575,24 +579,7 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                                 verticalArrangement = Arrangement.spacedBy(5.dp),
                                                 horizontalAlignment = Alignment.CenterHorizontally,
                                             ) {
-                                                /*Row { // INDICADOR DEL VOLUMEN
-                                                    Surface(
-                                                        color = Color(0x0),
-                                                        modifier = Modifier
-                                                            .height(60.dp)
-                                                            .width(80.dp),
-                                                    ) {
-                                                        Text(
-                                                            modifier = Modifier.padding(top = 5.dp),
-                                                            textAlign = TextAlign.Center,
-                                                            text = "${speakerState.volume}",
-                                                            style = MaterialTheme.typography.headlineLarge,
-                                                            fontWeight = FontWeight.Bold,
-                                                            color = Color(0xFFFFFFFF),
-                                                        )
-                                                    }
 
-                                                }*/
                                                 Row { // BARRITAS DEL VOLUMEN
                                                     Surface(
                                                         color = Color(0x0),
@@ -657,34 +644,60 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                         bottom = 15.dp
                                     )
                             ) {
-
-                                //Nombre de la cancion
-                                AnimatedTextOverflow(text = "Peso Pluma: Bzrp Music Sessions, Vol. 39")
+                                // NOMBRE DE LA CANCION
+                                AnimatedTextOverflow(
+                                    text = speakerState.song.title?: "la dukineta"
+                                )
 
                                 // artista
                                 Text(
-                                    text = "BZRP Music Sessions, Vol. 39",
+                                    text = speakerState.song.artist?: "unavailable",
                                     color = Color(0xB9FFFFFF),
                                     style = MaterialTheme.typography.bodyMedium,
                                     fontWeight = FontWeight.Bold,
                                 )
-                                // slider de posicion en la cacin
-                                Slider(
-                                    value = 0.5f,
-                                    enabled = false,
-                                    onValueChange = { /*TODO*/ },
-                                    colors = SliderDefaults.colors(
-                                        thumbColor = Color(0xFFFFFFFF),
-                                        activeTrackColor = Color(0xFFFFFFFF),
-                                        inactiveTrackColor = Color(0x97FFFFFF),
-                                        disabledThumbColor = Color(0xFFFFFFFF),
-                                        disabledActiveTrackColor = Color(0xFFFFFFFF),
-                                        disabledInactiveTrackColor = Color(0x97FFFFFF),
-
-                                        ),
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                )
+                                // slider de posicion en la cancion
+                                Column(modifier = Modifier.fillMaxWidth()) {
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.spacedBy(5.dp),
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                    ) {
+                                        Text(
+                                            text = speakerState.song.progress ?: "0:00",
+                                            fontSize = 12.sp,
+                                            color = Color(0xB9FFFFFF),
+                                            style = MaterialTheme.typography.bodyMedium,
+                                        )
+                                        Slider(
+                                            value = getProgress(
+                                                progress = speakerState.song.progress ?: "0:00",
+                                                duration = speakerState.song.duration ?: "0:00"
+                                            ),
+                                            valueRange = 0f..100f,
+                                            enabled = false,
+                                            onValueChange = { /*TODO*/ },
+                                            colors = SliderDefaults.colors(
+                                                thumbColor = Color(0xFFFFFFFF),
+                                                activeTrackColor = Color(0xFFFFFFFF),
+                                                inactiveTrackColor = Color(0x97FFFFFF),
+                                                disabledThumbColor = Color(0xFFFFFFFF),
+                                                disabledActiveTrackColor = Color(0xFFFFFFFF),
+                                                disabledInactiveTrackColor = Color(0x97FFFFFF)
+                                            ),
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .weight(1f)
+                                        )
+                                        Text(
+                                            text = speakerState.song.duration ?: "0:00",
+                                            fontSize = 12.sp,
+                                            color = Color(0xB9FFFFFF),
+                                            style = MaterialTheme.typography.bodyMedium,
+                                        )
+                                    }
+                                }
 
                                 Row(
                                     horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -879,7 +892,9 @@ fun SongRow(song: Song) {
         Icon(
             painter = painterResource(id = R.drawable.song),
             contentDescription = null,
-            modifier = Modifier.size(30.dp).padding(start= 10.dp),
+            modifier = Modifier
+                .size(30.dp)
+                .padding(start = 10.dp),
             tint = MaterialTheme.colorScheme.surface
         )
         Column(
@@ -916,3 +931,19 @@ data class Song(
     val artist: String,
     val duration: String,
 )
+
+
+fun getProgress(progress: String, duration: String): Float {
+    val durationParts = duration.split(":")
+    val minutes = durationParts[0].toFloatOrNull() ?: 0f
+    val seconds = durationParts.getOrNull(1)?.toFloatOrNull() ?: 0f
+    val totalSeconds = minutes * 60 + seconds
+
+    val progressParts = progress.split(":")
+    val minutesProgress = progressParts[0].toFloatOrNull() ?: 0f
+    val secondsProgress = progressParts.getOrNull(1)?.toFloatOrNull() ?: 0f
+    val totalSecondsProgress = minutesProgress * 60 + secondsProgress
+    val progressPercent = (totalSecondsProgress / totalSeconds) * 100
+    if(progressPercent.isNaN()) return 0f
+    return progressPercent
+}
