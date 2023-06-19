@@ -410,7 +410,9 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                         )
                                     }
                                     IconButton(
-                                        onClick = { speakerVM.nextSong() },
+                                        onClick = { if (speakerVM.uiState.value.status == "playing") {
+                                            speakerVM.nextSong()
+                                        } },
                                         modifier = Modifier.size(40.dp) // Adjust the size as desired
                                     ) {
                                         Icon(
