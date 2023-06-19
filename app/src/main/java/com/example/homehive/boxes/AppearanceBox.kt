@@ -76,7 +76,7 @@ fun AppearanceBox(viewModel : SettingsVM = viewModel()) {
     var isOpen = remember { mutableStateOf(true) }
 
     val height: Dp by animateDpAsState(
-        targetValue = if (isOpen.value) 240.dp else 100.dp,
+        targetValue = if (isOpen.value) 300.dp else 100.dp,
         animationSpec = tween(durationMillis = 100)
     )
 
@@ -149,46 +149,16 @@ fun AppearanceBox(viewModel : SettingsVM = viewModel()) {
                     Column(
                         verticalArrangement = Arrangement.SpaceBetween,
                     ){
-                        Row(
-                            modifier = Modifier
-                                .padding(start = 15.dp, end = 15.dp, top = 5.dp, bottom = 5.dp)
-                                .fillMaxWidth(),
-                        ){
-                            Surface(
-                                color = MaterialTheme.colorScheme.secondary,
-                                modifier = Modifier.fillMaxWidth(),
-                                shape = RoundedCornerShape(15.dp),
-                                shadowElevation = 16.dp
-                            ){
-                                Row(
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                ){
-                                    Text(text = stringResource(id = R.string.dark_mode),
-                                        style = MaterialTheme.typography.bodyMedium,
-                                        color = MaterialTheme.colorScheme.onPrimary,
-                                        modifier = Modifier
-                                            .padding(start = 22.dp)
-                                            .align(Alignment.CenterVertically)
-                                    )
-                                    Switch(
-                                        checked = isDarkTheme.value,
-                                        onCheckedChange = { isDarkTheme.value = !isDarkTheme.value },
-                                        modifier = Modifier
-                                            .padding(end = 22.dp)
-                                            .align(Alignment.CenterVertically),
-                                        colors = SwitchDefaults.colors(
-                                            checkedThumbColor = MaterialTheme.colorScheme.secondary,
-                                            uncheckedThumbColor = MaterialTheme.colorScheme.background,
-                                            checkedTrackColor = Color(0xFF7FAD74),
-                                            uncheckedTrackColor = MaterialTheme.colorScheme.secondary
-                                        )
-                                    )
-                                }
-
-                            }
-                        }
+                        AppearanceSwitchRow(
+                            message = stringResource(id = R.string.dark_mode),
+                            checked = isDarkTheme.value,
+                            onCheckedChange = {isDarkTheme.value = !isDarkTheme.value },
+                        )
+                        AppearanceSwitchRow(
+                            message = stringResource(id = R.string.show_routines_hs),
+                            checked = true,
+                            onCheckedChange = { },
+                        )
                         Row(
                             modifier = Modifier
                                 .padding(start = 15.dp, end = 15.dp, top = 5.dp, bottom = 5.dp)
@@ -241,6 +211,54 @@ fun AppearanceBox(viewModel : SettingsVM = viewModel()) {
     }
 }
 
+
+@Composable
+fun AppearanceSwitchRow(
+    message: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit
+){
+    Row(
+        modifier = Modifier
+            .padding(start = 15.dp, end = 15.dp, top = 5.dp, bottom = 5.dp)
+            .fillMaxWidth(),
+    ){
+        Surface(
+            color = MaterialTheme.colorScheme.secondary,
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(15.dp),
+            shadowElevation = 16.dp
+        ){
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ){
+                Text(text = message,//stringResource(id = R.string.show_routines_hs),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier
+                        .padding(start = 22.dp)
+                        .align(Alignment.CenterVertically)
+                )
+                Switch(
+                    checked = checked, //isDarkTheme.value,
+                    onCheckedChange = onCheckedChange,
+                    modifier = Modifier
+                        .padding(end = 22.dp)
+                        .align(Alignment.CenterVertically),
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = MaterialTheme.colorScheme.secondary,
+                        uncheckedThumbColor = MaterialTheme.colorScheme.background,
+                        checkedTrackColor = Color(0xFF7FAD74),
+                        uncheckedTrackColor = MaterialTheme.colorScheme.secondary
+                    )
+                )
+            }
+
+        }
+    }
+}
 @Composable
 fun GenericDropdownMenu(
     items: List<String>,

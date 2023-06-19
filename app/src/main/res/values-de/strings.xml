@@ -99,5 +99,6 @@
     <string name="add_devices">Anscheinend haben Sie keine Geräte. Fügen Sie ein Gerät hinzu, um fortzufahren.</string>
     <string name="add_device">Gerät hinzufügen</string>
     <string name="scan_qr">Scannen Sie den QR-Code auf dem Gerät, indem Sie Ihre Kamera darauf richten.</string>
+    <string name="show_routines_hs">Show Routines in Home</string>
     <string name="favorites">Favoritinnen</string>
 </resources>

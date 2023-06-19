@@ -99,5 +99,6 @@
     <string name="add_devices">Parece que no tienes dispositivos, agrega un dispositivo para continuar.</string>
     <string name="add_device">Añadir dispositivo</string>
     <string name="scan_qr">Escanea el código QR del dispositivo apuntando tu cámara hacia él.</string>
+    <string name="show_routines_hs">Show Routines in Home</string>
     <string name="favorites">Favoritos</string>
 </resources>

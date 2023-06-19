@@ -98,5 +98,6 @@
     <string name="add_devices">Seems like you dont have devices, add a device to continue.</string>
     <string name="add_device">Add device</string>
     <string name="scan_qr">Scan the QR code on the device by pointing your camera at it</string>
+    <string name="show_routines_hs">Show Routines in Home</string>
     <string name="favorites">Favorites</string>
 </resources>

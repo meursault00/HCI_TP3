@@ -99,6 +99,7 @@
     <string name="add_devices">Úgy tűnik, nincsenek eszközei. A folytatáshoz adjon hozzá egy eszközt.</string>
     <string name="add_device">Eszköz hozzáadása</string>
     <string name="scan_qr">Pászd a kamerát a készülék QR-kódjára mutatva, hogy beolvashasd.</string>
+    <string name="show_routines_hs">Show Routines in Home</string>
     <string name="favorites">kedvencek</string>
 </resources>
 
