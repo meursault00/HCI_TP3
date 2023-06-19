@@ -10,7 +10,8 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
 import android.widget.RemoteViews
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,9 +39,7 @@ fun createNotificationChannel(context: Context) {
         notificationManager.createNotificationChannel(channel)
     }
 }
-public fun sendCustomNotification(context: Context, title: String, content: String) {
-    Log.d("HomeHiveLog", "Sending Custom Notification")
-
+fun sendCustomNotification(context: Context, title: String, content: String) {
     // Build the notification
     val builder = NotificationCompat.Builder(context, "HomeHiveHCI")
         .setSmallIcon(R.drawable.ic_notification)
@@ -83,9 +82,6 @@ private fun getDefaultPendingIntent(context: Context): PendingIntent {
 fun PostNotification() {
     val context = LocalContext.current
     val notificationId = 1
-
-    Log.d("HomeHiveLog","Posting Notification")
-
     Column(modifier = Modifier.padding(16.dp)) {
         Button(
             onClick = {
@@ -116,7 +112,6 @@ fun PostNotification() {
                         Manifest.permission.POST_NOTIFICATIONS
                     ) != PackageManager.PERMISSION_GRANTED
                 ) {
-                    Log.d("HomeHiveLog","Activate Notification Permission")
                     return@Button
                 }
                 notificationManager.notify(notificationId, builder.build())

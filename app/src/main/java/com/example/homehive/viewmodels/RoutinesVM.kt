@@ -1,6 +1,5 @@
 package com.example.homehive.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.homehive.Globals
@@ -22,28 +21,20 @@ class RoutinesVM(
     val uiState: StateFlow<RoutinesUIState> = _uiState.asStateFlow()
     private var fetchJob: Job? = null
 
-    fun dismissMessage() {
-        _uiState.update { it.copy(message = null) }
-    }
-
     fun fetchRoutines() {
         _uiState.update { it.copy(isLoading = true) }
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             runCatching {
-                Log.d("homehivestatus", " Llegue hasta aca")
                 val apiService = RetrofitClient.getApiService()
-                Log.d("homehivestatus", " Nunca llego hasta aca!")
                 apiService?.getAllRoutines() ?: throw Exception("API Service is null")
             }.onSuccess { response ->
-                Log.d("homehivestatus", "Success: Inside Success Block")
                 delay(2000)
                 _uiState.update { it.copy(
                     routines = response.body(),
                     isLoading = false
                 ) }
             }.onFailure { e ->
-                Log.d("homehivestatus", "Failure: Inside Failure Block \nError message  ${e.message}")
                 delay(2000)
                 _uiState.update { it.copy(
                     message = e.message,
@@ -58,18 +49,14 @@ class RoutinesVM(
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             runCatching {
-                Log.d("homehivestatus", " Llegue hasta aca")
                 val apiService = RetrofitClient.getApiService()
-                Log.d("homehivestatus", " Nunca llego hasta aca!")
                 apiService?.getARoutine(id) ?: throw Exception("API Service is null")
             }.onSuccess { response ->
-                Log.d("homehivestatus", "Success: Inside Success Block")
                 _uiState.update { it.copy(
                     // deberia retornar la rutina que se pidio
                     isLoading = false
                 ) }
             }.onFailure { e ->
-                Log.d("homehivestatus", "Failure: Inside Failure Block \nError message  ${e.message}")
                 _uiState.update { it.copy(
                     message = e.message,
                     isLoading = false
@@ -86,17 +73,11 @@ class RoutinesVM(
                 val apiService = RetrofitClient.getApiService()
                 apiService?.executeARoutine(id)
             }.onSuccess { response ->
-                Log.d("homehivestatus", "routine execute successful")
-                if (response != null) {
-                    Log.d("debug", response)
-                }
                 _uiState.update { it.copy(isLoading = false) }
             }.onFailure { e ->
-                Log.d("debug", "Api Call was Unsuccessful \nError message  ${e.message}")
                 _uiState.update { it.copy(message = e.message, isLoading = false) }
             }
         }
-        Log.d("putaku", "${devicesVM.qDevices()}")
         Globals.updates += devicesVM.qDevices()
     }
 }

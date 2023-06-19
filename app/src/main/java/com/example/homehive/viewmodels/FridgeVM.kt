@@ -1,7 +1,5 @@
 package com.example.homehive.viewmodels
 
-import android.bluetooth.BluetoothClass.Device
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.homehive.states.FridgeUIState

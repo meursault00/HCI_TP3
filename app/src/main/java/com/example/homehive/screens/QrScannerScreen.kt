@@ -29,7 +29,6 @@ import com.example.homehive.Camera
 import com.example.homehive.R
 import com.example.homehive.code
 import com.example.homehive.viewmodels.SettingsVM
-import com.example.homehive.viewmodels.isDarkTheme
 
 
 @Composable

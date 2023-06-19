@@ -1,10 +1,8 @@
 package com.example.homehive.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.homehive.network.deviceModels.NetworkPlaylist
-import com.example.homehive.network.deviceModels.NetworkPlaylistData
 import com.example.homehive.network.deviceModels.NetworkSong
 import com.example.homehive.states.SpeakerUIState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -51,7 +49,6 @@ class SpeakerVM(
                 )
             }
         }
-        Log.d("luegosync", _uiState.toString())
     }
 
     fun incrementVolume(){
@@ -75,7 +72,6 @@ class SpeakerVM(
     }
 
     fun play(){
-        Log.d("homehivestatus", "about to play")
         _uiState.update{currentState ->
             currentState.copy(status = "resume")
         }
@@ -158,8 +154,12 @@ class SpeakerVM(
 
     }
 
-    // Cuando se hace play => isLoopActive = true ^ llamo a la funcion polling
-    // Cuando se hace stop => isLoopActive = false
+    fun checkPolling(){
+        if ( uiState.value.status == "playing" ){
+            isLoopActive = true
+            polling()
+        }
+    }
 
     fun polling() {
         val thread = Thread {
@@ -170,5 +170,4 @@ class SpeakerVM(
         }
         thread.start()
     }
-
 }

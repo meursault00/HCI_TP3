@@ -1,6 +1,5 @@
 package com.example.homehive.viewmodels
 
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.homehive.states.SettingsUIState
@@ -19,13 +18,6 @@ class SettingsVM : ViewModel() {
         _uiState.update { currentState ->
             currentState.copy(language = !currentState.language)
         }
-    }
-
-    fun toggleTheme() {
-        _uiState.update { currentState ->
-            currentState.copy(theme = !currentState.theme)
-        }
-        isDarkTheme.value = !isDarkTheme.value // Update the global variable
     }
 
 }

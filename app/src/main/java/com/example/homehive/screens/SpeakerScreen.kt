@@ -1,6 +1,5 @@
 package com.example.homehive.screens
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -37,13 +36,13 @@ import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import androidx.navigation.NavController
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.CornerRadius
@@ -63,9 +62,9 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.homehive.R
 import com.example.homehive.WindowInfo
-import com.example.homehive.boxes.GenericDropdownMenu
 import com.example.homehive.library.AnimatedTextOverflow
 import com.example.homehive.rememberWindowInfo
 import com.example.homehive.viewmodels.SpeakerVM
@@ -78,8 +77,8 @@ fun SpeakerScreen(
     speakerVM: SpeakerVM = viewModel()
 ) {
 
-    val speakerState by speakerVM.uiState.collectAsState();
-    val windowInfo = rememberWindowInfo();
+    val speakerState by speakerVM.uiState.collectAsState()
+    val windowInfo = rememberWindowInfo()
     var expanded = remember { // Para el playlist dropdown
         mutableStateOf(false)
     }
@@ -88,6 +87,11 @@ fun SpeakerScreen(
 
     val playlists = listOf("Playlist 1", "Playlist 2", "Playlist 3", "Playlist 4", "Playlist 5")
     var selectedPlaylist = remember { mutableStateOf(playlists[0]) }
+
+    LaunchedEffect(Unit) {
+        speakerVM.checkPolling()
+    }
+
 
     Column (
         modifier = Modifier.fillMaxSize(),
@@ -145,7 +149,7 @@ fun SpeakerScreen(
                                             items = playlists,
                                             painter = painterResource(id = R.drawable.playlist),
                                             onItemSelected = { playlist ->
-                                                selectedPlaylist.value = playlist;
+                                                selectedPlaylist.value = playlist
                                             },
                                             expanded = expanded,
                                         )

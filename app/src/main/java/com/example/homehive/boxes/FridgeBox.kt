@@ -1,6 +1,5 @@
 package com.example.homehive.boxes
 
-import android.util.Log
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -23,7 +22,6 @@ import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -50,11 +48,11 @@ fun FridgeBox(
     fridgeVM : FridgeVM = viewModel()
 ) {
 
-    val uiState by fridgeVM.uiState.collectAsState();
-    val isOpen = remember { mutableStateOf(false) };
-    val currentMode = uiState.mode;
-    val auxTemperature  = remember { mutableStateOf(uiState.temperature)};
-    val auxFreezerTemperature = remember { mutableStateOf(uiState.freezerTemperature)};
+    val uiState by fridgeVM.uiState.collectAsState()
+    val isOpen = remember { mutableStateOf(false) }
+    val currentMode = uiState.mode
+    val auxTemperature  = remember { mutableStateOf(uiState.temperature)}
+    val auxFreezerTemperature = remember { mutableStateOf(uiState.freezerTemperature)}
 
     if ( Globals.updates > 0 ){
         fridgeVM.sync()

@@ -2,7 +2,6 @@ package com.example.homehive.network
 
 import com.example.homehive.network.deviceModels.NetworkDevicesList
 import com.example.homehive.network.deviceModels.NetworkPlaylist
-import com.example.homehive.network.deviceModels.NetworkPlaylistData
 import com.example.homehive.network.deviceModels.NetworkUnaryDevice
 import com.example.homehive.network.routineModels.NetworkRoutinesList
 import retrofit2.Response
@@ -10,11 +9,6 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PUT
 import retrofit2.http.Path
-
-data class ArrayValue(
-    val values: List<Any>
-)
-
 
 
 interface ApiService {

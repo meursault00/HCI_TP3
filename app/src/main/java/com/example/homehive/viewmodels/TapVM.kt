@@ -1,7 +1,6 @@
 package com.example.homehive.viewmodels
 
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.homehive.states.TapUIState
@@ -67,10 +66,8 @@ class TapVM(
     fun polling() {
         val thread = Thread {
             while (uiState.value.status == "opened") {
-                Log.d("polling", "${_uiState.value}")
                 Thread.sleep(1000)
                 sync()
-                Log.d("polling", "${_uiState.value}")
 
             }
         }

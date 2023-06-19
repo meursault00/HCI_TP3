@@ -1,7 +1,6 @@
 package com.example.homehive
 
 
-import android.os.Bundle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
@@ -9,12 +8,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.*
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import com.example.homehive.screens.HelpScreen
 import com.example.homehive.screens.HomeScreen
 import com.example.homehive.screens.OvenScreen
@@ -23,7 +23,6 @@ import com.example.homehive.screens.RoutinesScreen
 import com.example.homehive.screens.SettingsScreen
 import com.example.homehive.screens.SpeakerScreen
 import com.example.homehive.viewmodels.DevicesVM
-import com.example.homehive.viewmodels.FridgeVM
 import com.example.homehive.viewmodels.OvenVM
 import com.example.homehive.viewmodels.RoutinesVM
 import com.example.homehive.viewmodels.SpeakerVM
@@ -85,9 +84,13 @@ fun NavHost(
             }
         }
         composable("settings") {
-            println("List of devices: $devices")
             App(navController = navController) { navController, innerPadding ->
                 SettingsScreen(navController = navController, innerPadding = innerPadding)
+            }
+        }
+        composable("help") {
+            App(navController = navController) { navController, innerPadding ->
+                HelpScreen(navController = navController, innerPadding = innerPadding)
             }
         }
         composable("scanner") {

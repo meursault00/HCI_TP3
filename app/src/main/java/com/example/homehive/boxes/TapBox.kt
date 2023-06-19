@@ -57,23 +57,22 @@ import com.example.homehive.viewmodels.TapVM
 @Composable
 fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
 
-    val tapState by tapVM.uiState.collectAsState();
+    val tapState by tapVM.uiState.collectAsState()
 
-    val context = LocalContext.current;
+    val context = LocalContext.current
 
-    val isOpen = remember { mutableStateOf(false) };
-    val isOn  = remember { mutableStateOf(tapState.status == "opened") };
-//    var isOn = remember { mutableStateOf(false) };
-    val isDispensing = remember { mutableStateOf(false) };
-
-    val dispenseValue = remember { mutableStateOf("") };
-    val dispenseValueError = remember { mutableStateOf("") };
-    val dispenseValueHasError = remember { mutableStateOf(false) };
+    val isOpen = remember { mutableStateOf(false) }
+    val isOn  = remember { mutableStateOf(tapState.status == "opened") }
+//    var isOn = remember { mutableStateOf(false) }
+    val isDispensing = remember { mutableStateOf(false) }
+    val dispenseValue = remember { mutableStateOf("") }
+    val dispenseValueError = remember { mutableStateOf("") }
+    val dispenseValueHasError = remember { mutableStateOf(false) }
 
     val dispenseOptions = setOf("mL", "cL", "dL", "L")
-    val dispenseUnit = remember { mutableStateOf("") };
-    val dispenseUnitError = remember { mutableStateOf("") };
-    val dispenseUnitHasError = remember { mutableStateOf(false) };
+    val dispenseUnit = remember { mutableStateOf("") }
+    val dispenseUnitError = remember { mutableStateOf("") }
+    val dispenseUnitHasError = remember { mutableStateOf(false) }
 
     if ( Globals.updates > 0 ){
         tapVM.sync()
@@ -86,7 +85,6 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
     )
 
     LaunchedEffect(Unit) {
-        // Perform your logic here
         tapVM.checkPolling()
     }
 
