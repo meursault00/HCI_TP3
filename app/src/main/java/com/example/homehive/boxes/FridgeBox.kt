@@ -77,6 +77,7 @@ fun FridgeBox(
                 .height(height)
                 .width(200.dp)
                 .clickable { isOpen.value = !isOpen.value },
+            shadowElevation = 5.dp,
 
             shape = RoundedCornerShape(15.dp),
         ) {

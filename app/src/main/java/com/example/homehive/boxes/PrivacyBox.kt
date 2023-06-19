@@ -58,6 +58,7 @@ fun PrivacyBox() {
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable{ isOpen.value = !isOpen.value },
+            shadowElevation = 5.dp,
 
             shape = RoundedCornerShape(15.dp),
             color = MaterialTheme.colorScheme.onSecondaryContainer

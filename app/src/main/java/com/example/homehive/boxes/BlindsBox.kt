@@ -78,6 +78,7 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
         contentAlignment = Alignment.Center,
     ) {
         Surface(
+            shadowElevation = 5.dp,
             modifier = Modifier
                 .width(200.dp)
                 .clickable{ isOpen.value = !isOpen.value },

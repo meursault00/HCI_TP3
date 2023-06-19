@@ -40,7 +40,7 @@
     <string name="fridge_at">Heladera en</string>
     <string name="freezer_at">Congelador en</string>
     <string name="mode">Modo</string>
-    <string name="default_s">Predeterminado</string>
+    <string name="default_s">Normal</string>
     <string name="routine">Rutina</string>
     <string name="run">Ejecutar</string>
     <string name="actions">Acciones</string>

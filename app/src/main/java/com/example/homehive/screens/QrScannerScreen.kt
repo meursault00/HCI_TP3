@@ -48,7 +48,7 @@ fun QrScannerScreen(
             shadowElevation = 16.dp,
             color = MaterialTheme.colorScheme.secondary,
             modifier = Modifier
-                .padding(30.dp)
+                .padding(15.dp)
                 .fillMaxSize(),
             shape = RoundedCornerShape(15.dp),
         ) {

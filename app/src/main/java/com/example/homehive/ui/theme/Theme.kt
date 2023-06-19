@@ -15,20 +15,22 @@ import com.example.homehive.viewmodels.isDarkTheme
 
 private val DarkColorScheme = darkColorScheme(
     primary = Color(0xFF333333), //FF203831 // INTERESANTE = FF4F7469
-    secondary = Color(0xFF374542), // HAY OPACOS
+    secondary = Color(0xFF424645), // HAY OPACOS
     onSecondaryContainer = Color(0xFF202020),
-    tertiary = Color(0xFF374542),
+    tertiary = Color(0xFF424645),
     background = Color(0xFFA8A495), // BOTONES APAGADOS Y COSASS ASI
     surface = Color(0xFFFFFBFE),
     onPrimary = Color(0xFFDADFDD),
     onSecondary = Color(0xFF98B891),
     onTertiary = Color(0xFF2B4E5C),
-    onBackground = Color(0xFF325052),
+    onBackground = Color(0xFF424645),
     onSurface = Color(0xFFFFFFFF),
     onTertiaryContainer = Color(0xFFA0CCCF),
     inversePrimary = Color(0xFFDADFDD),
     inverseSurface = Color(0xFF202020),
-    )
+    tertiaryContainer = Color(0xFFEFE5C5)
+
+)
 
 private val LightColorScheme = lightColorScheme(
     primary = Color(0xFF1C4E3F), //FF203831 // INTERESANTE = FF4F7469 // FF84A89D // FF1C4E3F
@@ -45,6 +47,7 @@ private val LightColorScheme = lightColorScheme(
     onTertiaryContainer = Color(0xFF2B4E5C),
     inversePrimary = Color(0xFFEFE5C5),
     inverseSurface = Color(0xFF555555),
+    tertiaryContainer = Color(0xFFF4CF6D)
     )
 
 @Composable

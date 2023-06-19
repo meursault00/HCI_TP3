@@ -70,6 +70,7 @@ fun SpeakerBox(
     ) {
         Surface(
             color = MaterialTheme.colorScheme.secondary,
+            shadowElevation = 5.dp,
             modifier = Modifier
                 .height(200.dp)
 

@@ -86,6 +86,8 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
                 .width(200.dp)
 
                 .clickable(onClick = onClick),
+            shadowElevation = 5.dp,
+
             shape = RoundedCornerShape(15.dp),
             color = MaterialTheme.colorScheme.secondary
         ) {
@@ -128,8 +130,8 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
                 }
                 Button(
                     onClick = { 
-                                sendCustomNotification(context, "Oven", if(uiState.power == "on") context.getString(R.string.turned_on)
-                                                                     else context.getString(R.string.turned_off)
+                                sendCustomNotification(context, "Oven", if(uiState.power == "on") context.getString(R.string.turned_off)
+                                                                     else context.getString(R.string.turned_on)
                                                                                                      )
                                 ovenVM.togglePower() 
                               },

@@ -73,6 +73,8 @@ fun RoutineBox(
                 .width(200.dp)
                 .clickable { isOpen.value = !isOpen.value },
             shape = RoundedCornerShape(15.dp),
+            shadowElevation = 5.dp,
+
             color = MaterialTheme.colorScheme.secondary
         ) {
             Box(

@@ -61,19 +61,19 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
 
     val context = LocalContext.current;
 
-    var isOpen = remember { mutableStateOf(false) };
-    var isOn  = remember { mutableStateOf(tapState.status == "opened") };
+    val isOpen = remember { mutableStateOf(false) };
+    val isOn  = remember { mutableStateOf(tapState.status == "opened") };
 //    var isOn = remember { mutableStateOf(false) };
-    var isDispensing = remember { mutableStateOf(false) };
+    val isDispensing = remember { mutableStateOf(false) };
 
-    var dispenseValue = remember { mutableStateOf("") };
-    var dispenseValueError = remember { mutableStateOf("") };
-    var dispenseValueHasError = remember { mutableStateOf(false) };
+    val dispenseValue = remember { mutableStateOf("") };
+    val dispenseValueError = remember { mutableStateOf("") };
+    val dispenseValueHasError = remember { mutableStateOf(false) };
 
     val dispenseOptions = setOf("mL", "cL", "dL", "L")
-    var dispenseUnit = remember { mutableStateOf("") };
-    var dispenseUnitError = remember { mutableStateOf("") };
-    var dispenseUnitHasError = remember { mutableStateOf(false) };
+    val dispenseUnit = remember { mutableStateOf("") };
+    val dispenseUnitError = remember { mutableStateOf("") };
+    val dispenseUnitHasError = remember { mutableStateOf(false) };
 
     if ( Globals.updates > 0 ){
         tapVM.sync()
@@ -98,6 +98,8 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
         contentAlignment = Alignment.Center,
     ) {
         Surface(
+            shadowElevation = 5.dp,
+
             modifier = Modifier
                 .width(200.dp)
                 .clickable{ isOpen.value = !isOpen.value },
@@ -177,7 +179,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                             color = Color(0xFFD3DEE0)
                         )
                         Text(
-                            text = stringResource(id = R.string.dispensing)+ "${ dispenseValue.value } ${ dispenseUnit.value }",
+                            text = stringResource(id = R.string.dispensing)+ " ${ dispenseValue.value } ${ dispenseUnit.value }",
                             style = MaterialTheme.typography.bodySmall,
                             color = Color(0xFFD3DEE0),
                             modifier = Modifier
@@ -188,11 +190,11 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                 }
 
                 Button(
-                    onClick = { if(isOn.value) tapVM.setClose() else tapVM.setOpen();
-                        isOn.value = !isOn.value ;
-                        isDispensing.value = false;
-                        dispenseValue.value = "";
-                        dispenseUnit.value = "";
+                    onClick = { if(isOn.value) tapVM.setClose() else tapVM.setOpen()
+                        isOn.value = !isOn.value
+                        isDispensing.value = false
+                        dispenseValue.value = ""
+                        dispenseUnit.value = ""
                         sendCustomNotification(context, "Tap",  context.getString(R.string.tap) + " " + if(isOn.value) context.getString(R.string.opened) else context.getString(R.string.closed))
                     },
                     elevation = ButtonDefaults.buttonElevation(
@@ -226,7 +228,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                             onValueChange = { newValue ->
                                 // Ensure the value falls within the range of 1 to 100
 
-                                val sanitizedValue = newValue.takeIf { it.isNullOrBlank() || it.toIntOrNull() in 1..100 } ?: dispenseValue.value
+                                val sanitizedValue = newValue.takeIf { it.isBlank() || it.toIntOrNull() in 1..100 } ?: dispenseValue.value
                                 dispenseValue.value = sanitizedValue
                                 dispenseValueHasError.value = false
 
@@ -324,8 +326,8 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                                             dispenseUnitHasError.value = false
                                             dispenseValueHasError.value = false
                                             tapVM.dispense(dispenseValue.value.toInt(), dispenseUnit.value)
-                                            isOn.value = true;
-                                            isDispensing.value = true;
+                                            isOn.value = true
+                                            isDispensing.value = true
                                         }
                                   }
                             },

@@ -109,7 +109,7 @@ fun AppBar(
                     Icon(
                         imageVector = Icons.Default.Menu,
                         contentDescription = "Toggle Drawer",
-                        tint = Color(0xFFEECC66)
+                        tint = MaterialTheme.colorScheme.tertiaryContainer
                     )
                 }
                 Box(
@@ -119,7 +119,7 @@ fun AppBar(
                         text = stringResource(id = R.string.homehive),
                         fontSize = 30.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color(0xFFEECC66)
+                        color = MaterialTheme.colorScheme.tertiaryContainer
                     )
                 }
             }
