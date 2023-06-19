@@ -59,6 +59,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -71,7 +72,11 @@ import com.example.homehive.viewmodels.SpeakerVM
 
 
 @Composable
-fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, speakerVM: SpeakerVM = viewModel()) {
+fun SpeakerScreen(
+    navController: NavController,
+    innerPadding: PaddingValues?,
+    speakerVM: SpeakerVM = viewModel()
+) {
 
     val speakerState by speakerVM.uiState.collectAsState();
     val windowInfo = rememberWindowInfo();
@@ -79,8 +84,11 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
         mutableStateOf(false)
     }
 
+    var playlistSongs = speakerState.playlist.result // array de canciones
+
     val playlists = listOf("Playlist 1", "Playlist 2", "Playlist 3", "Playlist 4", "Playlist 5")
     var selectedPlaylist = remember { mutableStateOf(playlists[0]) }
+
     Column (
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -104,7 +112,7 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                 ) {
                     Column(Modifier.fillMaxSize()) {
                         Surface( // PARTE NEGRA
-                            color = Color(0x0),
+                            color = Color(0x00000000),
                             modifier = Modifier
                                 .height(300.dp)
                                 .width(330.dp),
@@ -174,40 +182,19 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                                 .height(300.dp)
                                                 .width(250.dp),
                                         ) {
-                                            PlaylistSongs(
-                                                playlistName = "Playlist 1",
-                                                items = listOf(
-                                                Song(
-                                                    name = "Song 1",
-                                                    artist = "Artist 1",
-                                                    duration = "3:00",
-                                                ),
-                                                Song(
-                                                    name = "Song 2",
-                                                    artist = "Artist 2",
-                                                    duration = "3:00",
-                                                ),
-                                                Song(
-                                                    name = "Song 3",
-                                                    artist = "Artist 3",
-                                                    duration = "3:00",
-                                                ),
-                                                Song(
-                                                    name = "Song 4",
-                                                    artist = "Artist 4",
-                                                    duration = "3:00",
-                                                ),
-                                                Song(
-                                                    name = "Song 5",
-                                                    artist = "Artist 1",
-                                                    duration = "3:00",
-                                                ),
-                                                Song(
-                                                    name = "Song 6",
-                                                    artist = "Artist 2",
-                                                    duration = "3:00",
-                                                ),
-                                            ))
+                                            PlaylistSongsDisplay(
+                                                playlistName = speakerState.genre,
+                                                items = playlistSongs.map { song ->
+                                                    Song(
+                                                        name = song.title,
+                                                        artist = song.artist,
+                                                        album = song.album,
+                                                        duration = song.duration
+                                                    )
+                                                },
+                                                songPlayingColor = Color(0xFF3AF77D),
+                                                currentSong = speakerState.song.title?: "Loading...",
+                                            )
 
                                         }
 
@@ -447,20 +434,8 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                 }
             }
 
-  /*MEDIUM*/  is WindowInfo.WindowType.Medium -> {
-                Surface(
-                    color = Color(0xFF8000FF),
-                    modifier = Modifier
-                        .padding(15.dp)
-                        .height(330.dp)
-                        .width(430.dp),
-                    shape = RoundedCornerShape(15.dp),
-                ){
-                    Text(text = stringResource(id = R.string.medium))
-                }
-            }
 
-   /*MARGE*/ else -> {
+/*MARGE*/   else -> {
                 Surface(
                     color = Color(0xFF000000),
                     modifier = Modifier
@@ -544,39 +519,10 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                                 .height(300.dp)
                                                 .width(250.dp),
                                         ) {
-                                            PlaylistSongs(
+                                            PlaylistSongsDisplay(
                                                 playlistName = "Playlist 1",
                                                 items = listOf(
-                                                    Song(
-                                                        name = "Song 1",
-                                                        artist = "Artist 1",
-                                                        duration = "3:00",
-                                                    ),
-                                                    Song(
-                                                        name = "Song 2",
-                                                        artist = "Artist 2",
-                                                        duration = "3:00",
-                                                    ),
-                                                    Song(
-                                                        name = "Song 3",
-                                                        artist = "Artist 3",
-                                                        duration = "3:00",
-                                                    ),
-                                                    Song(
-                                                        name = "Song 4",
-                                                        artist = "Artist 4",
-                                                        duration = "3:00",
-                                                    ),
-                                                    Song(
-                                                        name = "Song 5",
-                                                        artist = "Artist 1",
-                                                        duration = "3:00",
-                                                    ),
-                                                    Song(
-                                                        name = "Song 6",
-                                                        artist = "Artist 2",
-                                                        duration = "3:00",
-                                                    ),
+
                                                 ))
                                         }
 
@@ -662,14 +608,12 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                 AnimatedTextOverflow(
                                     text = speakerState.song.title?: "la dukineta"
                                 )
-
-                                // artista
-                                Text(
+                                AnimatedTextOverflow(
                                     text = speakerState.song.artist?: "unavailable",
                                     color = Color(0xB9FFFFFF),
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    fontWeight = FontWeight.Bold,
+                                    style = MaterialTheme.typography.bodySmall,
                                 )
+
                                 // slider de posicion en la cancion
                                 Column(modifier = Modifier.fillMaxWidth()) {
                                     Row(
@@ -871,7 +815,12 @@ fun VerticalSlider(
 
 
 @Composable
-fun PlaylistSongs(items: List<Song>, playlistName: String = "PLAYLIST") {
+fun PlaylistSongsDisplay(
+    items: List<Song>,
+    playlistName: String = "PLAYLIST",
+    songPlayingColor : Color = MaterialTheme.colorScheme.surface,
+    currentSong: String = "",
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -893,7 +842,10 @@ fun PlaylistSongs(items: List<Song>, playlistName: String = "PLAYLIST") {
 
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(items) { song ->
-                SongRow(song = song)
+                SongRow(
+                    song = song,
+                    songColor = if( currentSong == song.name) songPlayingColor else MaterialTheme.colorScheme.surface,
+                )
                 Divider(color = MaterialTheme.colorScheme.surface, modifier = Modifier.alpha(0.6f))
             }
         }
@@ -901,7 +853,10 @@ fun PlaylistSongs(items: List<Song>, playlistName: String = "PLAYLIST") {
 
 }
 @Composable
-fun SongRow(song: Song) {
+fun SongRow(
+    song: Song,
+    songColor: Color = MaterialTheme.colorScheme.surface
+) {
     Row(
         modifier = Modifier
             .padding(5.dp)
@@ -922,21 +877,21 @@ fun SongRow(song: Song) {
                 .weight(1f)
         ) {
             Text(
-                text = song.name,
+                text = song.name?: "Loading...",
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 16.sp,
-                color = MaterialTheme.colorScheme.surface
+                color = songColor
             )
             Text(
-                text = song.artist,
+                text = song.artist?: "Loading...",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.surface,
                 modifier = Modifier.alpha(0.6f)
 
             )
             Text(
-                text = song.duration,
+                text = song.duration?: "Loading...",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.surface,
                 modifier = Modifier.alpha(0.6f)
@@ -946,9 +901,10 @@ fun SongRow(song: Song) {
     }
 }
 data class Song(
-    val name: String,
-    val artist: String,
-    val duration: String,
+    val name: String?,
+    val artist: String?,
+    val album: String?,
+    val duration: String?,
 )
 
 
@@ -994,6 +950,7 @@ fun GenericDropdownMenuOnOutlinedButtonIcon(
         DropdownMenu(
             expanded = expanded.value,
             onDismissRequest = { expanded.value = false },
+            offset = DpOffset(0.dp, (7).dp),
             modifier = Modifier
                 .background(
                     color = MaterialTheme.colorScheme.secondary,
