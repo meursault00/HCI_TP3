@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import com.example.homehive.screens.FavoritesScreen
 import com.example.homehive.screens.HelpScreen
 import com.example.homehive.screens.HomeScreen
 import com.example.homehive.screens.OvenScreen
@@ -125,6 +126,11 @@ fun NavHost(
                 val viewModel = deviceViewModelMap[id.toString()]
                 val speakerVM = viewModel as? SpeakerVM
                 SpeakerScreen(navController = navController, innerPadding = innerPadding, speakerVM = speakerVM!!)
+            }
+        }
+        composable("favorites") {
+            App(navController = navController) { navController, innerPadding ->
+                FavoritesScreen(navController = navController, innerPadding = innerPadding, devicesVM = devicesVM)
             }
         }
         composable(

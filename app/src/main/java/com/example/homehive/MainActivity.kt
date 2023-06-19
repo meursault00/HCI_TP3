@@ -99,6 +99,12 @@ fun App(
                                 painter = painterResource(id = R.drawable.routine),
                             ),
                             MenuItem(
+                                id = "favorites",
+                                title = stringResource(id = R.string.favorites),
+                                contentDescription = "Go to favorites screen",
+                                painter = painterResource(id = R.drawable.heart_filled),
+                            ),
+                            MenuItem(
                                 id = "settings",
                                 title = stringResource(id = R.string.settings),
                                 contentDescription = "Go to settings screen",

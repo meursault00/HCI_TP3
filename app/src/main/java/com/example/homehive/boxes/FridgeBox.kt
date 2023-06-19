@@ -1,21 +1,26 @@
 package com.example.homehive.boxes
 
+import android.util.Log
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
@@ -36,6 +41,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.homehive.FavoritesArray
 import com.example.homehive.Globals
 import com.example.homehive.R
 import com.example.homehive.viewmodels.FridgeVM
@@ -53,6 +59,7 @@ fun FridgeBox(
     val currentMode = uiState.mode
     val auxTemperature  = remember { mutableStateOf(uiState.temperature)}
     val auxFreezerTemperature = remember { mutableStateOf(uiState.freezerTemperature)}
+    var isFavorite = remember { mutableStateOf(FavoritesArray.array.contains(uiState.id)) }
 
     if ( Globals.updates > 0 ){
         fridgeVM.sync()
@@ -100,6 +107,28 @@ fun FridgeBox(
                         .padding(16.dp)
                         .align(Alignment.TopCenter)
                 )
+
+                IconButton(
+                    onClick = {
+                        if (FavoritesArray.array.contains(uiState.id)) {
+                            FavoritesArray.array.remove(uiState.id)
+                            isFavorite.value = false
+                            Log.d("favorite", "removing from fav")
+                        } else {
+                            FavoritesArray.array.add(uiState.id)
+                            isFavorite.value = true
+                            Log.d("favorite", "adding to fav")
+                        }
+                    },
+                ) {
+                    Icon(
+                        painter = if (isFavorite.value) painterResource(id = R.drawable.heart_filled) else painterResource(id = R.drawable.heart_outline),
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.background,
+                        modifier = Modifier.size(30.dp)
+                    )
+                }
+
                 if(!isOpen.value){
                     Column(
                         modifier = Modifier
