@@ -96,6 +96,9 @@
     <string name="unit_is_required">Az egység kötelező</string>
     <string name="try_refreshing">Probáljón mégegyszer!</string>
     <string name="check_connection">Néze meg a WIFI kapcsolatot</string>
+    <string name="add_devices">Úgy tűnik, nincsenek eszközei. A folytatáshoz adjon hozzá egy eszközt.</string>
+    <string name="add_device">Eszköz hozzáadása</string>
+    <string name="scan_qr">Pászd a kamerát a készülék QR-kódjára mutatva, hogy beolvashasd.</string>
 </resources>
 
 

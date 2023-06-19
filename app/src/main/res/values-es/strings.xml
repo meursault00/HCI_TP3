@@ -96,4 +96,7 @@
     <string name="unit_is_required">Se requiere una unidad</string>
     <string name="try_refreshing">Refresque la página?!</string>
     <string name="check_connection">Revise su conexión con WIFI</string>
+    <string name="add_devices">Parece que no tienes dispositivos, agrega un dispositivo para continuar.</string>
+    <string name="add_device">Añadir dispositivo</string>
+    <string name="scan_qr">Escanea el código QR del dispositivo apuntando tu cámara hacia él.</string>
 </resources>

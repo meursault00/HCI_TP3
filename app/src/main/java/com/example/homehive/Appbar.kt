@@ -79,9 +79,9 @@ fun AppBar(
             id = R.drawable.settings
         ),
         DropdownOption(
-            stringResource(id = R.string.language),
-            painterResource(id = R.drawable.language),
-            id= R.drawable.language
+            stringResource(id = R.string.add_device),
+            painterResource(id = R.drawable.add_qr),
+            id= R.drawable.add_qr
         ) ,
     )
 
@@ -192,9 +192,8 @@ private fun actionBasedOnIcon(navController: NavController,id: Int){
         R.drawable.settings -> {
             navController.navigate("settings")
         }
-        R.drawable.language -> {
-            navController.navigate("ssad")
-
+        R.drawable.add_qr -> {
+            navController.navigate("scanner")
         }
     }
 }
