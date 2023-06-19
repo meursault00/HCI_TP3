@@ -111,7 +111,7 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                         )
                                 ) {
                                     Text(
-                                        text = stringResource(id = R.string.speaker),
+                                        text = speakerState.name,
                                         color = Color(0xFFFFFFFF),
                                         style = MaterialTheme.typography.headlineLarge,
                                         fontWeight = FontWeight.Bold,
