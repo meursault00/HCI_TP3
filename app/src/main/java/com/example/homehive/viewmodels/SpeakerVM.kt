@@ -3,9 +3,10 @@ package com.example.homehive.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.homehive.network.deviceModels.NetworkPlaylist
+import com.example.homehive.network.deviceModels.NetworkPlaylistData
 import com.example.homehive.network.deviceModels.NetworkSong
 import com.example.homehive.states.SpeakerUIState
-import com.example.homehive.states.TapUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,6 +20,7 @@ class SpeakerVM(
     initialVolume: Int?,
     initialSong: NetworkSong?,
     initialGenre: String?,
+    initialPlaylist : NetworkPlaylist,
     val devicesVM: DevicesVM
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(
@@ -29,6 +31,7 @@ class SpeakerVM(
             volume = initialVolume ?: 0,
             song = initialSong ?: NetworkSong(),
             genre = initialGenre ?: "pop",
+            playlist = initialPlaylist
         )
     )
     val uiState: StateFlow<SpeakerUIState> = _uiState.asStateFlow()
@@ -151,6 +154,8 @@ class SpeakerVM(
             currentState.copy(genre = newGenre)
         }
         devicesVM.editADevice(uiState.value.id, "setGenre", listOf(newGenre))
+        devicesVM.fetchPlaylist(uiState.value.id)
+
     }
 
     // Cuando se hace play => isLoopActive = true ^ llamo a la funcion polling

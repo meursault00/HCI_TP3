@@ -76,10 +76,17 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
     var songArtist = remember { mutableStateOf(speakerState.song.artist ?: "BZRP") }
     var songAlbum = remember { mutableStateOf(speakerState.song.album ?: "Clasicos") }
 
+    Column (
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ){
+
     Box(
         modifier = Modifier
-            .padding(innerPadding ?: PaddingValues())
-    ) {
+            .padding(innerPadding ?: PaddingValues()),
+        contentAlignment = Alignment.Center,
+        ) {
         when (windowInfo.screenWidthInfo) {
             is WindowInfo.WindowType.Compact -> {
                 Surface(
@@ -787,6 +794,8 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
 
     }
 }
+}
+
 
 
 @Composable

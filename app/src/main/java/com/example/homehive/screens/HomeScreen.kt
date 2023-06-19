@@ -254,6 +254,9 @@ fun HomeScreen(
                                                     device.state?.volume,
                                                     device.state?.song,
                                                     device.state?.genre,
+                                                    devicesVM.fetchPlaylist(device.id ?: ""),
+                                                    // llamado a la api
+                                                    // otra cuenta distinta para pasarle la playslist
                                                     devicesVM
                                                 )
                                             }

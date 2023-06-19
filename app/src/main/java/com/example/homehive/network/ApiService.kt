@@ -1,7 +1,8 @@
 package com.example.homehive.network
 
 import com.example.homehive.network.deviceModels.NetworkDevicesList
-import com.example.homehive.network.deviceModels.NetworkResult
+import com.example.homehive.network.deviceModels.NetworkPlaylist
+import com.example.homehive.network.deviceModels.NetworkPlaylistData
 import com.example.homehive.network.deviceModels.NetworkUnaryDevice
 import com.example.homehive.network.routineModels.NetworkRoutinesList
 import retrofit2.Response
@@ -64,6 +65,8 @@ interface ApiService {
     @GET("/api/routines/{routineId}")
     suspend fun getARoutine(@Path("routineId")routineId: String): Response<NetworkRoutinesList>
 
+    @PUT("/api/devices/{id}/getPlaylist")
+    suspend fun getPlaylist(@Path("id")deviceID: String): Response<NetworkPlaylist>
 
 
 }

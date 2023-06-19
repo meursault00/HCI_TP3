@@ -1,5 +1,7 @@
 package com.example.homehive.states
 
+import com.example.homehive.network.deviceModels.NetworkPlaylist
+import com.example.homehive.network.deviceModels.NetworkPlaylistData
 import com.example.homehive.network.deviceModels.NetworkSong
 
 data class SpeakerUIState(
@@ -9,4 +11,5 @@ data class SpeakerUIState(
     val volume: Int = 0,                 // [0, 10]
     val song: NetworkSong,
     val genre: String = "",
+    val playlist : NetworkPlaylist = NetworkPlaylist()
 )
