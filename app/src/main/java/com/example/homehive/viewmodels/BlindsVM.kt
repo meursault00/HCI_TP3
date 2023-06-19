@@ -57,6 +57,11 @@ class BlindsVM(
         polling()
     }
 
+    fun checkPolling(){
+        if ( uiState.value.status == "opening" || uiState.value.status == "closing" )
+            polling()
+    }
+
     fun polling() {
         val thread = Thread {
             while (uiState.value.status == "opening" || uiState.value.status == "closing" ) {
