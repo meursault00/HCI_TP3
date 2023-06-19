@@ -1,10 +1,7 @@
 package com.example.homehive
 
 import android.Manifest
-import android.content.Context
-import android.util.Size
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
@@ -13,8 +10,6 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -22,14 +17,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 
+var code = mutableStateOf("")
 @Composable
 fun Camera() {
 
-    var code = remember { mutableStateOf("") }
 
     val context = LocalContext.current
     val cameraProviderFuture = remember {
@@ -39,7 +33,7 @@ fun Camera() {
         mutableStateOf(
             ContextCompat.checkSelfPermission(context,android.Manifest.permission.CAMERA) == android.content.pm.PackageManager.PERMISSION_GRANTED)
     }
-val lifecycleOwner = LocalLifecycleOwner.current
+    val lifecycleOwner = LocalLifecycleOwner.current
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission(),
         onResult = { granted ->
@@ -56,7 +50,6 @@ val lifecycleOwner = LocalLifecycleOwner.current
         modifier = Modifier
             .fillMaxSize()
     ){
-
         if(hasCameraPermission.value){
             AndroidView(
                 factory = { context ->
@@ -89,17 +82,8 @@ val lifecycleOwner = LocalLifecycleOwner.current
 
                     previewView
                 } ,
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxSize()
+                modifier = Modifier.fillMaxSize()
             )
-           Text(
-               text = code.value,
-               fontSize = 20.sp,
-               modifier = Modifier
-                   .fillMaxWidth()
-           )
         }
-
     }
 }

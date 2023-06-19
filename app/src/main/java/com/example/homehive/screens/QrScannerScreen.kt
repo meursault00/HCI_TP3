@@ -1,11 +1,13 @@
 package com.example.homehive.screens
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,6 +27,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.homehive.Camera
 import com.example.homehive.R
+import com.example.homehive.code
 import com.example.homehive.viewmodels.SettingsVM
 import com.example.homehive.viewmodels.isDarkTheme
 
@@ -99,6 +102,34 @@ fun QrScannerScreen(
                         shape = RoundedCornerShape(15.dp),
                     ) {
                         Camera()
+                        if(code.value.isNotEmpty()){
+                            Box(modifier = Modifier.fillMaxSize()) {
+                                Surface(
+                                    color = MaterialTheme.colorScheme.onSecondary,
+                                    modifier = Modifier
+                                        .align(Alignment.BottomCenter)
+                                        .fillMaxWidth()
+                                        .padding(10.dp)
+                                        .height(100.dp),
+                                    shape = RoundedCornerShape(15.dp),
+                                    shadowElevation = 16.dp
+                                ) {
+                                    Column(
+                                        modifier = Modifier.fillMaxSize().padding(5.dp),
+                                        verticalArrangement = Arrangement.Center
+                                    ) {
+                                        Text(
+                                            text = code.value,
+                                            color = MaterialTheme.colorScheme.secondary,
+                                            style = MaterialTheme.typography.headlineSmall,
+                                            fontWeight = FontWeight.Bold,
+                                            textAlign = TextAlign.End,
+                                        )
+                                    }
+                                }
+                            }
+                        }
+
                     }
                 }
             }
