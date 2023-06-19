@@ -197,6 +197,7 @@ fun HomeScreen(
                                             DeviceViewModelMap.map.getOrPut(device.id.toString()) {
                                                 OvenVM(
                                                     device.id,
+                                                    device.name,
                                                     device.state?.status,
                                                     device.state?.temperature,
                                                     device.state?.grill,
@@ -211,6 +212,7 @@ fun HomeScreen(
                                             DeviceViewModelMap.map.getOrPut(device.id.toString()) {
                                                 FridgeVM(
                                                     device.id,
+                                                    device.name,
                                                     device.state?.temperature,
                                                     device.state?.freezerTemperature,
                                                     device.state?.mode,
@@ -223,6 +225,7 @@ fun HomeScreen(
                                             DeviceViewModelMap.map.getOrPut(device.id.toString()) {
                                                 TapVM(
                                                     device.id,
+                                                    device.name,
                                                     device.state?.status,
                                                     devicesVM
                                                 )
@@ -233,6 +236,7 @@ fun HomeScreen(
                                             DeviceViewModelMap.map.getOrPut(device.id.toString()) {
                                                 BlindsVM(
                                                     device.id,
+                                                    device.name,
                                                     device.state?.status,
                                                     device.state?.level,
                                                     device.state?.currentLevel,
@@ -245,10 +249,14 @@ fun HomeScreen(
                                             DeviceViewModelMap.map.getOrPut(device.id.toString()) {
                                                 SpeakerVM(
                                                     device.id,
+                                                    device.name,
                                                     device.state?.status,
                                                     device.state?.volume,
                                                     device.state?.song,
                                                     device.state?.genre,
+                                                    devicesVM.fetchPlaylist(device.id ?: ""),
+                                                    // llamado a la api
+                                                    // otra cuenta distinta para pasarle la playslist
                                                     devicesVM
                                                 )
                                             }

@@ -76,10 +76,17 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
     var songArtist = remember { mutableStateOf(speakerState.song.artist ?: "BZRP") }
     var songAlbum = remember { mutableStateOf(speakerState.song.album ?: "Clasicos") }
 
+    Column (
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ){
+
     Box(
         modifier = Modifier
-            .padding(innerPadding ?: PaddingValues())
-    ) {
+            .padding(innerPadding ?: PaddingValues()),
+        contentAlignment = Alignment.Center,
+        ) {
         when (windowInfo.screenWidthInfo) {
             is WindowInfo.WindowType.Compact -> {
                 Surface(
@@ -111,7 +118,7 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                         )
                                 ) {
                                     Text(
-                                        text = stringResource(id = R.string.speaker),
+                                        text = speakerState.name,
                                         color = Color(0xFFFFFFFF),
                                         style = MaterialTheme.typography.headlineLarge,
                                         fontWeight = FontWeight.Bold,
@@ -410,7 +417,9 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
                                         )
                                     }
                                     IconButton(
-                                        onClick = { speakerVM.nextSong() },
+                                        onClick = { if (speakerVM.uiState.value.status == "playing") {
+                                            speakerVM.nextSong()
+                                        } },
                                         modifier = Modifier.size(40.dp) // Adjust the size as desired
                                     ) {
                                         Icon(
@@ -785,6 +794,8 @@ fun SpeakerScreen(navController: NavController, innerPadding: PaddingValues?, sp
 
     }
 }
+}
+
 
 
 @Composable

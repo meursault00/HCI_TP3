@@ -88,7 +88,7 @@ fun SpeakerBox(
                         .padding(top = 16.dp)
                 )
                 Text(
-                    text = stringResource(id = R.string.speaker),
+                    text = speakerState.name,
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.onPrimary,

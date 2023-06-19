@@ -1,5 +1,6 @@
 package com.example.homehive.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.homehive.states.BlindsUIState
@@ -11,6 +12,7 @@ import kotlinx.coroutines.launch
 
 class BlindsVM(
     deviceID: String?,
+    deviceName: String?,
     initialStatus: String?,
     level : Int?,
     initialPosition: Int?,
@@ -18,6 +20,7 @@ class BlindsVM(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(BlindsUIState(
         id = deviceID ?: "",
+        name = deviceName ?: "",
         status = initialStatus ?: "",
         level = level ?: 0,
         position = initialPosition ?: 0
@@ -44,6 +47,7 @@ class BlindsVM(
         }
         val action = if (uiState.value.status == "opening") "open" else "close"
         devicesVM.editADevice(uiState.value.id, action, listOf())
+        polling()
     }
 
 
@@ -52,5 +56,24 @@ class BlindsVM(
             currentState.copy(position = newPosition)
         }
         devicesVM.editADevice(uiState.value.id, "setLevel", listOf(newPosition))
+        polling()
+    }
+
+    fun checkPolling(){
+        if ( uiState.value.status == "opening" || uiState.value.status == "closing" )
+            polling()
+    }
+
+    fun polling() {
+        val thread = Thread {
+            while (uiState.value.status == "opening" || uiState.value.status == "closing" ) {
+                Log.d("polling", "${_uiState.value}")
+                Thread.sleep(1000)
+                sync()
+                Log.d("polling", "${_uiState.value}")
+
+            }
+        }
+        thread.start()
     }
 }

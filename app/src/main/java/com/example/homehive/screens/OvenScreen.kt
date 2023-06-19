@@ -135,7 +135,7 @@ fun OvenScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = stringResource(id = R.string.oven),
+                            text = OvenUIState.name,
                             fontWeight = FontWeight.Bold,
                             style = MaterialTheme.typography.headlineLarge,
                             color = MaterialTheme.colorScheme.onPrimary,

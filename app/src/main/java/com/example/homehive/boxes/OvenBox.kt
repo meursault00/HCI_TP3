@@ -101,7 +101,7 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
                     modifier = Modifier
                 )
                 Text(
-                    text = stringResource(id = R.string.oven),
+                    text = uiState.name,
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.onPrimary,

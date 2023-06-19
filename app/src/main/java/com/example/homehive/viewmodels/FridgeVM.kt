@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 
 class FridgeVM(
     deviceID : String?,
+    deviceName: String?,
     initialTemperature: Int?,
     initialFreezerTemperature: Int?,
     initialMode: String?,
@@ -23,6 +24,7 @@ class FridgeVM(
     // Genero un proxy para que el estado pase a ser read only y no se puedan hacer accesos directos
     private val _uiState = MutableStateFlow(FridgeUIState(
         id = deviceID ?: "",
+        name = deviceName ?: "",
         temperature = initialTemperature ?: -2,
         freezerTemperature = initialFreezerTemperature ?: -12,
         mode = initialMode ?: "party"

@@ -3,10 +3,9 @@ package com.example.homehive.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.homehive.network.ArrayValue
 import com.example.homehive.network.RetrofitClient
-import com.example.homehive.network.deviceModels.NetworkDevicesList
-import com.example.homehive.network.deviceModels.NetworkResult
+import com.example.homehive.network.deviceModels.NetworkPlaylist
+import com.example.homehive.network.deviceModels.NetworkPlaylistData
 import com.example.homehive.network.deviceModels.NetworkUnaryDevice
 import com.example.homehive.states.DevicesUIState
 import kotlinx.coroutines.Job
@@ -131,6 +130,29 @@ class DevicesVM : ViewModel() {
                 _uiState.update { it.copy(message = e.message, isLoading = false) }
             }
         }
+    }
+
+    fun fetchPlaylist(id: String): NetworkPlaylist{
+        fetchJob?.cancel()
+        _uiState.update { it.copy(isLoading = true) }
+
+        var toReturn: NetworkPlaylist? = null // Declare the variable to hold the result
+
+        runBlocking {
+            runCatching {
+                val apiService = RetrofitClient.getApiService()
+                val response = apiService?.getPlaylist(id) ?: throw Exception("API Service is null")
+                response.body() ?: throw Exception("Empty response body")
+            }.onSuccess { body ->
+                _uiState.update { it.copy(isLoading = false) }
+                toReturn = body // Assign the result to the variable
+                Log.d("fetchADeviceDebug", "Response: ${body.result}") // Add this line to log the response
+            }.onFailure { e ->
+                _uiState.update { it.copy(message = e.message, isLoading = false) }
+            }
+        }
+
+        return toReturn ?: NetworkPlaylist() // Return the result or an empty NetworkResult
     }
 
     fun qDevices(): Int {

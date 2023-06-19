@@ -3,6 +3,7 @@ package com.example.homehive.states
 
 data class OvenUIState(
     val id: String = "",
+    val name: String = "",
     val power: String = "off",                 // on, off
     val ovenTemperature : Int = 90,             // [ 90, 230 ]
     val heatMode : String = "convencional",          // convencional, abajo, arriba

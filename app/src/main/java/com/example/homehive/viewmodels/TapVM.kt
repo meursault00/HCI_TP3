@@ -1,10 +1,9 @@
 package com.example.homehive.viewmodels
 
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.homehive.network.deviceModels.NetworkSong
-import com.example.homehive.states.FridgeUIState
 import com.example.homehive.states.TapUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,13 +13,15 @@ import kotlinx.coroutines.launch
 
 class TapVM(
     deviceID : String?,
+    deviceName: String?,
     initialStatus: String?,
     val devicesVM: DevicesVM
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(
         TapUIState(
-        id = deviceID ?: "",
-        status = initialStatus ?: "closed",
+            id = deviceID ?: "",
+            name = deviceName ?: "",
+            status = initialStatus ?: "closed",
     )
     )
     val uiState: StateFlow<TapUIState> = _uiState.asStateFlow()
@@ -54,7 +55,25 @@ class TapVM(
             currentState.copy(status = "opened")
         }
         devicesVM.editADevice(uiState.value.id, "dispense", listOf(amount, unit))
-
+        polling()
         //el amount y unit se pasan directo a api, no hay variables locales para estas
+    }
+
+    fun checkPolling(){
+        if ( uiState.value.status == "opened" )
+            polling()
+    }
+
+    fun polling() {
+        val thread = Thread {
+            while (uiState.value.status == "opened") {
+                Log.d("polling", "${_uiState.value}")
+                Thread.sleep(1000)
+                sync()
+                Log.d("polling", "${_uiState.value}")
+
+            }
+        }
+        thread.start()
     }
 }

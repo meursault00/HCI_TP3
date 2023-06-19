@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 
 class OvenVM(
     deviceID: String?,
+    deviceName: String?,
     power: String?,
     ovenTemperature: Int?,
     grillMode: String?,
@@ -20,6 +21,7 @@ class OvenVM(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(OvenUIState(
         id = deviceID ?: "",
+        name = deviceName ?: "",
         power = power ?: "",
         ovenTemperature = ovenTemperature ?: 0,
         grillMode = grillMode ?: "",
