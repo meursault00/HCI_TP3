@@ -15,13 +15,15 @@ import kotlinx.coroutines.launch
 
 class TapVM(
     deviceID : String?,
+    deviceName: String?,
     initialStatus: String?,
     val devicesVM: DevicesVM
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(
         TapUIState(
-        id = deviceID ?: "",
-        status = initialStatus ?: "closed",
+            id = deviceID ?: "",
+            name = deviceName ?: "",
+            status = initialStatus ?: "closed",
     )
     )
     val uiState: StateFlow<TapUIState> = _uiState.asStateFlow()

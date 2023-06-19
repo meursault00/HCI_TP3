@@ -4,6 +4,7 @@ package com.example.homehive.states
 data class FridgeUIState (
     // Llamado a la API
     val id: String = "",
+    val name: String = "",
     val temperature: Int = 4,            // [2, 8]
     val freezerTemperature: Int = 0,     // [-20, -8]
     val mode: String = "default"               // default, party, vacation

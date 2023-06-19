@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 
 class BlindsVM(
     deviceID: String?,
+    deviceName: String?,
     initialStatus: String?,
     level : Int?,
     initialPosition: Int?,
@@ -19,6 +20,7 @@ class BlindsVM(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(BlindsUIState(
         id = deviceID ?: "",
+        name = deviceName ?: "",
         status = initialStatus ?: "",
         level = level ?: 0,
         position = initialPosition ?: 0

@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 
 class SpeakerVM(
     deviceID : String?,
+    deviceName: String?,
     initialStatus: String?,
     initialVolume: Int?,
     initialSong: NetworkSong?,
@@ -23,6 +24,7 @@ class SpeakerVM(
     private val _uiState = MutableStateFlow(
         SpeakerUIState(
             id = deviceID ?: "",
+            name = deviceName ?: "",
             status = initialStatus ?: "playing",
             volume = initialVolume ?: 0,
             song = initialSong ?: NetworkSong(),

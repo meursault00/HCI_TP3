@@ -129,7 +129,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                     modifier = Modifier
                 )
                 Text(
-                    text = stringResource(id = R.string.tap),
+                    text = tapState.name,
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.onPrimary,

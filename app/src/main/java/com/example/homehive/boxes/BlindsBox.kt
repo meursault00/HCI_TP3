@@ -107,7 +107,7 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                         .offset { IntOffset(x = auxBlindsPosition.value  , y = 0) }
                 )
                 Text(
-                    text = stringResource(id = R.string.blinds),
+                    text = blindState.name,
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.onPrimary,

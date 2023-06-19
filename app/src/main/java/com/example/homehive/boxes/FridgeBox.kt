@@ -93,7 +93,7 @@ fun FridgeBox(
                 )
 
                 Text(
-                    text = stringResource(id = R.string.firdge),
+                    text = uiState.name,
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.onTertiary,
