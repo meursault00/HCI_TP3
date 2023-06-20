@@ -1,6 +1,9 @@
 package com.example.homehive.ui.theme
 
 import android.app.Activity
+import android.content.Context
+import android.content.SharedPreferences
+import android.util.Log
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
@@ -8,8 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.example.homehive.getPersistedValue
 import com.example.homehive.viewmodels.isDarkTheme
 
 private val DarkColorScheme = darkColorScheme(
@@ -55,7 +60,11 @@ fun HomeHiveTheme(
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = if (isDarkTheme.value) {
+    // Application context can be used to access Shared Preferences throughout the app
+    val context = LocalContext.current
+    val sharedPrefs: SharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+    isDarkTheme.value = getPersistedValue(sharedPrefs, "theme")
+    val colorScheme = if (getPersistedValue(sharedPrefs, "theme")) {
         DarkColorScheme
     } else {
         LightColorScheme

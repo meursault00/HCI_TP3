@@ -1,6 +1,9 @@
 package com.example.homehive
 
 
+import android.content.Context
+import android.content.SharedPreferences
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
@@ -8,6 +11,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -28,6 +32,8 @@ import com.example.homehive.viewmodels.DevicesVM
 import com.example.homehive.viewmodels.OvenVM
 import com.example.homehive.viewmodels.RoutinesVM
 import com.example.homehive.viewmodels.SpeakerVM
+import com.example.homehive.viewmodels.isDarkTheme
+import com.google.gson.Gson
 
 
 @Composable
@@ -62,7 +68,7 @@ fun NavHost(
     SideEffect {
         println("List of devices: $routines")
     }
-    
+
     // ---------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -152,3 +158,41 @@ fun NavHost(
     }
 }
 
+fun saveValueIfAbsent(sharedPrefs: SharedPreferences, key: String, newValue: Boolean) {
+    if (!sharedPrefs.contains(key)) {
+        val editor: SharedPreferences.Editor = sharedPrefs.edit()
+        editor.putBoolean(key, newValue)
+        editor.apply()
+    }
+}
+
+fun saveBooleanValue(sharedPrefs: SharedPreferences, key: String, value: Boolean) {
+    val editor: SharedPreferences.Editor = sharedPrefs.edit()
+    editor.putString(key, value.toString())
+    editor.apply()
+}
+
+fun getPersistedValue(sharedPrefs: SharedPreferences, key: String): Boolean {
+    return sharedPrefs.getString(key, null)?.toBoolean() ?: false
+}
+
+
+// Save a list of strings in SharedPreferences
+fun saveList(sharedPrefs: SharedPreferences, list: List<String>, key: String) {
+    val gson = Gson()
+    val json = gson.toJson(list)
+    val editor = sharedPrefs.edit()
+    editor.putString(key, json)
+    editor.apply()
+}
+
+// Retrieve a list of strings from SharedPreferences
+fun getPersistedList(sharedPrefs: SharedPreferences, key: String): List<String> {
+    val gson = Gson()
+    val json = sharedPrefs.getString(key, null)
+    return if (json != null) {
+        gson.fromJson(json, Array<String>::class.java).toList()
+    } else {
+        emptyList()
+    }
+}
