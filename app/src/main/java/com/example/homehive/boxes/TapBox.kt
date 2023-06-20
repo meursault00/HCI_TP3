@@ -156,7 +156,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                         Row(
                             horizontalArrangement = Arrangement.Center,
                             modifier = Modifier.fillMaxWidth()
-                                .height(35.dp)
+                                .height(40.dp)
                         ){
                             Text(
                                 text = tapState.name,
