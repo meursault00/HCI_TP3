@@ -64,6 +64,7 @@ fun HomeHiveTheme(
     val context = LocalContext.current
     val sharedPrefs: SharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
     isDarkTheme.value = getPersistedValue(sharedPrefs, "theme")
+    Log.d("putakunashe", isDarkTheme.value.toString())
     val colorScheme = if (getPersistedValue(sharedPrefs, "theme")) {
         DarkColorScheme
     } else {

@@ -43,6 +43,8 @@ fun NavHost(
     startDestination: String = "routines",
 ) {
 
+
+
     // Creacion de Singleton VM para los Dipositivos y Fetch de Devices
     
     val devicesVM = remember { DevicesVM() }

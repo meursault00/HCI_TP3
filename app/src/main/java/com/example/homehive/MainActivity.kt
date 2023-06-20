@@ -38,6 +38,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             HomeHiveTheme() {
+                // Application context can be used to access Shared Preferences throughout the app
+                val context = LocalContext.current
+                val sharedPrefs: SharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+                isDarkTheme.value = getPersistedValue(sharedPrefs, "theme")
+                Log.d("putakunashe", isDarkTheme.value.toString())
                 NavHost(startDestination = "home")
             }
         }

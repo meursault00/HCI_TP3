@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-
 var isDarkTheme = mutableStateOf(false) // Global variable for theme
 
 class SettingsVM : ViewModel() {
