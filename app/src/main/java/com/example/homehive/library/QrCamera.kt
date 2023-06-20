@@ -1,4 +1,4 @@
-package com.example.homehive
+package com.example.homehive.library
 
 import android.Manifest
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -22,7 +22,7 @@ import androidx.core.content.ContextCompat
 
 var code = mutableStateOf("")
 @Composable
-fun Camera() {
+fun QrCamera() {
 
 
     val context = LocalContext.current

@@ -25,9 +25,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.homehive.Camera
+import com.example.homehive.library.QrCamera
 import com.example.homehive.R
-import com.example.homehive.code
+import com.example.homehive.library.code
 import com.example.homehive.viewmodels.SettingsVM
 
 
@@ -100,7 +100,7 @@ fun QrScannerScreen(
                             .fillMaxSize(),
                         shape = RoundedCornerShape(15.dp),
                     ) {
-                        Camera()
+                        QrCamera()
                         if(code.value.isNotEmpty()){
                             Box(modifier = Modifier.fillMaxSize()) {
                                 Surface(

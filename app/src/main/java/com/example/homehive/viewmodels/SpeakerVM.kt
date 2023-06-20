@@ -2,6 +2,7 @@ package com.example.homehive.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.homehive.library.HistoryStack
 import com.example.homehive.network.deviceModels.NetworkPlaylist
 import com.example.homehive.network.deviceModels.NetworkSong
 import com.example.homehive.states.SpeakerUIState
@@ -56,12 +57,17 @@ class SpeakerVM(
             currentState.copy(volume = (uiState.value.volume + 1))
         }
         devicesVM.editADevice(uiState.value.id, "setVolume", listOf(uiState.value.volume + 1))
+        HistoryStack.push("${uiState.value.name}: increased volume by 1")
+
+
     }
     fun decrementVolume(){
         _uiState.update{currentState ->
             currentState.copy(volume = (uiState.value.volume - 1))
         }
         devicesVM.editADevice(uiState.value.id, "setVolume", listOf(uiState.value.volume - 1))
+        HistoryStack.push("${uiState.value.name}: decreased volume by 1")
+
     }
 
     fun setVolume( newVolume : Int ){
@@ -69,6 +75,8 @@ class SpeakerVM(
             currentState.copy(volume = newVolume)
         }
         devicesVM.editADevice(uiState.value.id, "setVolume", listOf(newVolume))
+        HistoryStack.push("${uiState.value.name}: set volume to $newVolume")
+
     }
 
     fun play(){
@@ -76,6 +84,7 @@ class SpeakerVM(
             currentState.copy(status = "resume")
         }
         devicesVM.editADevice(uiState.value.id, "play", listOf())
+        HistoryStack.push("${uiState.value.name}: started playing")
 
         //polling
         isLoopActive = true
@@ -86,6 +95,7 @@ class SpeakerVM(
             currentState.copy(status = "playing")
         }
         devicesVM.editADevice(uiState.value.id, "resume", listOf())
+        HistoryStack.push("${uiState.value.name}: resumed playing")
 
         //polling
         isLoopActive = true
@@ -96,6 +106,7 @@ class SpeakerVM(
             currentState.copy(status = "paused")
         }
         devicesVM.editADevice(uiState.value.id, "pause", listOf())
+        HistoryStack.push("${uiState.value.name}: paused playing")
 
         //polling
         isLoopActive = false
@@ -105,6 +116,7 @@ class SpeakerVM(
             currentState.copy(status = "stopped")
         }
         devicesVM.editADevice(uiState.value.id, "stop", listOf())
+        HistoryStack.push("${uiState.value.name}: stopped playing")
 
         //polling
         isLoopActive = false
@@ -119,6 +131,7 @@ class SpeakerVM(
 
         //pasamos a proxima cancion en api
         devicesVM.editADevice(uiState.value.id, "nextSong", listOf())
+        HistoryStack.push("${uiState.value.name}: played next song")
 
         //actualizamos estado local con cancion que aparece en api
 
@@ -143,6 +156,8 @@ class SpeakerVM(
             currentState.copy(song = NetworkSong())
         }
         devicesVM.editADevice(uiState.value.id, "previousSong", listOf())
+        HistoryStack.push("${uiState.value.name}: played previous song")
+
     }
 
     fun setGenre(newGenre : String){
@@ -150,7 +165,11 @@ class SpeakerVM(
             currentState.copy(genre = newGenre)
         }
         devicesVM.editADevice(uiState.value.id, "setGenre", listOf(newGenre))
-        devicesVM.fetchPlaylist(uiState.value.id)
+        _uiState.update{currentState ->
+            currentState.copy(playlist =devicesVM.fetchPlaylist(uiState.value.id))
+        }
+        HistoryStack.push("${uiState.value.name}: set genre to $newGenre")
+
     }
 
     fun checkPolling(){

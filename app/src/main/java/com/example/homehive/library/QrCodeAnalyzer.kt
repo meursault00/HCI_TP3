@@ -1,4 +1,4 @@
-package com.example.homehive
+package com.example.homehive.library
 
 import android.graphics.ImageFormat
 import androidx.camera.core.ImageAnalysis

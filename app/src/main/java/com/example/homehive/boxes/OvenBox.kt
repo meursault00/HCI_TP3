@@ -49,7 +49,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.Globals
 import com.example.homehive.R
 import com.example.homehive.library.AnimatedTextOverflow
-import com.example.homehive.sendCustomNotification
+import com.example.homehive.library.sendCustomNotification
 import com.example.homehive.viewmodels.OvenVM
 
 

@@ -50,7 +50,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.Globals
 import com.example.homehive.R
-import com.example.homehive.sendCustomNotification
+import com.example.homehive.library.sendCustomNotification
 import com.example.homehive.viewmodels.TapVM
 
 @OptIn(ExperimentalMaterial3Api::class)

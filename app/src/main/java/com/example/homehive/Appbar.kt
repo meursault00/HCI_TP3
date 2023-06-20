@@ -62,6 +62,11 @@ fun AppBar(
             painterResource(id = R.drawable.add_qr),
             id= R.drawable.add_qr
         ) ,
+        DropdownOption(
+            stringResource(id = R.string.history),
+            painterResource(id = R.drawable.history),
+            id= R.drawable.history
+        ) ,
     )
 
     Surface(
@@ -173,6 +178,9 @@ private fun actionBasedOnIcon(navController: NavController,id: Int){
         }
         R.drawable.add_qr -> {
             navController.navigate("scanner")
+        }
+        R.drawable.history -> {
+            navController.navigate("history")
         }
     }
 }

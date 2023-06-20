@@ -1,4 +1,4 @@
-package com.example.homehive
+package com.example.homehive.library
 
 import android.Manifest
 import android.app.NotificationChannel
@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.example.homehive.R
 
 // Create a notification channel
 fun createNotificationChannel(context: Context) {

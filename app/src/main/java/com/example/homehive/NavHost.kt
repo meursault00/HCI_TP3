@@ -17,6 +17,7 @@ import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import com.example.homehive.screens.FavoritesScreen
 import com.example.homehive.screens.HelpScreen
+import com.example.homehive.screens.HistoryScreen
 import com.example.homehive.screens.HomeScreen
 import com.example.homehive.screens.OvenScreen
 import com.example.homehive.screens.QrScannerScreen
@@ -87,6 +88,11 @@ fun NavHost(
         composable("settings") {
             App(navController = navController) { navController, innerPadding ->
                 SettingsScreen(navController = navController, innerPadding = innerPadding)
+            }
+        }
+        composable("history") {
+            App(navController = navController) { navController, innerPadding ->
+                HistoryScreen(navController = navController, innerPadding = innerPadding)
             }
         }
         composable("help") {

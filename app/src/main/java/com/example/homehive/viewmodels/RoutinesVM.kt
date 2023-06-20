@@ -3,6 +3,7 @@ package com.example.homehive.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.homehive.Globals
+import com.example.homehive.library.HistoryStack
 import com.example.homehive.network.RetrofitClient
 import com.example.homehive.states.RoutinesUIState
 import kotlinx.coroutines.Job
@@ -66,6 +67,7 @@ class RoutinesVM(
     }
 
     fun executeARoutine(id: String) {
+
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
@@ -74,6 +76,8 @@ class RoutinesVM(
                 apiService?.executeARoutine(id)
             }.onSuccess { response ->
                 _uiState.update { it.copy(isLoading = false) }
+                HistoryStack.push("Routine '${id}': got executed")
+
             }.onFailure { e ->
                 _uiState.update { it.copy(message = e.message, isLoading = false) }
             }

@@ -2,6 +2,7 @@ package com.example.homehive.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.homehive.library.HistoryStack
 import com.example.homehive.states.FridgeUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -47,6 +48,8 @@ class FridgeVM(
             currentState.copy(temperature = newTemperature)
         }
         devicesVM.editADevice(uiState.value.id, "setTemperature", listOf(newTemperature))
+        HistoryStack.push("${uiState.value.name}: set temperature to $newTemperature")
+
     }
 
     fun setFreezerTemperature( newTemperature : Int ){
@@ -54,6 +57,8 @@ class FridgeVM(
             currentState.copy(freezerTemperature =  newTemperature)
         }
         devicesVM.editADevice(uiState.value.id, "setFreezerTemperature", listOf(newTemperature))
+        HistoryStack.push("${uiState.value.name}: set freezer temperature to $newTemperature")
+
     }
 
     // No me acuerdo si era un String o no
@@ -62,5 +67,6 @@ class FridgeVM(
             currentState.copy(mode =  newMode)
         }
         devicesVM.editADevice(uiState.value.id, "setMode", listOf(newMode))
+        HistoryStack.push("${uiState.value.name}: set mode to $newMode")
     }
 }

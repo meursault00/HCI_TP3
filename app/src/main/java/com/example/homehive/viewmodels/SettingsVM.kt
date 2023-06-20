@@ -2,6 +2,7 @@ package com.example.homehive.viewmodels
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.example.homehive.library.HistoryStack
 import com.example.homehive.states.SettingsUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,6 +19,7 @@ class SettingsVM : ViewModel() {
         _uiState.update { currentState ->
             currentState.copy(language = !currentState.language)
         }
+
     }
 
 }

@@ -1,7 +1,10 @@
 package com.example.homehive.viewmodels
 
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.homehive.R
+import com.example.homehive.library.HistoryStack
 import com.example.homehive.states.BlindsUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -47,6 +50,7 @@ class BlindsVM(
         val action = if (uiState.value.status == "opening") "open" else "close"
         devicesVM.editADevice(uiState.value.id, action, listOf())
         polling()
+        HistoryStack.push("${uiState.value.name}: toggled to $action")
     }
 
 
@@ -56,6 +60,8 @@ class BlindsVM(
         }
         devicesVM.editADevice(uiState.value.id, "setLevel", listOf(newPosition))
         polling()
+        HistoryStack.push("${uiState.value.name}: set position to $newPosition")
+
     }
 
     fun checkPolling(){

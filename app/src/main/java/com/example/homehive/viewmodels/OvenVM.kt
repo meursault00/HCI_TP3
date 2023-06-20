@@ -2,6 +2,7 @@ package com.example.homehive.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.homehive.library.HistoryStack
 import com.example.homehive.states.OvenUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -55,6 +56,8 @@ class OvenVM(
         _uiState.update { currentState ->
             currentState.copy(power = powerState)
         }
+        HistoryStack.push("${uiState.value.name}: turned power $powerState")
+
     }
 
     fun togglePower() {
@@ -62,6 +65,8 @@ class OvenVM(
         val newPower = currentPower == "off"
 
         setPower(newPower)
+        HistoryStack.push("${uiState.value.name}: turned power $newPower")
+
     }
 
 
@@ -78,6 +83,8 @@ class OvenVM(
             currentState.copy(ovenTemperature = newTemperature)
         }
         devicesVM.editADevice(uiState.value.id, "setTemperature", listOf(newTemperature))
+        HistoryStack.push("${uiState.value.name}: set temperature to $newTemperature")
+
     }
 
     fun setHeatMode( newMode : String ){
@@ -85,6 +92,8 @@ class OvenVM(
             currentState.copy(heatMode =  newMode)
         }
         devicesVM.editADevice(uiState.value.id, "setHeat", listOf(newMode))
+        HistoryStack.push("${uiState.value.name}: set heat mode to $newMode")
+
     }
 
     fun setGrillMode( newMode : String ){
@@ -92,6 +101,8 @@ class OvenVM(
             currentState.copy(grillMode =  newMode)
         }
         devicesVM.editADevice(uiState.value.id, "setGrill", listOf(newMode))
+        HistoryStack.push("${uiState.value.name}: set grill mode to $newMode")
+
     }
 
     fun setConvectionMode( newMode : String ){
@@ -99,5 +110,7 @@ class OvenVM(
             currentState.copy(convectionMode =  newMode)
         }
         devicesVM.editADevice(uiState.value.id, "setConvection", listOf(newMode))
+        HistoryStack.push("${uiState.value.name}: set convection mode to $newMode")
+
     }
 }

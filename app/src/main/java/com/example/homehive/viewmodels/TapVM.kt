@@ -3,6 +3,7 @@ package com.example.homehive.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.homehive.library.HistoryStack
 import com.example.homehive.states.TapUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -41,12 +42,16 @@ class TapVM(
             currentState.copy(status = "opened")
         }
         devicesVM.editADevice(uiState.value.id, "open", listOf())
+        HistoryStack.push("${uiState.value.name}: opened")
+
     }
     fun setClose(){
         _uiState.update{currentState ->
             currentState.copy(status = "closed")
         }
         devicesVM.editADevice(uiState.value.id, "close", listOf())
+        HistoryStack.push("${uiState.value.name}: closed")
+
     }
 
     fun dispense( amount : Int, unit : String ){
@@ -55,6 +60,8 @@ class TapVM(
         }
         devicesVM.editADevice(uiState.value.id, "dispense", listOf(amount, unit))
         polling()
+        HistoryStack.push("${uiState.value.name}: started dispensing $amount $unit")
+
         //el amount y unit se pasan directo a api, no hay variables locales para estas
     }
 
