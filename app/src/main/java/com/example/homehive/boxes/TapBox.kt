@@ -1,5 +1,7 @@
 package com.example.homehive.boxes
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.compose.animation.core.animateDpAsState
 
@@ -56,6 +58,7 @@ import com.example.homehive.Globals
 import com.example.homehive.R
 import com.example.homehive.library.FavoritesArray
 import com.example.homehive.library.sendCustomNotification
+import com.example.homehive.saveList
 import com.example.homehive.viewmodels.TapVM
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -65,6 +68,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
     val tapState by tapVM.uiState.collectAsState()
 
     val context = LocalContext.current
+    val sharedPrefs: SharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
     val isOpen = remember { mutableStateOf(false) }
     val isOn  = remember { mutableStateOf(tapState.status == "opened") }
@@ -136,10 +140,12 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                                         FavoritesArray.array.remove(tapState.id)
                                         isFavorite.value = false
                                         Log.d("favorite", "removing from fav")
+                                        saveList(sharedPrefs, FavoritesArray.array, "FavoritesList" )
                                     } else {
                                         FavoritesArray.array.add(tapState.id)
                                         isFavorite.value = true
                                         Log.d("favorite", "adding to fav")
+                                        saveList(sharedPrefs, FavoritesArray.array, "FavoritesList" )
                                     }
                                 },
                             ) {

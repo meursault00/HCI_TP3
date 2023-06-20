@@ -1,5 +1,7 @@
 package com.example.homehive.boxes
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -32,6 +34,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -40,6 +43,7 @@ import com.example.homehive.Globals
 import com.example.homehive.R
 import com.example.homehive.library.AnimatedTextOverflow
 import com.example.homehive.library.FavoritesArray
+import com.example.homehive.saveList
 import com.example.homehive.viewmodels.SpeakerVM
 import com.example.homehive.viewmodels.isDarkTheme
 
@@ -50,6 +54,8 @@ fun SpeakerBox(
     speakerVM : SpeakerVM = viewModel()
 ) {
     val speakerState by speakerVM.uiState.collectAsState()
+    val context = LocalContext.current;
+    val sharedPrefs: SharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
     var isFavorite = remember { mutableStateOf(FavoritesArray.array.contains(speakerState.id)) }
 
     speakerVM.conditionalRecomposition()
@@ -102,10 +108,12 @@ fun SpeakerBox(
                                         FavoritesArray.array.remove(speakerState.id)
                                         isFavorite.value = false
                                         Log.d("favorite", "removing from fav")
+                                        saveList(sharedPrefs, FavoritesArray.array, "FavoritesList" )
                                     } else {
                                         FavoritesArray.array.add(speakerState.id)
                                         isFavorite.value = true
                                         Log.d("favorite", "adding to fav")
+                                        saveList(sharedPrefs, FavoritesArray.array, "FavoritesList" )
                                     }
                                 },
                             ) {

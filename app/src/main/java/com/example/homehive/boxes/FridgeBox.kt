@@ -2,6 +2,8 @@
 
 package com.example.homehive.boxes
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -39,6 +41,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -48,6 +51,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.library.FavoritesArray
 import com.example.homehive.Globals
 import com.example.homehive.R
+import com.example.homehive.saveList
 import com.example.homehive.viewmodels.FridgeVM
 
 
@@ -59,6 +63,8 @@ fun FridgeBox(
 ) {
 
     val uiState by fridgeVM.uiState.collectAsState()
+    val context = LocalContext.current;
+    val sharedPrefs: SharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
     val isOpen = remember { mutableStateOf(false) }
     val currentMode = uiState.mode
     val auxTemperature  = remember { mutableStateOf(uiState.temperature)}
@@ -112,10 +118,12 @@ fun FridgeBox(
                                     FavoritesArray.array.remove(uiState.id)
                                     isFavorite.value = false
                                     Log.d("favorite", "removing from fav")
+                                    saveList(sharedPrefs, FavoritesArray.array, "FavoritesList" )
                                 } else {
                                     FavoritesArray.array.add(uiState.id)
                                     isFavorite.value = true
                                     Log.d("favorite", "adding to fav")
+                                    saveList(sharedPrefs, FavoritesArray.array, "FavoritesList" )
                                 }
                             },
                         ) {
