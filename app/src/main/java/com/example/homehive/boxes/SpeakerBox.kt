@@ -1,5 +1,6 @@
 package com.example.homehive.boxes
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +20,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -26,6 +28,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -35,6 +39,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.Globals
 import com.example.homehive.R
 import com.example.homehive.library.AnimatedTextOverflow
+import com.example.homehive.library.FavoritesArray
 import com.example.homehive.viewmodels.SpeakerVM
 import com.example.homehive.viewmodels.isDarkTheme
 
@@ -45,6 +50,7 @@ fun SpeakerBox(
     speakerVM : SpeakerVM = viewModel()
 ) {
     val speakerState by speakerVM.uiState.collectAsState()
+    var isFavorite = remember { mutableStateOf(FavoritesArray.array.contains(speakerState.id)) }
 
     if ( Globals.updates > 0 ){
         speakerVM.sync()
@@ -81,15 +87,54 @@ fun SpeakerBox(
                     modifier = Modifier
                         .padding(top = 16.dp)
                 )
-                Text(
-                    text = speakerState.name,
-                    fontWeight = FontWeight.Bold,
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .align(Alignment.TopCenter)
-                )
+
+                Box(modifier = Modifier
+                    .fillMaxSize(),
+                    contentAlignment = Alignment.TopCenter){
+                    Column(verticalArrangement = Arrangement.Top){
+                        Row(
+                            horizontalArrangement = Arrangement.End,
+                            modifier = Modifier.fillMaxWidth()
+                                .height(25.dp)
+                        ){
+                            IconButton(
+                                onClick = {
+                                    if (FavoritesArray.array.contains(speakerState.id)) {
+                                        FavoritesArray.array.remove(speakerState.id)
+                                        isFavorite.value = false
+                                        Log.d("favorite", "removing from fav")
+                                    } else {
+                                        FavoritesArray.array.add(speakerState.id)
+                                        isFavorite.value = true
+                                        Log.d("favorite", "adding to fav")
+                                    }
+                                },
+                            ) {
+                                Icon(
+                                    painter = if (isFavorite.value) painterResource(id = R.drawable.heart_filled) else painterResource(id = R.drawable.heart_outline),
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.background,
+                                    modifier = Modifier.size(25.dp)
+                                        .padding(top = 5.dp)
+                                )
+                            }
+                        }
+
+                        Row(
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier.fillMaxWidth()
+                                .height(35.dp)
+                        ){
+                            Text(
+                                text = speakerState.name,
+                                fontWeight = FontWeight.Bold,
+                                style = MaterialTheme.typography.headlineMedium,
+                                color = MaterialTheme.colorScheme.onTertiary,
+                            )
+                        }
+                    }
+                }
+
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier

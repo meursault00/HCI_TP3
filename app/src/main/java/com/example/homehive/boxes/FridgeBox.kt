@@ -134,7 +134,7 @@ fun FridgeBox(
                     Row(
                         horizontalArrangement = Arrangement.Center,
                         modifier = Modifier.fillMaxWidth()
-                            .height(30.dp)
+                            .height(35.dp)
                     ){
                         Text(
                             text = uiState.name,
