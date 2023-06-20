@@ -26,6 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.homehive.library.FavoritesArray
 import com.example.homehive.library.createNotificationChannel
 import com.example.homehive.ui.theme.HomeHiveTheme
 import com.example.homehive.viewmodels.isDarkTheme
@@ -42,6 +43,8 @@ class MainActivity : ComponentActivity() {
                 val context = LocalContext.current
                 val sharedPrefs: SharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
                 isDarkTheme.value = getPersistedValue(sharedPrefs, "theme")
+                saveListIfAbsent(sharedPrefs, listOf(""), "FavoritesList")
+                FavoritesArray.array = getPersistedList(sharedPrefs, "FavoritesList").toMutableList()
                 Log.d("putakunashe", isDarkTheme.value.toString())
                 NavHost(startDestination = "home")
             }
