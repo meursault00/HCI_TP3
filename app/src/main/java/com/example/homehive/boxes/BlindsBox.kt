@@ -147,7 +147,7 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                                 text = blindState.name,
                                 fontWeight = FontWeight.Bold,
                                 style = MaterialTheme.typography.headlineMedium,
-                                color = MaterialTheme.colorScheme.onTertiary,
+                                color = MaterialTheme.colorScheme.onPrimary,
                             )
                         }
                     }

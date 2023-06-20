@@ -127,7 +127,7 @@ fun SpeakerBox(
                                 text = speakerState.name,
                                 fontWeight = FontWeight.Bold,
                                 style = MaterialTheme.typography.headlineMedium,
-                                color = MaterialTheme.colorScheme.onTertiary,
+                                color = MaterialTheme.colorScheme.onPrimary,
                             )
                         }
                     }
