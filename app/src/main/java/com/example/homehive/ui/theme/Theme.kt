@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import com.example.homehive.getPersistedValue
 import com.example.homehive.viewmodels.isDarkTheme
+import com.example.homehive.viewmodels.isShowRoutines
 
 private val DarkColorScheme = darkColorScheme(
     primary = Color(0xFF333333), //FF203831 // INTERESANTE = FF4F7469
@@ -64,6 +65,8 @@ fun HomeHiveTheme(
     val context = LocalContext.current
     val sharedPrefs: SharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
     isDarkTheme.value = getPersistedValue(sharedPrefs, "theme")
+    isShowRoutines.value = getPersistedValue(sharedPrefs, "preference")
+
     Log.d("putakunashe", isDarkTheme.value.toString())
     val colorScheme = if (getPersistedValue(sharedPrefs, "theme")) {
         DarkColorScheme

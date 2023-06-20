@@ -65,6 +65,7 @@ import com.example.homehive.viewmodels.RoutinesVM
 import com.example.homehive.viewmodels.SpeakerVM
 import com.example.homehive.viewmodels.TapVM
 import com.example.homehive.viewmodels.isDarkTheme
+import com.example.homehive.viewmodels.isShowRoutines
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -192,7 +193,7 @@ fun HomeScreen(
                     LazyVerticalStaggeredGrid(
                         columns = StaggeredGridCells.Adaptive(170.dp),
                     ){
-                        if(routinesState.routines?.result?.isNotEmpty() == true){
+                        if(routinesState.routines?.result?.isNotEmpty() == true && isShowRoutines.value){
                             item(
                                 span = StaggeredGridItemSpan.FullLine
                             ){

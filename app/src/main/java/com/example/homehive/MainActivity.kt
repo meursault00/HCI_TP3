@@ -30,6 +30,7 @@ import com.example.homehive.library.FavoritesArray
 import com.example.homehive.library.createNotificationChannel
 import com.example.homehive.ui.theme.HomeHiveTheme
 import com.example.homehive.viewmodels.isDarkTheme
+import com.example.homehive.viewmodels.isShowRoutines
 import kotlinx.coroutines.launch
 
 
@@ -42,10 +43,13 @@ class MainActivity : ComponentActivity() {
                 // Application context can be used to access Shared Preferences throughout the app
                 val context = LocalContext.current
                 val sharedPrefs: SharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+
                 isDarkTheme.value = getPersistedValue(sharedPrefs, "theme")
+                isShowRoutines.value = getPersistedValue(sharedPrefs, "preference")
+
                 saveListIfAbsent(sharedPrefs, listOf(""), "FavoritesList")
                 FavoritesArray.array = getPersistedList(sharedPrefs, "FavoritesList").toMutableList()
-                Log.d("putakunashe", isDarkTheme.value.toString())
+
                 NavHost(startDestination = "home")
             }
         }

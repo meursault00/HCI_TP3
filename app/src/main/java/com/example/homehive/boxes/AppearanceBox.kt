@@ -54,6 +54,7 @@ import com.example.homehive.getPersistedValue
 import com.example.homehive.saveBooleanValue
 import com.example.homehive.viewmodels.SettingsVM
 import com.example.homehive.viewmodels.isDarkTheme
+import com.example.homehive.viewmodels.isShowRoutines
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -89,6 +90,7 @@ fun AppearanceBox(viewModel : SettingsVM = viewModel()) {
     val context = LocalContext.current
     val sharedPrefs: SharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
     var darkTheme = remember { mutableStateOf( getPersistedValue(sharedPrefs, "theme") )}
+    var showRoutines = remember { mutableStateOf( getPersistedValue(sharedPrefs, "preference") )}
 
     Box(
         modifier = Modifier
@@ -171,8 +173,13 @@ fun AppearanceBox(viewModel : SettingsVM = viewModel()) {
                         )
                         AppearanceSwitchRow(
                             message = stringResource(id = R.string.show_routines_hs),
-                            checked = true,
-                            onCheckedChange = { },
+                            checked = showRoutines.value,
+                            onCheckedChange = {
+                                saveBooleanValue(sharedPrefs, "preference", !showRoutines.value)
+                                showRoutines.value = getPersistedValue(sharedPrefs, "preference")
+                                isShowRoutines.value = showRoutines.value
+                                Log.d("putaku", showRoutines.value.toString())
+                            },
                         )
                         Row(
                             modifier = Modifier
