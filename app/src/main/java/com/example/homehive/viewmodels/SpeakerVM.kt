@@ -115,7 +115,7 @@ class SpeakerVM(
     }
     fun stop(){
         _uiState.update{currentState ->
-            currentState.copy(status = "stopped")
+            currentState.copy(status = "stopped", song = NetworkSong())
         }
         devicesVM.editADevice(uiState.value.id, "stop", listOf())
         HistoryStack.push("${uiState.value.name}: stopped playing")
