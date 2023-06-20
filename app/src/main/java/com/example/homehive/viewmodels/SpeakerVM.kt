@@ -166,12 +166,16 @@ class SpeakerVM(
         _uiState.update{currentState ->
             currentState.copy(genre = newGenre)
         }
+        Log.d("debug", newGenre)
         devicesVM.editADevice(uiState.value.id, "setGenre", listOf(newGenre))
-        _uiState.update{currentState ->
-            currentState.copy(playlist =devicesVM.fetchPlaylist(uiState.value.id))
-        }
-        HistoryStack.push("${uiState.value.name}: set genre to $newGenre")
+        Thread {
+            Thread.sleep(100)
+            _uiState.update { currentState ->
+                currentState.copy(playlist = devicesVM.fetchPlaylist(uiState.value.id))
+            }
+        }.start()
 
+        HistoryStack.push("${uiState.value.name}: set genre to $newGenre")
     }
 
     fun checkPolling(){
