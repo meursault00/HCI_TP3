@@ -1,5 +1,6 @@
 package com.example.homehive.screens
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -198,7 +199,7 @@ fun SpeakerScreen(
                                                     )
                                                 },
                                                 songPlayingColor = Color(0xFF3AF77D),
-                                                currentSong = speakerState.song.title?: "Loading...",
+                                                currentSong = speakerState.song.title?: " ",
                                             )
 
                                         }
@@ -305,15 +306,14 @@ fun SpeakerScreen(
 
                                 //Nombre de la cancion
                                 AnimatedTextOverflow(
-                                    text = speakerState.song.title?: "la dukineta"
+                                    text = speakerState.song.title?: " "
                                 )
 
                                 // artista
-                                Text(
+                                AnimatedTextOverflow(
                                     text = speakerState.song.artist?: "unavailable",
                                     color = Color(0xB9FFFFFF),
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    fontWeight = FontWeight.Bold,
+                                    style = MaterialTheme.typography.bodySmall,
                                 )
                                 // slider de posicion en la cancion
                                 Column(modifier = Modifier.fillMaxWidth()) {
@@ -362,7 +362,7 @@ fun SpeakerScreen(
                                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                                 ){
                                     IconButton(
-                                        onClick = {if(speakerState.volume > 0) speakerVM.decrementVolume() },
+                                        onClick = {if(speakerState.volume > 0) {speakerVM.decrementVolume()} else { Log.d("HOLA", "GOLA")} },
                                         modifier = Modifier.size(40.dp) // Adjust the size as desired
                                     ) {
                                         Icon(
@@ -474,40 +474,40 @@ fun SpeakerScreen(
                                         )
                                 ) {
                                     Text(
-                                        text = stringResource(id = R.string.speaker),
+                                        text = speakerState.name,
                                         color = Color(0xFFFFFFFF),
                                         style = MaterialTheme.typography.headlineLarge,
                                         fontWeight = FontWeight.Bold,
                                     )
-                                    OutlinedButton(
-                                        onClick = { },
-                                        modifier= Modifier.size(40.dp),  //avoid the oval shape
-                                        shape = CircleShape,
-                                        border= BorderStroke(1.dp, Color.White),
-                                        contentPadding = PaddingValues(0.dp),  //avoid the little icon
-                                        colors = ButtonDefaults.outlinedButtonColors(contentColor =  Color.White)
-                                    ) {
-                                        Icon(
+                                    Row(
+                                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                    )
+                                    {
+                                        GenericDropdownMenuOnOutlinedButtonIcon(
+                                            items = playlists,
                                             painter = painterResource(id = R.drawable.playlist),
-                                            contentDescription = null,
-                                            tint = Color(0xFFFFFFFF),
-                                            modifier = Modifier.size(20.dp)
+                                            onItemSelected = { genre ->
+                                                selectedPlaylist.value = genre
+                                                speakerVM.setGenre(genre.lowercase())
+                                            },
+                                            expanded = expanded,
                                         )
-                                    }
-                                    OutlinedButton(
-                                        onClick = { speakerVM.stop()},
-                                        modifier= Modifier.size(40.dp),  //avoid the oval shape
-                                        shape = CircleShape,
-                                        border= BorderStroke(1.dp, Color.White),
-                                        contentPadding = PaddingValues(0.dp),  //avoid the little icon
-                                        colors = ButtonDefaults.outlinedButtonColors(contentColor =  Color.White)
-                                    ) {
-                                        Icon(
-                                            painter = painterResource(id = R.drawable.stop),
-                                            contentDescription = null,
-                                            tint = Color(0xFFFFFFFF),
-                                            modifier = Modifier.size(20.dp)
-                                        )
+
+                                        OutlinedButton(
+                                            onClick = { speakerVM.stop()},
+                                            modifier= Modifier.size(40.dp),  //avoid the oval shape
+                                            shape = CircleShape,
+                                            border= BorderStroke(1.dp, Color.White),
+                                            contentPadding = PaddingValues(0.dp),  //avoid the little icon
+                                            colors = ButtonDefaults.outlinedButtonColors(contentColor =  Color.White)
+                                        ) {
+                                            Icon(
+                                                painter = painterResource(id = R.drawable.stop),
+                                                contentDescription = null,
+                                                tint = Color(0xFFFFFFFF),
+                                                modifier = Modifier.size(20.dp)
+                                            )
+                                        }
                                     }
                                 }
 
@@ -525,10 +525,18 @@ fun SpeakerScreen(
                                                 .width(250.dp),
                                         ) {
                                             PlaylistSongsDisplay(
-                                                playlistName = "Playlist 1",
-                                                items = listOf(
-
-                                                ))
+                                                playlistName = speakerState.genre,
+                                                items = playlistSongs.map { song ->
+                                                    Song(
+                                                        name = song.title,
+                                                        artist = song.artist,
+                                                        album = song.album,
+                                                        duration = song.duration
+                                                    )
+                                                },
+                                                songPlayingColor = Color(0xFF3AF77D),
+                                                currentSong = speakerState.song.title?: " ",
+                                            )
                                         }
 
                                     }
@@ -611,7 +619,7 @@ fun SpeakerScreen(
                             ) {
                                 // NOMBRE DE LA CANCION
                                 AnimatedTextOverflow(
-                                    text = speakerState.song.title?: "la dukineta"
+                                    text = speakerState.song.title?: " "
                                 )
                                 AnimatedTextOverflow(
                                     text = speakerState.song.artist?: "unavailable",

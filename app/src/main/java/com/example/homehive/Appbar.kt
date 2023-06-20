@@ -31,6 +31,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
@@ -74,10 +75,13 @@ fun AppBar(
         modifier = Modifier
             .background(
                 brush = Brush.radialGradient(
+
                     colors = listOf(
                         MaterialTheme.colorScheme.primary,
-                        MaterialTheme.colorScheme.onPrimary
+                        MaterialTheme.colorScheme.secondary
                     ),
+                    center = Offset.Zero,
+                    radius = 500f,
                     tileMode = TileMode.Clamp
                 )
             )
