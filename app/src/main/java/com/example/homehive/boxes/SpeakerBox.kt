@@ -95,7 +95,8 @@ fun SpeakerBox(
                         Row(
                             horizontalArrangement = Arrangement.End,
                             modifier = Modifier.fillMaxWidth()
-                                .height(25.dp)
+                                .height(30.dp)
+                                .padding(top = 10.dp)
                         ){
                             IconButton(
                                 onClick = {
@@ -114,8 +115,7 @@ fun SpeakerBox(
                                     painter = if (isFavorite.value) painterResource(id = R.drawable.heart_filled) else painterResource(id = R.drawable.heart_outline),
                                     contentDescription = null,
                                     tint = MaterialTheme.colorScheme.background,
-                                    modifier = Modifier.size(25.dp)
-                                        .padding(top = 5.dp)
+                                    modifier = Modifier.size(30.dp)
                                 )
                             }
                         }
