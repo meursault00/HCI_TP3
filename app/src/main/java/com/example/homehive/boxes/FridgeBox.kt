@@ -156,6 +156,7 @@ fun FridgeBox(
                             fontWeight = FontWeight.Bold,
                             style = MaterialTheme.typography.bodyLarge,
                             color = Color(0xFF4BACC4),
+                            modifier = Modifier.padding(top = 15.dp)
                         )
                         Text(
                             text = "${uiState.temperature}ºC",

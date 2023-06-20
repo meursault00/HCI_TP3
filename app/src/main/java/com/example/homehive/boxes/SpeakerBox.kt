@@ -145,12 +145,13 @@ fun SpeakerBox(
                         text = speakerState.song.title?: "Unavailable",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onPrimary,
+                        modifier = Modifier.padding(top = 15.dp)
                     )
                     Row(
                         horizontalArrangement = Arrangement.SpaceEvenly,
                         verticalAlignment = Alignment.CenterVertically, // Center vertically
                         modifier = Modifier
-                            .padding(top = 20.dp)
+                            .padding(top = 5.dp)
                             .fillMaxWidth()
                     ){
                         FloatingActionButton(
