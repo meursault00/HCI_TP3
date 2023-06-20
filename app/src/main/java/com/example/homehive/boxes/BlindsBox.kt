@@ -1,12 +1,17 @@
 package com.example.homehive.boxes
 
+import android.util.Log
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -16,6 +21,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
@@ -37,6 +43,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.homehive.library.FavoritesArray
 import com.example.homehive.Globals
 import com.example.homehive.R
 import com.example.homehive.viewmodels.BlindsVM
@@ -52,6 +59,8 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
     var isBlindClosed = remember { mutableStateOf(blindState.status == "closed") }
     var isClosing = remember { mutableStateOf(blindState.status == "closing" || blindState.status == "closed")}
     var auxBlindsPosition = remember { mutableStateOf(blindState.position) }
+    var isFavorite = remember { mutableStateOf(FavoritesArray.array.contains(blindState.id)) }
+
 
     if ( Globals.updates > 0 ){
         blindsVM.sync()
@@ -86,6 +95,7 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
             shape = RoundedCornerShape(15.dp),
             color = MaterialTheme.colorScheme.tertiary
         ) {
+
             Box(
                 modifier = Modifier
                     .fillMaxSize(),
@@ -98,15 +108,53 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                     modifier = Modifier
                         .offset { IntOffset(x = auxBlindsPosition.value  , y = 0) }
                 )
-                Text(
-                    text = blindState.name,
-                    fontWeight = FontWeight.Bold,
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .align(Alignment.TopCenter)
-                )
+
+                Box(modifier = Modifier
+                    .fillMaxSize(),
+                    contentAlignment = Alignment.TopCenter){
+                    Column(verticalArrangement = Arrangement.Top){
+                        Row(
+                            horizontalArrangement = Arrangement.End,
+                            modifier = Modifier.fillMaxWidth()
+                                .height(25.dp)
+                        ){
+                            IconButton(
+                                onClick = {
+                                    if (FavoritesArray.array.contains(blindState.id)) {
+                                        FavoritesArray.array.remove(blindState.id)
+                                        isFavorite.value = false
+                                        Log.d("favorite", "removing from fav")
+                                    } else {
+                                        FavoritesArray.array.add(blindState.id)
+                                        isFavorite.value = true
+                                        Log.d("favorite", "adding to fav")
+                                    }
+                                },
+                            ) {
+                                Icon(
+                                    painter = if (isFavorite.value) painterResource(id = R.drawable.heart_filled) else painterResource(id = R.drawable.heart_outline),
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.background,
+                                    modifier = Modifier.size(25.dp)
+                                        .padding(top = 5.dp)
+                                )
+                            }
+                        }
+
+                        Row(
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier.fillMaxWidth()
+                                .height(30.dp)
+                        ){
+                            Text(
+                                text = blindState.name,
+                                fontWeight = FontWeight.Bold,
+                                style = MaterialTheme.typography.headlineMedium,
+                                color = MaterialTheme.colorScheme.onTertiary,
+                            )
+                        }
+                    }
+                }
 
                 Text(
                     text = "${auxBlindsPosition.value}%",
