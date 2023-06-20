@@ -176,7 +176,7 @@ fun OvenScreen(
                         Text(
                             text =  stringResource(id = R.string.temperature) + " ${ovenTemperature.value}ºC",
                             style = MaterialTheme.typography.bodyMedium,
-                            color = Color(0xFF2B4E5C),
+                            color = MaterialTheme.colorScheme.onPrimary,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(start = 10.dp)
                         )
@@ -187,14 +187,16 @@ fun OvenScreen(
                                     newTemperature.toInt(),
                                     ovenTemperature
                                 )
-                                ovenVM.setOvenTemperature(newTemperature.toInt())
+                            },
+                            onValueChangeFinished = {
+                                ovenVM.setOvenTemperature(ovenTemperature.value)
                             },
                             valueRange = 90f..230f,
 
                             colors = SliderDefaults.colors(
                                 thumbColor = Color(0xFF620606),
                                 activeTrackColor = Color(0xFFE3592B),
-                                inactiveTrackColor = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.7f),
+                                inactiveTrackColor = Color(0xFFF4CF6D).copy(alpha = 0.7f),
                             ),
                             modifier = Modifier.padding(horizontal = 10.dp)
                         )
@@ -203,7 +205,7 @@ fun OvenScreen(
                         Text(
                             text = stringResource(id = R.string.grill_mode),
                             style = MaterialTheme.typography.bodyMedium,
-                            color = Color(0xFF2B4E5C),
+                            color = MaterialTheme.colorScheme.onPrimary,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(bottom = 10.dp, start = 10.dp)
                         )
@@ -225,7 +227,7 @@ fun OvenScreen(
                                 AnimatedTextOverflow(
                                     text = stringResource(id = R.string.off),
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = Color(0xFF2B4E5C)
+                                    color = if (grillMode.value == GrillMode.OFF) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onTertiary
                                 )
 
                             }
@@ -246,7 +248,7 @@ fun OvenScreen(
                                 AnimatedTextOverflow(
                                     text = stringResource(id = R.string.economic),
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = Color(0xFF2B4E5C)
+                                    color = if (grillMode.value == GrillMode.ECONOMIC) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onTertiary
                                 )
                             }
                             Button(
@@ -266,7 +268,7 @@ fun OvenScreen(
                                 AnimatedTextOverflow(
                                     text = stringResource(id = R.string.complete),
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = Color(0xFF2B4E5C)
+                                    color = if (grillMode.value == GrillMode.COMPLETE) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onTertiary
                                 )
                             }
                         }
@@ -275,7 +277,7 @@ fun OvenScreen(
                         Text(
                             text = stringResource(id = R.string.convection_mode),
                             style = MaterialTheme.typography.bodyMedium,
-                            color = Color(0xFF2B4E5C),
+                            color = MaterialTheme.colorScheme.onPrimary,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(bottom = 10.dp, start = 10.dp)
                         )
@@ -297,7 +299,7 @@ fun OvenScreen(
                                 AnimatedTextOverflow(
                                     text = stringResource(id = R.string.off),
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = Color(0xFF2B4E5C)
+                                    color = if (convectionMode.value == ConvectionMode.OFF) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onTertiary
                                 )
                             }
                             Button(
@@ -317,7 +319,7 @@ fun OvenScreen(
                                 AnimatedTextOverflow(
                                     text = stringResource(id = R.string.economic),
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = Color(0xFF2B4E5C)
+                                    color = if (convectionMode.value == ConvectionMode.ECONOMIC) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onTertiary
                                 )
                             }
                             Button(
@@ -337,7 +339,7 @@ fun OvenScreen(
                                 AnimatedTextOverflow(
                                     text = stringResource(id = R.string.conventional),
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = Color(0xFF2B4E5C)
+                                    color = if (convectionMode.value == ConvectionMode.CONVENTIONAL) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onTertiary
                                 )
                             }
                         }
@@ -346,7 +348,7 @@ fun OvenScreen(
                         Text(
                             text = stringResource(id = R.string.heat_mode),
                             style = MaterialTheme.typography.bodyMedium,
-                            color = Color(0xFF2B4E5C),
+                            color = MaterialTheme.colorScheme.onPrimary,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(bottom = 10.dp, start = 10.dp)
                         )
@@ -368,7 +370,7 @@ fun OvenScreen(
                                 AnimatedTextOverflow(
                                     text = stringResource(id = R.string.conventional),
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = Color(0xFF2B4E5C)
+                                    color = if (sourceMode.value == SourceMode.CONVENTIONAL) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onTertiary
                                 )
                             }
                             Button(
@@ -388,7 +390,7 @@ fun OvenScreen(
                                 AnimatedTextOverflow(
                                     text = stringResource(id = R.string.above),
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = Color(0xFF2B4E5C)
+                                    color = if (sourceMode.value == SourceMode.ABOVE) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onTertiary
                                 )
                             }
                             Button(
@@ -408,7 +410,7 @@ fun OvenScreen(
                                 AnimatedTextOverflow(
                                     text = stringResource(id = R.string.below),
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = Color(0xFF2B4E5C)
+                                    color = if (sourceMode.value == SourceMode.BELOW) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onTertiary
                                 )
                             }
                         }

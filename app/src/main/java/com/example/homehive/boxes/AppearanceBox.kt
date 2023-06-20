@@ -83,7 +83,7 @@ fun AppearanceBox(viewModel : SettingsVM = viewModel()) {
     var isOpen = remember { mutableStateOf(true) }
 
     val height: Dp by animateDpAsState(
-        targetValue = if (isOpen.value) 300.dp else 100.dp,
+        targetValue = if (isOpen.value) 250.dp else 100.dp,
         animationSpec = tween(durationMillis = 100)
     )
 
@@ -181,49 +181,6 @@ fun AppearanceBox(viewModel : SettingsVM = viewModel()) {
                                 Log.d("putaku", showRoutines.value.toString())
                             },
                         )
-                        Row(
-                            modifier = Modifier
-                                .padding(start = 15.dp, end = 15.dp, top = 5.dp, bottom = 5.dp)
-                                .fillMaxWidth(),
-                        ){
-                            Surface(
-                                color = MaterialTheme.colorScheme.secondary,
-                                modifier = Modifier
-                                    .height(50.dp)
-                                    .clickable { expanded.value = !expanded.value }
-                                    .fillMaxWidth(),
-                                shape = RoundedCornerShape(15.dp),
-                                shadowElevation = 16.dp
-                            ){
-                                Row(
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    modifier = Modifier
-                                        .padding(start = 22.dp, end = 22.dp)
-                                        .fillMaxWidth()
-                                ) {
-                                    GenericDropdownMenu(
-                                        items = languages,
-                                        selectedItem = selectedLanguage.value,
-                                        onItemSelected = { language ->
-                                            selectedLanguage.value = language
-                                            viewModel.toggleLanguage()
-                                        },
-                                        expanded = expanded,
-                                    )
-                                    Icon(
-                                        painter = icon,
-                                        contentDescription = null,
-                                        tint = MaterialTheme.colorScheme.onPrimary,
-                                    )
-                                }
-                            }
-                        }
-
-
-                        // --------------
-
-
 
                     }
 
