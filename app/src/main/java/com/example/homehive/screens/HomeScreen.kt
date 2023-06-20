@@ -37,6 +37,7 @@ import androidx.navigation.NavController
 import com.example.homehive.DeviceViewModelMap
 import com.example.homehive.LoadingAnimation
 import com.example.homehive.R
+import com.example.homehive.UpdateMap
 import com.example.homehive.boxes.BlindsBox
 import com.example.homehive.boxes.FridgeBox
 import com.example.homehive.boxes.OvenBox
@@ -170,6 +171,7 @@ fun HomeScreen(
                         }
 
                         devicesState.devices?.result?.forEach { device ->
+                            UpdateMap.map.putIfAbsent(device.id.toString(), false)
                             item {
                                 val viewModel = remember(device.id) {
                                     when (device.type?.name) {

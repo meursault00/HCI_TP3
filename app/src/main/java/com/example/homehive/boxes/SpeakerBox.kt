@@ -52,10 +52,8 @@ fun SpeakerBox(
     val speakerState by speakerVM.uiState.collectAsState()
     var isFavorite = remember { mutableStateOf(FavoritesArray.array.contains(speakerState.id)) }
 
-    if ( Globals.updates > 0 ){
-        speakerVM.sync()
-        Globals.updates--
-    }
+    speakerVM.conditionalRecomposition()
+
 
     LaunchedEffect(Unit) {
         speakerVM.checkPolling()

@@ -80,15 +80,14 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
     val dispenseUnitHasError = remember { mutableStateOf(false) }
     var isFavorite = remember { mutableStateOf(FavoritesArray.array.contains(tapState.id)) }
 
-    if ( Globals.updates > 0 ){
-        tapVM.sync()
-        Globals.updates--
-    }
+
 
     val height: Dp by animateDpAsState(
         targetValue = if (isOpen.value) 415.dp else 200.dp,
         animationSpec = tween(durationMillis = 100)
     )
+
+    tapVM.conditionalRecomposition()
 
     LaunchedEffect(Unit) {
         tapVM.checkPolling()

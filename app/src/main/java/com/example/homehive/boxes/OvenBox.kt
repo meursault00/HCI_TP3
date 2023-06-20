@@ -74,10 +74,7 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
         animationSpec = tween(durationMillis = 100)
     )
 
-    if ( Globals.updates > 0 ){
-        ovenVM.sync()
-        Globals.updates--
-    }
+    ovenVM.conditionalRecomposition()
 
     Box(
         modifier = Modifier

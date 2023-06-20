@@ -65,15 +65,12 @@ fun FridgeBox(
     val auxFreezerTemperature = remember { mutableStateOf(uiState.freezerTemperature)}
     var isFavorite = remember { mutableStateOf(FavoritesArray.array.contains(uiState.id)) }
 
-    if ( Globals.updates > 0 ){
-        fridgeVM.sync()
-        Globals.updates--
-    }
-
     val height: Dp by animateDpAsState(
         targetValue = if (isOpen.value) 415.dp else 200.dp,
         animationSpec = tween(durationMillis = 100)
     )
+
+    fridgeVM.conditionalRecomposition()
 
     Box(
         modifier = Modifier

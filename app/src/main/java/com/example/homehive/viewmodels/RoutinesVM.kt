@@ -1,8 +1,12 @@
 package com.example.homehive.viewmodels
 
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.homehive.Globals
+import com.example.homehive.UpdateMap
 import com.example.homehive.library.HistoryStack
 import com.example.homehive.network.RetrofitClient
 import com.example.homehive.states.RoutinesUIState
@@ -66,6 +70,7 @@ class RoutinesVM(
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun executeARoutine(id: String) {
 
         fetchJob?.cancel()
@@ -82,6 +87,7 @@ class RoutinesVM(
                 _uiState.update { it.copy(message = e.message, isLoading = false) }
             }
         }
-        Globals.updates += devicesVM.qDevices()
+        UpdateMap.map.replaceAll { _, _ -> true }
+        Log.d("debug", UpdateMap.map.toString())
     }
 }
