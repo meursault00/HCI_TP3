@@ -149,7 +149,6 @@ fun SpeakerBox(
                         horizontalArrangement = Arrangement.SpaceEvenly,
                         verticalAlignment = Alignment.CenterVertically, // Center vertically
                         modifier = Modifier
-                            .padding(top = 5.dp)
                             .fillMaxWidth()
                     ){
                         FloatingActionButton(
