@@ -1,5 +1,7 @@
 package com.example.homehive.boxes
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.BlurMaskFilter
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
@@ -52,9 +54,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.Globals
 import com.example.homehive.R
+import com.example.homehive.getPersistedList
 import com.example.homehive.library.AnimatedTextOverflow
 import com.example.homehive.library.FavoritesArray
 import com.example.homehive.library.sendCustomNotification
+import com.example.homehive.saveList
+import com.example.homehive.saveListIfAbsent
 import com.example.homehive.viewmodels.OvenVM
 
 
@@ -63,7 +68,7 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
 
     val uiState by ovenVM.uiState.collectAsState()
     val context = LocalContext.current;
-
+    val sharedPrefs: SharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
     val isOpen = remember { mutableStateOf(false) }
 
@@ -120,10 +125,12 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
                                     FavoritesArray.array.remove(uiState.id)
                                     isFavorite.value = false
                                     Log.d("favorite", "removing from fav")
+                                    saveList(sharedPrefs, FavoritesArray.array, "FavoritesList" )
                                 } else {
                                     FavoritesArray.array.add(uiState.id)
                                     isFavorite.value = true
                                     Log.d("favorite", "adding to fav")
+                                    saveList(sharedPrefs, FavoritesArray.array, "FavoritesList" )
                                 }
                             },
                         ) {

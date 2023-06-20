@@ -71,6 +71,27 @@ fun NavHost(
         println("List of devices: $routines")
     }
 
+
+
+
+    // val persistedValue = getPersistedValue(sharedPrefs, "theme")
+    // Log.d("demo", "Persisted value on app start: $persistedValue")
+
+    // Save a new value
+    // saveValueIfAbsent(sharedPrefs, "isDarkTheme", false)
+
+
+    // val updatedValue = getPersistedValue(sharedPrefs, "exampleKey")
+    // Log.d("demo", "Persisted value after saving: $updatedValue")
+
+    // Saving a list
+    // val myList = listOf("Item 1", "Item 2", "Item 3")
+    // saveList(sharedPrefs, myList, "myListKey")
+
+    // Retrieving a list
+    // val retrievedList = getPersistedList(sharedPrefs, "myListKey")
+    // Log.d("demo", retrievedList.toString()) // Output: [Item 1, Item 2, Item 3]
+
     // ---------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -176,6 +197,17 @@ fun saveBooleanValue(sharedPrefs: SharedPreferences, key: String, value: Boolean
 
 fun getPersistedValue(sharedPrefs: SharedPreferences, key: String): Boolean {
     return sharedPrefs.getString(key, null)?.toBoolean() ?: false
+}
+
+
+fun saveListIfAbsent(sharedPrefs: SharedPreferences, list: List<String>, key: String) {
+    if (!sharedPrefs.contains(key)) {
+        val gson = Gson()
+        val json = gson.toJson(list)
+        val editor = sharedPrefs.edit()
+        editor.putString(key, json)
+        editor.apply()
+    }
 }
 
 
