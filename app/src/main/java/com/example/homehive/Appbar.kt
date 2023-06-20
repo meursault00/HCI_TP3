@@ -119,62 +119,81 @@ fun AppBar(
                     )
                 }
             }
-
-            OutlinedIconButton(
-                onClick = { expanded.value = true },
-                border= BorderStroke(2.dp, MaterialTheme.colorScheme.inversePrimary),
-                shape = CircleShape,
-                colors = IconButtonDefaults.iconButtonColors(
-                    containerColor = Color.Transparent,
-                    contentColor = MaterialTheme.colorScheme.secondary
-                )
-            ) {
-                 Icon(
-                    painter = painterResource(id = R.drawable.moreh ),
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.inversePrimary,
-                    modifier = Modifier.size(30.dp)
-                )
-                DropdownMenu(
-                    expanded = expanded.value,
-                    onDismissRequest = { expanded.value = false },
-                    offset = DpOffset(0.dp, (15).dp),
-                    modifier = Modifier
-                        .background(
-                            color = MaterialTheme.colorScheme.secondary,
-                        )
+            Spacer(modifier = Modifier.width(20.dp))
+            Row() {
+                OutlinedIconButton(
+                    onClick = { navController.navigate("favorites") },
+                    border = BorderStroke(2.dp, MaterialTheme.colorScheme.inversePrimary),
+                    shape = CircleShape,
+                    colors = IconButtonDefaults.iconButtonColors(
+                        containerColor = Color.Transparent,
+                        contentColor = MaterialTheme.colorScheme.secondary
+                    )
                 ) {
-                    options.forEach { option ->
-                        DropdownMenuItem(
-                            onClick = {
-                                actionBasedOnIcon(
-                                    navController = navController,
-                                    id = option.id ,
-                                )
-                                expanded.value = false
-                            },
-                            text =  {
+                    Icon(
+                        painter = painterResource(id = R.drawable.heart_filled),
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.inversePrimary,
+                        modifier = Modifier.size(17.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.width(5.dp))
+                OutlinedIconButton(
+                    onClick = { expanded.value = true },
+                    border = BorderStroke(2.dp, MaterialTheme.colorScheme.inversePrimary),
+                    shape = CircleShape,
+                    colors = IconButtonDefaults.iconButtonColors(
+                        containerColor = Color.Transparent,
+                        contentColor = MaterialTheme.colorScheme.secondary
+                    )
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.moreh),
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.inversePrimary,
+                        modifier = Modifier.size(30.dp)
+                    )
+                    DropdownMenu(
+                        expanded = expanded.value,
+                        onDismissRequest = { expanded.value = false },
+                        offset = DpOffset(0.dp, (15).dp),
+                        modifier = Modifier
+                            .background(
+                                color = MaterialTheme.colorScheme.secondary,
+                            )
+                    ) {
+                        options.forEach { option ->
+                            DropdownMenuItem(
+                                onClick = {
+                                    actionBasedOnIcon(
+                                        navController = navController,
+                                        id = option.id,
+                                    )
+                                    expanded.value = false
+                                },
+                                text = {
 
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    modifier = Modifier.fillMaxWidth()
-                                ) {
-                                    Text(
-                                        text = option.title,
-                                        color = MaterialTheme.colorScheme.onPrimary
-                                    )
-                                    Spacer(modifier = Modifier.width(20.dp))
-                                    Icon(
-                                        painter = option.painter,
-                                        contentDescription = null,
-                                        tint = MaterialTheme.colorScheme.onPrimary,
-                                        modifier = Modifier.size(20.dp)
-                                    )
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.SpaceBetween,
+                                        modifier = Modifier.fillMaxWidth()
+                                    ) {
+                                        Text(
+                                            text = option.title,
+                                            color = MaterialTheme.colorScheme.onPrimary
+                                        )
+                                        Spacer(modifier = Modifier.width(20.dp))
+                                        Icon(
+                                            painter = option.painter,
+                                            contentDescription = null,
+                                            tint = MaterialTheme.colorScheme.onPrimary,
+                                            modifier = Modifier.size(20.dp)
+                                        )
+                                    }
+
                                 }
-
-                            }
-                        )
+                            )
+                        }
                     }
                 }
             }

@@ -123,6 +123,12 @@ fun App(
                                 painter = painterResource(id = R.drawable.heart_filled),
                             ),
                             MenuItem(
+                                id = "history",
+                                title = stringResource(id = R.string.history),
+                                contentDescription = "Go to history screen",
+                                painter = painterResource(id = R.drawable.history),
+                            ),
+                            MenuItem(
                                 id = "settings",
                                 title = stringResource(id = R.string.settings),
                                 contentDescription = "Go to settings screen",
