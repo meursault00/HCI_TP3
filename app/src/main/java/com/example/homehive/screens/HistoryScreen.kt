@@ -85,7 +85,7 @@ fun HistoryScreen(
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     contentPadding = PaddingValues(horizontal = 16.dp)
                 ) {
-                    items(stackItems) { item ->
+                    items(stackItems.reversed()) { item ->
                         Surface(
                             color = MaterialTheme.colorScheme.secondary,
                             modifier = Modifier
@@ -112,6 +112,7 @@ fun HistoryScreen(
                         }
                     }
                 }
+
             }
 
         }

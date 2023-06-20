@@ -10,13 +10,12 @@ object HistoryStack {
     private const val maxStackSize = 100
 
     @RequiresApi(Build.VERSION_CODES.O)
-
     fun push(item: String) {
         if (stack.size >= maxStackSize) {
             stack.removeFirst()
         }
         val currentTime = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("dd HH:mm")
+        val formatter = DateTimeFormatter.ofPattern("HH:mm")
         val formattedTime = currentTime.format(formatter)
         val itemWithTime = "$formattedTime - $item"
         stack.addLast(itemWithTime)

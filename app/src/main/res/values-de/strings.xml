@@ -102,4 +102,11 @@
     <string name="show_routines_hs">Rutinen beim Start</string>
     <string name="favorites">Favoritinnen</string>
     <string name="history">Verlauf</string>
+    <string name="order_by">Sortieren nach</string>
+    <string name="name_ascending">Nach Name Auf.</string>
+    <string name="name_descending">Nach Name Abs.</string>
+    <string name="type_ascending">Nach Typ Auf.</string>
+    <string name="type_descending">Nach Typ Abs.</string>
+    <string name="power_ascending">Nach Leistung Auf.</string>
+    <string name="power_descending">Nach Leistung Abs.</string>
 </resources>

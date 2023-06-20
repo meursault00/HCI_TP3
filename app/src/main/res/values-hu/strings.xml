@@ -102,6 +102,13 @@
     <string name="show_routines_hs">Rutinok a kezdölapon</string>
     <string name="favorites">Kedvencek</string>
     <string name="history">Előzmények</string>
+    <string name="order_by">Rendezés</string>
+    <string name="name_ascending">Név növekvő</string>
+    <string name="name_descending">Név csökkenő</string>
+    <string name="type_ascending">Típus növekvő</string>
+    <string name="type_descending">Típus csökkenő</string>
+    <string name="power_ascending">Teljesítmény növekvő</string>
+    <string name="power_descending">Teljesítmény csökkenő</string>
 </resources>
 
 

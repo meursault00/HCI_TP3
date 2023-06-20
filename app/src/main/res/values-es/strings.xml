@@ -102,4 +102,12 @@
     <string name="show_routines_hs">Show Routines in Home</string>
     <string name="favorites">Favoritos</string>
     <string name="history">Historial</string>
+    <string name="order_by">Ordenar por</string>
+    <string name="name_ascending">Nombre ascendente</string>
+    <string name="name_descending">Nombre descendente</string>
+    <string name="type_ascending">Tipo ascendente</string>
+    <string name="type_descending">Tipo descendente</string>
+    <string name="power_ascending">Potencia ascendente</string>
+    <string name="power_descending">Potencia descendente</string>
+
 </resources>

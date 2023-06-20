@@ -101,4 +101,11 @@
     <string name="show_routines_hs">Show Routines in Home</string>
     <string name="favorites">Favorites</string>
     <string name="history">History</string>
+    <string name="order_by">Order by</string>
+    <string name="name_ascending">Name Ascending</string>
+    <string name="name_descending">Name Descending</string>
+    <string name="type_ascending">Type Ascending</string>
+    <string name="type_descending">Type Descending</string>
+    <string name="power_ascending">Power Ascending</string>
+    <string name="power_descending">Power Descending</string>
 </resources>
