@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -66,20 +67,27 @@ fun AppBar(
             stringResource(id = R.string.history),
             painterResource(id = R.drawable.history),
             id= R.drawable.history
-        ) ,
+        ),
     )
 
     Surface(
         modifier = Modifier
-            .padding(15.dp)
+            .background(
+                brush = Brush.radialGradient(
+                    colors = listOf(
+                        MaterialTheme.colorScheme.primary,
+                        MaterialTheme.colorScheme.onPrimary
+                    ),
+                    tileMode = TileMode.Clamp
+                )
+            )
             .fillMaxWidth(),
         color = MaterialTheme.colorScheme.primary, // FF114225 // 0xFF2C4B42
-        shadowElevation = 4.dp,
-        shape = RoundedCornerShape(40.dp),
+        shadowElevation = 16.dp,
     ) {
         Row(
             modifier = Modifier
-                .padding(4.dp)
+                .padding(top = 20.dp, bottom = 10.dp, start = 15.dp, end = 15.dp)
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {

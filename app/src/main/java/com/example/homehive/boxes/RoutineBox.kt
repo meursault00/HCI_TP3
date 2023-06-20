@@ -2,6 +2,7 @@ package com.example.homehive.boxes
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -74,7 +75,7 @@ fun RoutineBox(
                 .clickable { isOpen.value = !isOpen.value },
             shape = RoundedCornerShape(15.dp),
             shadowElevation = 5.dp,
-
+            border  = BorderStroke(3.dp, MaterialTheme.colorScheme.onSecondary),
             color = MaterialTheme.colorScheme.secondary
         ) {
             Box(

@@ -305,13 +305,14 @@ fun GenericDropdownMenu(
                     text  = {
                         Row(
                             verticalAlignment = Alignment.CenterVertically
+
                         ) {
                             Text(
                                 text = language,
-                                color = MaterialTheme.colorScheme.onPrimary,
+                                color = if(language == selectedItem) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.background,
                                 style = MaterialTheme.typography.bodyMedium,
-
-                                )
+                                fontWeight = if(language == selectedItem) FontWeight.Bold else FontWeight.Normal,
+                            )
                         }
                     },
                     onClick = {
