@@ -1,7 +1,9 @@
 package com.example.homehive.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.homehive.UpdateMap
 import com.example.homehive.library.HistoryStack
 import com.example.homehive.network.deviceModels.NetworkPlaylist
 import com.example.homehive.network.deviceModels.NetworkSong
@@ -113,7 +115,7 @@ class SpeakerVM(
     }
     fun stop(){
         _uiState.update{currentState ->
-            currentState.copy(status = "stopped")
+            currentState.copy(status = "stopped", song = NetworkSong())
         }
         devicesVM.editADevice(uiState.value.id, "stop", listOf())
         HistoryStack.push("${uiState.value.name}: stopped playing")
@@ -164,12 +166,16 @@ class SpeakerVM(
         _uiState.update{currentState ->
             currentState.copy(genre = newGenre)
         }
+        Log.d("debug", newGenre)
         devicesVM.editADevice(uiState.value.id, "setGenre", listOf(newGenre))
-        _uiState.update{currentState ->
-            currentState.copy(playlist =devicesVM.fetchPlaylist(uiState.value.id))
-        }
-        HistoryStack.push("${uiState.value.name}: set genre to $newGenre")
+        Thread {
+            Thread.sleep(100)
+            _uiState.update { currentState ->
+                currentState.copy(playlist = devicesVM.fetchPlaylist(uiState.value.id))
+            }
+        }.start()
 
+        HistoryStack.push("${uiState.value.name}: set genre to $newGenre")
     }
 
     fun checkPolling(){
@@ -187,5 +193,13 @@ class SpeakerVM(
             }
         }
         thread.start()
+    }
+
+    fun conditionalRecomposition(){
+        if (UpdateMap.map[uiState.value.id] == true){
+            Log.d("debug","Syncing ${uiState.value.name}")
+            sync()
+            UpdateMap.map[uiState.value.id] = false
+        }
     }
 }

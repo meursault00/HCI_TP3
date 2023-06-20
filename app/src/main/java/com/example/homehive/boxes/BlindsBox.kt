@@ -46,6 +46,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.library.FavoritesArray
 import com.example.homehive.Globals
 import com.example.homehive.R
+import com.example.homehive.UpdateMap
 import com.example.homehive.viewmodels.BlindsVM
 import com.example.homehive.viewmodels.isDarkTheme
 
@@ -61,18 +62,14 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
     var auxBlindsPosition = remember { mutableStateOf(blindState.position) }
     var isFavorite = remember { mutableStateOf(FavoritesArray.array.contains(blindState.id)) }
 
-
-    if ( Globals.updates > 0 ){
-        blindsVM.sync()
-        Globals.updates--
-    }
-
     var isOpen = remember { mutableStateOf(false) }
 
     val blindsHeight: Dp by animateDpAsState(
         targetValue = if (isOpen.value) 300.dp else 200.dp,
         animationSpec = tween(durationMillis = 100)
     )
+
+    blindsVM.conditionalRecomposition()
 
     LaunchedEffect(Unit) {
         // Perform your logic here
@@ -116,7 +113,8 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                         Row(
                             horizontalArrangement = Arrangement.End,
                             modifier = Modifier.fillMaxWidth()
-                                .height(25.dp)
+                                .height(30.dp)
+                                .padding(top = 10.dp)
                         ){
                             IconButton(
                                 onClick = {
@@ -135,8 +133,7 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                                     painter = if (isFavorite.value) painterResource(id = R.drawable.heart_filled) else painterResource(id = R.drawable.heart_outline),
                                     contentDescription = null,
                                     tint = MaterialTheme.colorScheme.background,
-                                    modifier = Modifier.size(25.dp)
-                                        .padding(top = 5.dp)
+                                    modifier = Modifier.size(30.dp)
                                 )
                             }
                         }
@@ -144,7 +141,7 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                         Row(
                             horizontalArrangement = Arrangement.Center,
                             modifier = Modifier.fillMaxWidth()
-                                .height(30.dp)
+                                .height(40.dp)
                         ){
                             Text(
                                 text = blindState.name,

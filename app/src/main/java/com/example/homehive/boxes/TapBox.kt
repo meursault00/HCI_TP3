@@ -1,15 +1,18 @@
 package com.example.homehive.boxes
 
+import android.util.Log
 import androidx.compose.animation.core.animateDpAsState
 
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -22,6 +25,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
@@ -50,6 +54,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.Globals
 import com.example.homehive.R
+import com.example.homehive.library.FavoritesArray
 import com.example.homehive.library.sendCustomNotification
 import com.example.homehive.viewmodels.TapVM
 
@@ -73,16 +78,16 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
     val dispenseUnit = remember { mutableStateOf("") }
     val dispenseUnitError = remember { mutableStateOf("") }
     val dispenseUnitHasError = remember { mutableStateOf(false) }
+    var isFavorite = remember { mutableStateOf(FavoritesArray.array.contains(tapState.id)) }
 
-    if ( Globals.updates > 0 ){
-        tapVM.sync()
-        Globals.updates--
-    }
+
 
     val height: Dp by animateDpAsState(
         targetValue = if (isOpen.value) 415.dp else 200.dp,
         animationSpec = tween(durationMillis = 100)
     )
+
+    tapVM.conditionalRecomposition()
 
     LaunchedEffect(Unit) {
         tapVM.checkPolling()
@@ -114,15 +119,53 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                 )
-                Text(
-                    text = tapState.name,
-                    fontWeight = FontWeight.Bold,
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .align(Alignment.TopCenter)
-                )
+
+                Box(modifier = Modifier
+                    .fillMaxSize(),
+                    contentAlignment = Alignment.TopCenter){
+                    Column(verticalArrangement = Arrangement.Top){
+                        Row(
+                            horizontalArrangement = Arrangement.End,
+                            modifier = Modifier.fillMaxWidth()
+                                .height(30.dp)
+                                .padding(top = 10.dp)
+                        ){
+                            IconButton(
+                                onClick = {
+                                    if (FavoritesArray.array.contains(tapState.id)) {
+                                        FavoritesArray.array.remove(tapState.id)
+                                        isFavorite.value = false
+                                        Log.d("favorite", "removing from fav")
+                                    } else {
+                                        FavoritesArray.array.add(tapState.id)
+                                        isFavorite.value = true
+                                        Log.d("favorite", "adding to fav")
+                                    }
+                                },
+                            ) {
+                                Icon(
+                                    painter = if (isFavorite.value) painterResource(id = R.drawable.heart_filled) else painterResource(id = R.drawable.heart_outline),
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.background,
+                                    modifier = Modifier.size(30.dp)
+                                )
+                            }
+                        }
+
+                        Row(
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier.fillMaxWidth()
+                                .height(40.dp)
+                        ){
+                            Text(
+                                text = tapState.name,
+                                fontWeight = FontWeight.Bold,
+                                style = MaterialTheme.typography.headlineMedium,
+                                color = MaterialTheme.colorScheme.onTertiary,
+                            )
+                        }
+                    }
+                }
 
                 if (!isOn.value) {
                     Box(

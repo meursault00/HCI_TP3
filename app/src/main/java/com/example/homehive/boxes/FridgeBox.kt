@@ -65,15 +65,12 @@ fun FridgeBox(
     val auxFreezerTemperature = remember { mutableStateOf(uiState.freezerTemperature)}
     var isFavorite = remember { mutableStateOf(FavoritesArray.array.contains(uiState.id)) }
 
-    if ( Globals.updates > 0 ){
-        fridgeVM.sync()
-        Globals.updates--
-    }
-
     val height: Dp by animateDpAsState(
         targetValue = if (isOpen.value) 415.dp else 200.dp,
         animationSpec = tween(durationMillis = 100)
     )
+
+    fridgeVM.conditionalRecomposition()
 
     Box(
         modifier = Modifier
@@ -106,7 +103,8 @@ fun FridgeBox(
                     Row(
                         horizontalArrangement = Arrangement.End,
                         modifier = Modifier.fillMaxWidth()
-                            .height(25.dp)
+                            .height(30.dp)
+                            .padding(top = 10.dp)
                     ){
                         IconButton(
                             onClick = {
@@ -125,8 +123,7 @@ fun FridgeBox(
                                 painter = if (isFavorite.value) painterResource(id = R.drawable.heart_filled) else painterResource(id = R.drawable.heart_outline),
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.background,
-                                modifier = Modifier.size(25.dp)
-                                    .padding(top = 5.dp)
+                                modifier = Modifier.size(30.dp)
                             )
                         }
                     }
@@ -134,7 +131,7 @@ fun FridgeBox(
                     Row(
                         horizontalArrangement = Arrangement.Center,
                         modifier = Modifier.fillMaxWidth()
-                            .height(30.dp)
+                            .height(40.dp)
                     ){
                         Text(
                             text = uiState.name,
@@ -156,6 +153,7 @@ fun FridgeBox(
                             fontWeight = FontWeight.Bold,
                             style = MaterialTheme.typography.bodyLarge,
                             color = Color(0xFF4BACC4),
+                            modifier = Modifier.padding(top = 15.dp)
                         )
                         Text(
                             text = "${uiState.temperature}ºC",

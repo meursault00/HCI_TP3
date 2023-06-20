@@ -1,7 +1,9 @@
 package com.example.homehive.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.homehive.UpdateMap
 import com.example.homehive.library.HistoryStack
 import com.example.homehive.states.FridgeUIState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -68,5 +70,13 @@ class FridgeVM(
         }
         devicesVM.editADevice(uiState.value.id, "setMode", listOf(newMode))
         HistoryStack.push("${uiState.value.name}: set mode to $newMode")
+    }
+
+    fun conditionalRecomposition(){
+        if (UpdateMap.map[uiState.value.id] == true){
+            Log.d("debug","Syncing ${uiState.value.name}")
+            sync()
+            UpdateMap.map[uiState.value.id] = false
+        }
     }
 }

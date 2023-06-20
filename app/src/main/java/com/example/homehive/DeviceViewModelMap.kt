@@ -9,3 +9,7 @@ object DeviceViewModelMap {
 object Globals {
     var updates: Int = 0
 }
+
+object UpdateMap {
+    val map: MutableMap<String, Boolean> = mutableMapOf()
+}

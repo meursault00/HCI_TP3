@@ -3,13 +3,16 @@ package com.example.homehive.boxes
 import android.graphics.BlurMaskFilter
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
+import android.util.Log
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,6 +24,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -49,6 +53,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.Globals
 import com.example.homehive.R
 import com.example.homehive.library.AnimatedTextOverflow
+import com.example.homehive.library.FavoritesArray
 import com.example.homehive.library.sendCustomNotification
 import com.example.homehive.viewmodels.OvenVM
 
@@ -62,15 +67,14 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
 
     val isOpen = remember { mutableStateOf(false) }
 
+    var isFavorite = remember { mutableStateOf(FavoritesArray.array.contains(uiState.id)) }
+
     val height: Dp by animateDpAsState(
         targetValue = if (isOpen.value) 415.dp else 200.dp,
         animationSpec = tween(durationMillis = 100)
     )
 
-    if ( Globals.updates > 0 ){
-        ovenVM.sync()
-        Globals.updates--
-    }
+    ovenVM.conditionalRecomposition()
 
     Box(
         modifier = Modifier
@@ -102,15 +106,49 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                 )
-                Text(
-                    text = uiState.name,
-                    fontWeight = FontWeight.Bold,
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .align(Alignment.TopCenter)
-                )
+
+                Column(verticalArrangement = Arrangement.Top){
+                    Row(
+                        horizontalArrangement = Arrangement.End,
+                        modifier = Modifier.fillMaxWidth()
+                            .height(30.dp)
+                            .padding(top = 10.dp)
+                    ){
+                        IconButton(
+                            onClick = {
+                                if (FavoritesArray.array.contains(uiState.id)) {
+                                    FavoritesArray.array.remove(uiState.id)
+                                    isFavorite.value = false
+                                    Log.d("favorite", "removing from fav")
+                                } else {
+                                    FavoritesArray.array.add(uiState.id)
+                                    isFavorite.value = true
+                                    Log.d("favorite", "adding to fav")
+                                }
+                            },
+                        ) {
+                            Icon(
+                                painter = if (isFavorite.value) painterResource(id = R.drawable.heart_filled) else painterResource(id = R.drawable.heart_outline),
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.background,
+                                modifier = Modifier.size(30.dp)
+                            )
+                        }
+                    }
+
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.fillMaxWidth()
+                            .height(40.dp)
+                    ){
+                        Text(
+                            text = uiState.name,
+                            fontWeight = FontWeight.Bold,
+                            style = MaterialTheme.typography.headlineMedium,
+                            color = MaterialTheme.colorScheme.onTertiary,
+                        )
+                    }
+                }
 
                 if (uiState.power != "on") {
                     Box(
