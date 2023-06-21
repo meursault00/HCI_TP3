@@ -52,6 +52,7 @@ fun NavHost(
     LaunchedEffect(Unit) {
         devicesVM.fetchDevices()
     }
+    UpdateMap.map.replaceAll { _, _ -> true }
     
     val devices = devicesState.devices
     SideEffect {
