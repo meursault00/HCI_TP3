@@ -565,7 +565,6 @@ fun OvenScreen(
                     }
                 }
                 if (!ovenState.value) {
-                    Text(text = "WTF")
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
