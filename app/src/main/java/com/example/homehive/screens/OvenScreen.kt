@@ -1,5 +1,6 @@
 package com.example.homehive.screens
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -144,6 +145,7 @@ fun OvenScreen(
                                     .padding(16.dp)
                             )
                             Button(
+                                border = BorderStroke(1.dp, MaterialTheme.colorScheme.background),
                                 onClick = {
                                     ovenVM.togglePower()
                                     setOvenStateLocal(ovenState)
