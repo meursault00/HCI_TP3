@@ -31,19 +31,25 @@ class EventService : Service() {
 
         job = GlobalScope.launch(Dispatchers.IO) {
             while (true) {
-                val events = fetchEvents()
-                events?.forEach {
-                    Log.d(TAG, "Broadcasting send notification intent (${it.deviceId})")
-                    val intent2 = Intent().apply {
-                        action = MyIntent.SHOW_NOTIFICATION
-                        `package` = MyIntent.PACKAGE
-                        putExtra(MyIntent.DEVICE_ID, it.deviceId)
-                        putExtra(MyIntent.DEVICE_NAME, getDeviceName(it.deviceId))
-                        putExtra(MyIntent.ACTION, it.event)
+                try{
+                    val events = fetchEvents()
+                    events?.forEach {
+                        Log.d(TAG, "Broadcasting send notification intent (${it.deviceId})")
+                        val intent2 = Intent().apply {
+                            action = MyIntent.SHOW_NOTIFICATION
+                            `package` = MyIntent.PACKAGE
+                            putExtra(MyIntent.DEVICE_ID, it.deviceId)
+                            putExtra(MyIntent.DEVICE_NAME, getDeviceName(it.deviceId))
+                            putExtra(MyIntent.ACTION, it.event)
+                        }
+                        sendOrderedBroadcast(intent2, null)
                     }
-                    sendOrderedBroadcast(intent2, null)
+                    delay(DELAY_MILLIS)
                 }
-                delay(DELAY_MILLIS)
+                catch (e: Exception){
+                    Log.d(TAG, "Error fetching events: ${e.message}")
+                }
+
             }
         }
 

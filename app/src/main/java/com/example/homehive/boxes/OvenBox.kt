@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -66,7 +67,10 @@ import com.example.homehive.viewmodels.isDarkTheme
 
 
 @Composable
-fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
+fun OvenBox(
+    onClick: () -> Unit,
+    ovenVM : OvenVM = viewModel()
+) {
 
     val uiState by ovenVM.uiState.collectAsState()
     val context = LocalContext.current;
@@ -77,7 +81,7 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
     var isFavorite = remember { mutableStateOf(FavoritesArray.array.contains(uiState.id)) }
 
     val height: Dp by animateDpAsState(
-        targetValue = if (isOpen.value) 415.dp else 200.dp,
+        targetValue = if (isOpen.value) 450.dp else 200.dp,
         animationSpec = tween(durationMillis = 100)
     )
 
@@ -113,7 +117,7 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
                     painter = painterResource(id = R.drawable.fuego),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier
+                    modifier = Modifier.offset(y =  if(isOpen.value) 50.dp else 0.dp)
                 )
 
                 Column(verticalArrangement = Arrangement.Top){
@@ -180,12 +184,12 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
                 Button(
                     border = BorderStroke(1.dp, MaterialTheme.colorScheme.background),
 
-                    onClick = { 
-                                sendCustomNotification(context, "Oven", if(uiState.power == "on") context.getString(R.string.turned_off)
-                                                                     else context.getString(R.string.turned_on)
-                                                                                                     )
-                                ovenVM.togglePower() 
-                              },
+                    onClick = {
+                        sendCustomNotification(context, "Oven", if(uiState.power == "on") context.getString(R.string.turned_off)
+                        else context.getString(R.string.turned_on)
+                        )
+                        ovenVM.togglePower()
+                    },
                     elevation = ButtonDefaults.buttonElevation(
                         defaultElevation = 30.dp,
                         pressedElevation = 0.0.dp,
@@ -194,83 +198,105 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
                         containerColor = if(uiState.power == "on") MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.background,
                     ),
                     modifier = Modifier.padding(top = 70.dp)
-                    ) {
+                ) {
                     Text(text = if (uiState.power == "on") stringResource(id = R.string.turn_off) else stringResource(id = R.string.turn_on),
                         style = MaterialTheme.typography.bodySmall,
                         color = if(uiState.power == "on") MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.secondary,
-                        )
+                    )
                 }
 
 
 
 
                 if(isOpen.value){
-                    Surface(
-                        color = MaterialTheme.colorScheme.secondary,
-                        shadowElevation = 12.dp,
-                        shape = RoundedCornerShape(15.dp),
-                        modifier = Modifier
-                            .alpha(0.9f)
-                            .padding(top = 100.dp, start = 10.dp, end = 10.dp)
-                            .align(Alignment.Center)
-                            .height(170.dp)
-                            .fillMaxWidth()
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(10.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
                     ){
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally,
+                        Surface(
+                            color = MaterialTheme.colorScheme.secondary,
+                            shadowElevation = 12.dp,
+                            shape = RoundedCornerShape(15.dp),
                             modifier = Modifier
-                                .padding(10.dp)
-                                .align(Alignment.Center)
+                                .alpha(0.9f)
+                                .padding(top = 165.dp, start = 10.dp, end = 10.dp)
+                                .height(170.dp)
+                                .fillMaxWidth()
+                        ){
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier
+                                    .padding(10.dp)
+                            ){
+                                Text(
+                                    text = stringResource(id = R.string.grill_mode) ,
+                                    fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.background,
+                                    modifier = Modifier
+                                )
+                                AnimatedTextOverflow(
+                                    text = uiState.grillMode,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = MaterialTheme.colorScheme.background,
+                                )
+                                Divider(
+                                    color = MaterialTheme.colorScheme.background,
+                                    modifier = Modifier
+                                        .padding(top = 5.dp, bottom = 5.dp)
+                                        .fillMaxWidth()
+                                )
+                                Text(
+                                    text = stringResource(id = R.string.convection_mode) ,
+                                    fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.background,
+                                    modifier = Modifier
+                                )
+                                AnimatedTextOverflow(
+                                    text = uiState.convectionMode,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = MaterialTheme.colorScheme.background,
+                                )
+                                Divider(
+                                    color = MaterialTheme.colorScheme.background,
+                                    modifier = Modifier
+                                        .padding(top = 5.dp, bottom = 5.dp)
+                                        .fillMaxWidth()
+                                )
+                                Text(
+                                    text = stringResource(id = R.string.heat_mode) ,
+                                    fontSize = MaterialTheme.typography.bodyMedium.fontSize,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.background,
+                                    modifier = Modifier
+                                )
+                                AnimatedTextOverflow(
+                                    text = uiState.heatMode,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = MaterialTheme.colorScheme.background,
+                                )
+
+
+
+                            }
+                        }
+                        Button(
+                            onClick = onClick,
+                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.background),
+                            elevation = ButtonDefaults.buttonElevation(
+                                defaultElevation = 30.dp,
+                                pressedElevation = 0.0.dp,
+                            ),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if(uiState.power == "on" ) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.background,
+                            )
                         ){
                             Text(
-                                text = stringResource(id = R.string.grill_mode) ,
-                                fontSize = MaterialTheme.typography.bodyMedium.fontSize,
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.background,
-                                modifier = Modifier
+                                text = stringResource(R.string.edit),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = if(uiState.power == "on") MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.secondary,
                             )
-                            AnimatedTextOverflow(
-                                text = uiState.grillMode,
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.background,
-                            )
-                            Divider(
-                                color = MaterialTheme.colorScheme.background,
-                                modifier = Modifier
-                                    .padding(top = 5.dp, bottom = 5.dp)
-                                    .fillMaxWidth()
-                            )
-                            Text(
-                                text = stringResource(id = R.string.convection_mode) ,
-                                fontSize = MaterialTheme.typography.bodyMedium.fontSize,
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.background,
-                                modifier = Modifier
-                            )
-                            AnimatedTextOverflow(
-                                text = uiState.convectionMode,
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.background,
-                            )
-                            Divider(
-                                color = MaterialTheme.colorScheme.background,
-                                modifier = Modifier
-                                    .padding(top = 5.dp, bottom = 5.dp)
-                                    .fillMaxWidth()
-                            )
-                            Text(
-                                text = stringResource(id = R.string.heat_mode) ,
-                                fontSize = MaterialTheme.typography.bodyMedium.fontSize,
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.background,
-                                modifier = Modifier
-                            )
-                            AnimatedTextOverflow(
-                                text = uiState.heatMode,
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.background,
-                            )
-
                         }
                     }
 

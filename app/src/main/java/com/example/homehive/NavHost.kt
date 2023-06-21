@@ -62,10 +62,8 @@ fun NavHost(
     
     val routinesVM = remember { RoutinesVM( devicesVM ) }
     val routinesState by routinesVM.uiState.collectAsState()
-    LaunchedEffect(Unit) {
         routinesVM.fetchRoutines()
-    }
-    
+
     val routines = routinesState.routines
     SideEffect {
         println("List of devices: $routines")

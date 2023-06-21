@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -232,6 +233,7 @@ fun HomeScreen(
                                 )
 
                                 Surface(
+                                    border = if(isDarkTheme.value) BorderStroke(1.dp, MaterialTheme.colorScheme.background) else null,
                                     color = MaterialTheme.colorScheme.secondary,
                                     modifier = Modifier
                                         .height(40.dp)

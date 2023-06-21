@@ -78,10 +78,8 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
 
     blindsVM.conditionalRecomposition()
 
-    LaunchedEffect(Unit) {
-        // Perform your logic here
-        blindsVM.checkPolling()
-    }
+    // Perform your logic here
+    blindsVM.checkPolling()
 
     Box(
         modifier = Modifier
