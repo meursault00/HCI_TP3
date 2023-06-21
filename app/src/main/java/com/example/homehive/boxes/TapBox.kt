@@ -61,6 +61,7 @@ import com.example.homehive.library.FavoritesArray
 import com.example.homehive.library.sendCustomNotification
 import com.example.homehive.saveList
 import com.example.homehive.viewmodels.TapVM
+import com.example.homehive.viewmodels.isDarkTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -107,7 +108,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
     ) {
         Surface(
             shadowElevation = 5.dp,
-
+            border = if(isDarkTheme.value) BorderStroke(1.dp, MaterialTheme.colorScheme.background) else null,
             modifier = Modifier
                 .width(200.dp)
                 .clickable{ isOpen.value = !isOpen.value },

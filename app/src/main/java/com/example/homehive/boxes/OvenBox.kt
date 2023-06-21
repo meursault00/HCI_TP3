@@ -62,6 +62,7 @@ import com.example.homehive.library.sendCustomNotification
 import com.example.homehive.saveList
 import com.example.homehive.saveListIfAbsent
 import com.example.homehive.viewmodels.OvenVM
+import com.example.homehive.viewmodels.isDarkTheme
 
 
 @Composable
@@ -92,6 +93,8 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
         contentAlignment = Alignment.Center,
     ) {
         Surface(
+            border = if(isDarkTheme.value) BorderStroke(1.dp, MaterialTheme.colorScheme.background) else null,
+
             modifier = Modifier
                 .width(200.dp)
 

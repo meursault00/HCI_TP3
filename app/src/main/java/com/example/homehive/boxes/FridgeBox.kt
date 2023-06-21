@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import android.util.Log
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -53,6 +54,7 @@ import com.example.homehive.Globals
 import com.example.homehive.R
 import com.example.homehive.saveList
 import com.example.homehive.viewmodels.FridgeVM
+import com.example.homehive.viewmodels.isDarkTheme
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -85,6 +87,8 @@ fun FridgeBox(
         contentAlignment = Alignment.Center,
     ) {
         Surface(
+            border = if(isDarkTheme.value) BorderStroke(1.dp, MaterialTheme.colorScheme.background) else null,
+
             modifier = Modifier
                 .height(height)
                 .width(200.dp)

@@ -91,6 +91,7 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
         contentAlignment = Alignment.Center,
     ) {
         Surface(
+            border = if(isDarkTheme.value) BorderStroke(1.dp, MaterialTheme.colorScheme.background) else null,
             shadowElevation = 5.dp,
             modifier = Modifier
                 .width(200.dp)

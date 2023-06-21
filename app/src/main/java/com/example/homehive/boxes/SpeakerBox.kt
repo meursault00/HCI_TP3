@@ -3,6 +3,7 @@ package com.example.homehive.boxes
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -72,6 +73,8 @@ fun SpeakerBox(
         contentAlignment = Alignment.Center,
     ) {
         Surface(
+            border = if(isDarkTheme.value) BorderStroke(1.dp, MaterialTheme.colorScheme.background) else null,
+
             color = MaterialTheme.colorScheme.secondary,
             shadowElevation = 5.dp,
             modifier = Modifier
