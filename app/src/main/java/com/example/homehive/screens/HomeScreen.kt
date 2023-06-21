@@ -106,6 +106,9 @@ fun HomeScreen(
     }
 
     loadDevicesAndRoutines(devicesVM =  devicesVM, routinesVM =  routinesVM)
+
+    Log.d("takutaku",devicesState.devices.toString())
+
     if((devicesState.isLoading || routinesState.isLoading) && showLoader.value){
         Column(
             modifier = Modifier
@@ -467,15 +470,11 @@ fun LazyRoutineRow(routinesVM: RoutinesVM){
 
 
 @Composable
-fun loadDevicesAndRoutines(devicesVM: DevicesVM,
-                           routinesVM: RoutinesVM){
-
-    LaunchedEffect(Unit){
-        try{
-            devicesVM.fetchDevices()
-            routinesVM.fetchRoutines()
-        } catch (e: Exception){
-            Log.e("HomeScreen", "Error fetching devices and routines")
-        }
+fun loadDevicesAndRoutines(devicesVM: DevicesVM, routinesVM: RoutinesVM){
+    try{
+        devicesVM.fetchDevices()
+        routinesVM.fetchRoutines()
+    } catch (e: Exception){
+        Log.e("HomeScreen", "Error fetching devices and routines")
     }
 }
