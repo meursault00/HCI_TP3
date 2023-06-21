@@ -66,7 +66,7 @@ fun FavoritesScreen(
         mutableStateOf(true)
     }
 
-    loadDevicesAndRoutines2(devicesVM =  devicesVM)
+    loadDevices(devicesVM =  devicesVM)
     if((devicesState.isLoading) && showLoader.value){
         Column(
             modifier = Modifier
@@ -319,7 +319,7 @@ fun FavoritesScreen(
 }
 
 @Composable
-fun loadDevicesAndRoutines2(devicesVM: DevicesVM){
+fun loadDevices(devicesVM: DevicesVM){
 
     LaunchedEffect(Unit){
         try{

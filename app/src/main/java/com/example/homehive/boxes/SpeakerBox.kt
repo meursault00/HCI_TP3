@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -24,7 +26,9 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,9 +39,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.Globals
@@ -74,7 +80,6 @@ fun SpeakerBox(
     ) {
         Surface(
             border = if(isDarkTheme.value) BorderStroke(1.dp, MaterialTheme.colorScheme.background) else null,
-
             color = MaterialTheme.colorScheme.secondary,
             shadowElevation = 5.dp,
             modifier = Modifier
@@ -92,6 +97,7 @@ fun SpeakerBox(
                     painter = painterResource(id = if(!isDarkTheme.value) R.drawable.spot else R.drawable.spotdark),
                     contentDescription = null,
                     modifier = Modifier
+                        .offset { IntOffset(0, 50) }
                         .padding(top = 16.dp)
                 )
 
@@ -101,7 +107,8 @@ fun SpeakerBox(
                     Column(verticalArrangement = Arrangement.Top){
                         Row(
                             horizontalArrangement = Arrangement.End,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
                                 .height(30.dp)
                                 .padding(top = 10.dp)
                         ){
@@ -131,7 +138,8 @@ fun SpeakerBox(
 
                         Row(
                             horizontalArrangement = Arrangement.Center,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
                                 .height(40.dp)
                         ){
                             Text(
@@ -144,33 +152,32 @@ fun SpeakerBox(
                     }
                 }
 
-                Column(
+                Column( // columna de botones de control y titulo de la cancion
                     horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
                     modifier = Modifier
-                        .padding(start = 10.dp, end = 10.dp)
+                        .padding(start = 10.dp, end = 10.dp, top = 10.dp)
                         .align(Alignment.Center),
                 ) {
-                    AnimatedTextOverflow(
-                        text = speakerState.song.title?: "Unavailable",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onPrimary,
-                        modifier = Modifier.padding(top = 15.dp)
-                    )
+
                     Row(
                         horizontalArrangement = Arrangement.SpaceEvenly,
                         verticalAlignment = Alignment.CenterVertically, // Center vertically
                         modifier = Modifier
                             .fillMaxWidth()
                     ){
-                        FloatingActionButton(
+                        OutlinedIconButton(
+                            colors = IconButtonDefaults.iconButtonColors(
+                                containerColor = MaterialTheme.colorScheme.secondary,
+                            ),
+                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.background),
                             onClick = {
                                 if (speakerVM.uiState.value.status == "playing") {
                                     speakerVM.previousSong()
                                 } },
                             shape = CircleShape,
-                            elevation = FloatingActionButtonDefaults.elevation(16.dp),
-                            containerColor = MaterialTheme.colorScheme.secondary,
-                            modifier = Modifier.size(30.dp) // Adjust the size as desired
+                            modifier = Modifier
+                                .size(30.dp)
                         ) {
                             Icon(
                                 painter = painterResource(id = R.drawable.previous),
@@ -179,7 +186,11 @@ fun SpeakerBox(
                                 modifier = Modifier.size(20.dp)
                             )
                         }
-                        FloatingActionButton(
+                        OutlinedIconButton(
+                            colors = IconButtonDefaults.iconButtonColors(
+                                containerColor = MaterialTheme.colorScheme.secondary,
+                            ),
+                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.background),
                             onClick = {
                                 when(speakerState.status) {
                                     "stopped" -> speakerVM.play()
@@ -188,9 +199,8 @@ fun SpeakerBox(
                                 }
                             } ,
                             shape = CircleShape,
-                            elevation = FloatingActionButtonDefaults.elevation(16.dp),
-                            containerColor = MaterialTheme.colorScheme.secondary,
-                            modifier = Modifier.size(40.dp), // Adjust the size as desired
+                            modifier = Modifier
+                                .size(40.dp)
                         ) {
                             Icon(
                                 painter = painterResource(id = if(speakerState.status == "paused" || speakerState.status == "stopped") R.drawable.play else R.drawable.pause),
@@ -199,15 +209,18 @@ fun SpeakerBox(
                                 modifier = Modifier.size(20.dp)
                             )
                         }
-                        FloatingActionButton(
+                        OutlinedIconButton(
+                            colors = IconButtonDefaults.iconButtonColors(
+                                containerColor = MaterialTheme.colorScheme.secondary,
+                            ),
+                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.background),
                             onClick = {
                                 if (speakerVM.uiState.value.status == "playing") {
                                     speakerVM.nextSong()
-                            } },
+                                } },
                             shape = CircleShape,
-                            elevation = FloatingActionButtonDefaults.elevation(16.dp),
-                            containerColor = MaterialTheme.colorScheme.secondary,
-                            modifier = Modifier.size(30.dp) // Adjust the size as desired
+                            modifier = Modifier
+                                .size(30.dp)
                         ) {
                             Icon(
                                 painter = painterResource(id = R.drawable.next),
@@ -217,6 +230,13 @@ fun SpeakerBox(
                             )
                         }
                     }
+                    AnimatedTextOverflow(
+                        text = speakerState.song.title?: "Unavailable",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        modifier = Modifier
+                            .alpha(0.8f),
+                    )
 
                 }
 

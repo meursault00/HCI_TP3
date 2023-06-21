@@ -3,7 +3,9 @@ package com.example.homehive
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
@@ -36,6 +38,7 @@ import com.example.homehive.viewmodels.isDarkTheme
 import com.google.gson.Gson
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavHost(
     modifier: Modifier = Modifier,
@@ -49,15 +52,11 @@ fun NavHost(
     
     val devicesVM = remember { DevicesVM() }
     val devicesState by devicesVM.uiState.collectAsState()
-    LaunchedEffect(Unit) {
-        devicesVM.fetchDevices()
-    }
+    devicesVM.fetchDevices()
     UpdateMap.map.replaceAll { _, _ -> true }
     
     val devices = devicesState.devices
-    SideEffect {
-        println("List of devices: $devices")
-    }    
+
     
     // Creacion de Singleton VM para las Rutinas y Fetch de Routines
     
