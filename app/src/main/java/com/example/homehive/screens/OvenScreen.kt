@@ -73,8 +73,8 @@ fun OvenScreen(
 
     val grillMode = remember {
         when (uiState.grillMode) {
-            "apagado" -> mutableStateOf(GrillMode.OFF)
-            "economico" -> mutableStateOf(GrillMode.ECONOMIC)
+            "off" -> mutableStateOf(GrillMode.OFF)
+            "eco" -> mutableStateOf(GrillMode.ECONOMIC)
             else -> mutableStateOf(GrillMode.COMPLETE)
         }
     }
@@ -82,8 +82,8 @@ fun OvenScreen(
 
     val convectionMode = remember {
         when (uiState.convectionMode) {
-            "apagado" -> mutableStateOf(ConvectionMode.OFF)
-            "economico" -> mutableStateOf(ConvectionMode.ECONOMIC)
+            "off" -> mutableStateOf(ConvectionMode.OFF)
+            "eco" -> mutableStateOf(ConvectionMode.ECONOMIC)
             else -> mutableStateOf(ConvectionMode.CONVENTIONAL)
         }
     }
@@ -91,8 +91,8 @@ fun OvenScreen(
 
     val sourceMode = remember {
         when (uiState.heatMode) {
-            "convencional" -> mutableStateOf(SourceMode.CONVENTIONAL)
-            "arriba" -> mutableStateOf(SourceMode.ABOVE)
+            "normal" -> mutableStateOf(SourceMode.CONVENTIONAL)
+            "top" -> mutableStateOf(SourceMode.ABOVE)
             else -> mutableStateOf(SourceMode.BELOW)
         }
     }
