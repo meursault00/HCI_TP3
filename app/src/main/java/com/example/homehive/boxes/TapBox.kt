@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.compose.animation.core.animateDpAsState
 
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -237,6 +238,8 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                 }
 
                 Button(
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.background),
+
                     onClick = { if(isOn.value) tapVM.setClose() else tapVM.setOpen()
                         isOn.value = !isOn.value
                         isDispensing.value = false

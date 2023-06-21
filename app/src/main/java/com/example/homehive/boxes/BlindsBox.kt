@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.util.Log
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -206,6 +207,7 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                 }
                 Button( // CHECKEAR CONDICIONES DE ESTADO
                     onClick = { blindsVM.toggleBlinds() },
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.background),
                     elevation = ButtonDefaults.buttonElevation(
                         defaultElevation = 30.dp,
                         pressedElevation = 0.0.dp,

@@ -8,6 +8,7 @@ import android.graphics.PorterDuffXfermode
 import android.util.Log
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -174,6 +175,8 @@ fun OvenBox(onClick: () -> Unit, ovenVM : OvenVM = viewModel()) {
                     )
                 }
                 Button(
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.background),
+
                     onClick = { 
                                 sendCustomNotification(context, "Oven", if(uiState.power == "on") context.getString(R.string.turned_off)
                                                                      else context.getString(R.string.turned_on)
