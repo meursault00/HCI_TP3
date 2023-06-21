@@ -109,6 +109,13 @@
     <string name="type_descending">Típus csökkenő</string>
     <string name="power_ascending">Teljesítmény növekvő</string>
     <string name="power_descending">Teljesítmény csökkenő</string>
+
+    <string name="channel_name">Device notifications</string>
+    <string name="channel_description">Device notifications</string>
+    <string name="notification_title">My notification</string>
+    <string name="notification_text">"Much longer text that cannot fit one line…"</string>
+    <string name="notification_text2">"Much longer text that cannot fit one line…"</string>
+    <string name="message">Notification selected for device id %1$s</string>
 </resources>
 
 
