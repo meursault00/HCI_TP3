@@ -186,7 +186,7 @@ fun FridgeBox(
                 else{
                     Column(
                         modifier = Modifier
-                            .padding(start = 10.dp, top = 5.dp, end = 10.dp)
+                            .padding(start = 10.dp, top = 15.dp, end = 10.dp)
                             .align(Alignment.Center)
                     ) {
                         Text(
