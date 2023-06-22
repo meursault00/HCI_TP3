@@ -44,16 +44,36 @@ class BlindsVM(
         }
     }
 
-    fun toggleBlinds() {
+    fun closeBlinds() {
+        Log.d("Putaku", "closeBlinds called")
         _uiState.update { currentState ->
-            val newStatus = if (currentState.status == "opening") "closing" else "opening"
-            currentState.copy(status = newStatus)
+            currentState.copy(status = "closing")
         }
-        val action = if (uiState.value.status == "opening") "close" else "open"
-        devicesVM.editADevice(uiState.value.id, action, listOf())
+        devicesVM.editADevice(uiState.value.id, "close", listOf())
         polling()
-        HistoryStack.push("${uiState.value.name}: toggled to $action")
+        HistoryStack.push("${uiState.value.name}: toggled to close")
     }
+
+    fun openBlinds() {
+        Log.d("Putaku", "openBlinds called")
+        _uiState.update { currentState ->
+            currentState.copy(status = "opening")
+        }
+        devicesVM.editADevice(uiState.value.id, "open", listOf())
+        polling()
+        HistoryStack.push("${uiState.value.name}: toggled to open")
+    }
+
+    fun toggleBlinds() {
+        Log.d("Putaku before change", uiState.value.status)
+        if (uiState.value.status == "opening" || uiState.value.status == "opened") {
+            closeBlinds()
+        } else {
+            openBlinds()
+        }
+        Log.d("Putaku after change", uiState.value.status)
+    }
+
 
 
     fun setPosition( newPosition : Int ){

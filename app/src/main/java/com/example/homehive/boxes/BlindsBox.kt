@@ -27,6 +27,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderColors
+import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -70,7 +72,7 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
     var state = remember { mutableStateOf(blindState.status) }
 
 
-    var auxBlindsPosition = remember { mutableStateOf(blindState.position) }
+    var auxBlindsPosition = remember { mutableStateOf(blindState.level) }
     var isFavorite = remember { mutableStateOf(FavoritesArray.array.contains(blindState.id)) }
 
     var isOpen = remember { mutableStateOf(false) }
@@ -115,7 +117,7 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier
-                        .offset { IntOffset(x = auxBlindsPosition.value  , y = 0) }
+                        .offset { IntOffset(x = 100 - blindState.position  , y = 0) }
                 )
 
                 Box(modifier = Modifier
@@ -253,6 +255,12 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                 if(isOpen.value) {
 
                     Slider(
+                        enabled = blindState.status == "opened" || blindState.status == "closed",
+                        colors = SliderDefaults.colors(
+                            thumbColor = MaterialTheme.colorScheme.onPrimary,
+                            activeTrackColor = MaterialTheme.colorScheme.onPrimary,
+                            inactiveTrackColor = MaterialTheme.colorScheme.background
+                        ),
                         value = auxBlindsPosition.value.toFloat(),
                         onValueChange = { newPosition ->
                             auxBlindsPosition.value = newPosition.toInt()
@@ -263,7 +271,7 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                         valueRange = 0f..100f,
                         modifier = Modifier
                             .padding(bottom = 50.dp, start = 10.dp, end = 10.dp)
-                            .align(Alignment.BottomCenter)
+                            .align(Alignment.BottomCenter),
                     )
                 }
             }
