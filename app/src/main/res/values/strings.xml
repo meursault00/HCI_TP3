@@ -108,7 +108,6 @@
     <string name="type_descending">Type Descending</string>
     <string name="power_ascending">Power Ascending</string>
     <string name="power_descending">Power Descending</string>
-
     <string name="channel_name">Device notifications</string>
     <string name="channel_description">Device notifications</string>
     <string name="notification_title">My notification</string>

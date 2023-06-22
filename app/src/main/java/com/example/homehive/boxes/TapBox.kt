@@ -3,10 +3,15 @@ package com.example.homehive.boxes
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.infiniteRepeatable
 
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,15 +22,16 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -42,9 +48,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -53,6 +65,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.Globals
@@ -62,6 +76,7 @@ import com.example.homehive.library.sendCustomNotification
 import com.example.homehive.saveList
 import com.example.homehive.viewmodels.TapVM
 import com.example.homehive.viewmodels.isDarkTheme
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -76,16 +91,17 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
     val isOn  = remember { mutableStateOf(tapState.status == "opened") }
 //    var isOn = remember { mutableStateOf(false) }
     val isDispensing = remember { mutableStateOf(false) }
-    val dispenseValue = remember { mutableStateOf("") }
+    val dispenseValue = remember { mutableStateOf("10") }
     val dispenseValueError = remember { mutableStateOf("") }
     val dispenseValueHasError = remember { mutableStateOf(false) }
 
     val dispenseOptions = setOf("mL", "cL", "dL", "L")
-    val dispenseUnit = remember { mutableStateOf("") }
+    val dispenseUnit = remember { mutableStateOf("dL") }
     val dispenseUnitError = remember { mutableStateOf("") }
     val dispenseUnitHasError = remember { mutableStateOf(false) }
     var isFavorite = remember { mutableStateOf(FavoritesArray.array.contains(tapState.id)) }
 
+    val isDispensingNormal = remember { mutableStateOf(false) }
 
 
     val height: Dp by animateDpAsState(
@@ -95,8 +111,10 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
 
     tapVM.conditionalRecomposition()
 
-    LaunchedEffect(Unit) {
-        tapVM.checkPolling()
+    LaunchedEffect(isOpen.value) {
+        if(isOpen.value){
+            tapVM.checkPolling()
+        }
     }
 
     Box(
@@ -111,7 +129,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
             border = if(isDarkTheme.value) BorderStroke(1.dp, MaterialTheme.colorScheme.background) else null,
             modifier = Modifier
                 .width(200.dp)
-                .clickable{ isOpen.value = !isOpen.value },
+                .clickable { isOpen.value = !isOpen.value },
             shape = RoundedCornerShape(15.dp),
             color = MaterialTheme.colorScheme.onBackground,
         ) {
@@ -125,14 +143,21 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                 )
-
+                if(tapState.status == "opened" ){
+                    Log.d("dispensing", "dispensing")
+                    RippleAnimation(
+                        circleColor = Color(0x23C3F6FF),
+                        animationDelay = 2500,
+                    )
+                }
                 Box(modifier = Modifier
                     .fillMaxSize(),
                     contentAlignment = Alignment.TopCenter){
                     Column(verticalArrangement = Arrangement.Top){
                         Row(
                             horizontalArrangement = Arrangement.End,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
                                 .height(30.dp)
                                 .padding(top = 10.dp)
                         ){
@@ -162,7 +187,8 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
 
                         Row(
                             horizontalArrangement = Arrangement.Center,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
                                 .height(40.dp)
                         ){
                             Text(
@@ -174,8 +200,17 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                         }
                     }
                 }
+                if(isDispensing.value && !isOpen.value && tapState.status == "opened"){
+                    Text(
+                        text = stringResource(id = R.string.dispensing)+ " ${ dispenseValue.value } ${ dispenseUnit.value }",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onTertiary,
+                        modifier = Modifier
+                            .padding(top = 60.dp)
+                    )
+                }
 
-                if (!isOn.value) {
+                if (tapState.status == "closed") {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -211,41 +246,43 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                 }
 
 
-                if(isDispensing.value && isOpen.value){
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(Color.Black.copy(alpha = 0.3f))
-                    )
+                if(isDispensing.value && isOpen.value && tapState.status == "opened"){
+
                     Column(
                         modifier = Modifier
                             .align(Alignment.Center)
                     ) {
-                        CircularProgressIndicator(
-                            modifier = Modifier
-                                .size(100.dp)
-                                .align(Alignment.CenterHorizontally),
-                            color = Color(0xFFD3DEE0)
-                        )
+
                         Text(
                             text = stringResource(id = R.string.dispensing)+ " ${ dispenseValue.value } ${ dispenseUnit.value }",
                             style = MaterialTheme.typography.bodySmall,
-                            color = Color(0xFFD3DEE0),
+                            color = MaterialTheme.colorScheme.onTertiary,
                             modifier = Modifier
-                                .padding(top = 20.dp)
+                                .padding(top = 90.dp)
                                 .align(Alignment.CenterHorizontally)
                         )
                     }
+                }else if(isOpen.value && tapState.status == "opened"){
+                    Text(
+                        text = stringResource(id = R.string.dispensing),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onTertiary,
+                        modifier = Modifier
+                            .padding(top =90.dp)
+                    )
                 }
+
 
                 Button(
                     border = BorderStroke(1.dp, MaterialTheme.colorScheme.background),
 
                     onClick = { if(isOn.value) tapVM.setClose() else tapVM.setOpen()
+
+                        isDispensingNormal.value = !isDispensingNormal.value
                         isOn.value = !isOn.value
                         isDispensing.value = false
-                        dispenseValue.value = ""
-                        dispenseUnit.value = ""
+                        dispenseValue.value = "10"
+                        dispenseUnit.value = "dL"
                         sendCustomNotification(context, "Tap",  context.getString(R.string.tap) + " " + if(isOn.value) context.getString(R.string.opened) else context.getString(R.string.closed))
                     },
                     elevation = ButtonDefaults.buttonElevation(
@@ -404,6 +441,68 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
 
                 }
 
+            }
+        }
+    }
+}
+
+
+@Composable
+fun RippleAnimation(
+    circleColor: Color = Color.Magenta,
+    animationDelay: Int = 1500
+) {
+
+    // 3 circles
+    val circles = listOf(
+        remember {
+            Animatable(initialValue = 0f)
+        },
+        remember {
+            Animatable(initialValue = 0f)
+        },
+        remember {
+            Animatable(initialValue = 0f)
+        }
+    )
+
+    circles.forEachIndexed { index, animatable ->
+        LaunchedEffect(Unit) {
+            // Use coroutine delay to sync animations
+            // divide the animation delay by number of circles
+            delay(timeMillis = (animationDelay / 3L) * (index + 1))
+
+            animatable.animateTo(
+                targetValue = 1f,
+                animationSpec = infiniteRepeatable(
+                    animation = tween(
+                        durationMillis = animationDelay,
+                        easing = LinearEasing
+                    ),
+                    repeatMode = RepeatMode.Restart
+                )
+            )
+        }
+    }
+
+    // outer circle
+    Box(
+        modifier = Modifier
+            .size(size = 200.dp)
+            .background(color = Color.Transparent)
+    ) {
+        // animating circles
+        circles.forEachIndexed { index, animatable ->
+            Box(
+                modifier = Modifier
+                    .scale(scale = animatable.value)
+                    .size(size = 200.dp)
+                    .clip(shape = CircleShape)
+                    .background(
+                        color = circleColor
+                            .copy(alpha = (1 - animatable.value))
+                    )
+            ) {
             }
         }
     }

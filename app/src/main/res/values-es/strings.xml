@@ -110,10 +110,12 @@
     <string name="power_ascending">Potencia ascendente</string>
     <string name="power_descending">Potencia descendente</string>
 
-    <string name="channel_name">Device notifications</string>
-    <string name="channel_description">Device notifications</string>
-    <string name="notification_title">My notification</string>
-    <string name="notification_text">"Much longer text that cannot fit one line…"</string>
-    <string name="notification_text2">"Much longer text that cannot fit one line…"</string>
-    <string name="message">Notification selected for device id %1$s</string>
+    <string name="channel_name">Notificaciones del dispositivo</string>
+    <string name="channel_description">Notificaciones del dispositivo</string>
+    <string name="notification_title">Mi notificación</string>
+    <string name="notification_text">"Texto mucho más largo que no cabe en una línea…"</string>
+    <string name="notification_text2">"Texto mucho más largo que no cabe en una línea…"</string>
+    <string name="message">Notificación seleccionada para el ID del dispositivo %1$s</string>
+    <string name="edit">Editar</string>
+
 </resources>

@@ -110,10 +110,12 @@
     <string name="power_ascending">Nach Leistung Auf.</string>
     <string name="power_descending">Nach Leistung Abs.</string>
 
-    <string name="channel_name">Device notifications</string>
-    <string name="channel_description">Device notifications</string>
-    <string name="notification_title">My notification</string>
-    <string name="notification_text">"Much longer text that cannot fit one line…"</string>
-    <string name="notification_text2">"Much longer text that cannot fit one line…"</string>
-    <string name="message">Notification selected for device id %1$s</string>
+    <string name="channel_name">Gerätenachrichten</string>
+    <string name="channel_description">Gerätenachrichten</string>
+    <string name="notification_title">Meine Benachrichtigung</string>
+    <string name="notification_text">"Viel längerer Text, der nicht in eine Zeile passt…"</string>
+    <string name="notification_text2">"Viel längerer Text, der nicht in eine Zeile passt…"</string>
+    <string name="message">Benachrichtigung für Gerätekennung %1$s ausgewählt</string>
+    <string name="edit">Bearbeiten</string>
+
 </resources>

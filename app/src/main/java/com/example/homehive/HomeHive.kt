@@ -12,6 +12,8 @@ class HomeHive : Application() {
     private var eventServiceRunning = false
 
     override fun onCreate() {
+        try{
+
         super.onCreate()
 
         createNotificationChannel()
@@ -21,6 +23,10 @@ class HomeHive : Application() {
             startService(intent)
 
             eventServiceRunning = true
+        }
+        }
+        catch (e: Exception){
+            println("Error: ${e.message}")
         }
     }
 

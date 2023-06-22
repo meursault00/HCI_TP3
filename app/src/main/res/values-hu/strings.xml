@@ -110,12 +110,14 @@
     <string name="power_ascending">Teljesítmény növekvő</string>
     <string name="power_descending">Teljesítmény csökkenő</string>
 
-    <string name="channel_name">Device notifications</string>
-    <string name="channel_description">Device notifications</string>
-    <string name="notification_title">My notification</string>
-    <string name="notification_text">"Much longer text that cannot fit one line…"</string>
-    <string name="notification_text2">"Much longer text that cannot fit one line…"</string>
-    <string name="message">Notification selected for device id %1$s</string>
+    <string name="channel_name">Eszközértesítések</string>
+    <string name="channel_description">Eszközértesítések</string>
+    <string name="notification_title">Az értesítésem</string>
+    <string name="notification_text">"Nagyon hosszú szöveg, ami nem fér el egy sorban…"</string>
+    <string name="notification_text2">"Nagyon hosszú szöveg, ami nem fér el egy sorban…"</string>
+    <string name="message">%1$s eszköz azonosítójú értesítés kiválasztva</string>
+    <string name="edit">Szerkesztés</string>
+
 </resources>
 
 

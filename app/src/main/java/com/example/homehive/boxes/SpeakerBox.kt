@@ -67,7 +67,6 @@ fun SpeakerBox(
 
     speakerVM.conditionalRecomposition()
 
-
     LaunchedEffect(Unit) {
         speakerVM.checkPolling()
     }

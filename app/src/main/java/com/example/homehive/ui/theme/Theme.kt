@@ -35,6 +35,7 @@ private val DarkColorScheme = darkColorScheme(
     inverseSurface = Color(0xFF202020),
     tertiaryContainer = Color(0xFFEFE5C5),
     inverseOnSurface = Color(0xFFD5AE76),
+    surfaceTint = Color(0xFFD3DEE0)
 
 )
 
@@ -54,7 +55,8 @@ private val LightColorScheme = lightColorScheme(
     inversePrimary = Color(0xFFEFE5C5),
     inverseSurface = Color(0xFF555555),
     tertiaryContainer = Color(0xFFF4CF6D),
-    inverseOnSurface = Color(0xFFF0BD74)
+    inverseOnSurface = Color(0xFFF0BD74),
+            surfaceTint = Color(0xFFD3DEE0)
     )
 
 @Composable
