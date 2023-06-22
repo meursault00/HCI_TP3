@@ -117,5 +117,13 @@
     <string name="notification_text2">"Texto mucho más largo que no cabe en una línea…"</string>
     <string name="message">Notificación seleccionada para el ID del dispositivo %1$s</string>
     <string name="edit">Editar</string>
+    <string name="max_position">Máximo</string>
+    <string name="current">Actualmente</string>
+    <string name="opening">Apertura</string>
+    <string name="closing">Cierre</string>
+    <string name="opened_uppercase">Abierto</string>
+    <string name="closed_uppercase">Cerrado</string>
+    <string name="executed">Ejecutado</string>
+
 
 </resources>

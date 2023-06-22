@@ -117,5 +117,13 @@
     <string name="notification_text2">"Viel längerer Text, der nicht in eine Zeile passt…"</string>
     <string name="message">Benachrichtigung für Gerätekennung %1$s ausgewählt</string>
     <string name="edit">Bearbeiten</string>
+    <string name="max_position">Max</string>
+    <string name="current">Aktuell</string>
+    <string name="opening">Öffnung</string>
+    <string name="closing">Schließung</string>
+    <string name="opened_uppercase">Geöffnet</string>
+    <string name="closed_uppercase">Geschlossen</string>
+    <string name="executed">Ausgeführt</string>
+
 
 </resources>

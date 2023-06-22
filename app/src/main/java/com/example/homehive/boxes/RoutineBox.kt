@@ -32,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -42,6 +43,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.homehive.R
 import com.example.homehive.library.AnimatedTextOverflow
+import com.example.homehive.library.sendCustomNotification
 import com.example.homehive.network.routineModels.NetworkActions
 import com.example.homehive.viewmodels.RoutineVM
 
@@ -52,6 +54,7 @@ fun RoutineBox(
 ) {
     val uiState by routineVM.uiState.collectAsState()
     var isOpen = remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     val blindsHeight: Dp by animateDpAsState(
         targetValue = if (isOpen.value) 400.dp else 200.dp,
@@ -96,7 +99,11 @@ fun RoutineBox(
                         .align(Alignment.TopCenter)
                 )
                 Button( // CHECKEAR CONDICIONES DE ESTADO
-                    onClick = { routineVM.executeRoutine(uiState.id) },
+                    onClick = {
+                        routineVM.executeRoutine(uiState.id)
+                        sendCustomNotification(context, context.getString(R.string.routine), "${uiState.name} " + context.getString(R.string.executed)  )
+
+                    },
                     elevation = ButtonDefaults.buttonElevation(
                         defaultElevation = 30.dp,
                         pressedElevation = 0.0.dp,

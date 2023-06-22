@@ -117,7 +117,13 @@
     <string name="notification_text2">"Nagyon hosszú szöveg, ami nem fér el egy sorban…"</string>
     <string name="message">%1$s eszköz azonosítójú értesítés kiválasztva</string>
     <string name="edit">Szerkesztés</string>
-
+    <string name="max_position">Max</string>
+    <string name="current">Jelenleg</string>
+    <string name="opening">Megnyitás</string>
+    <string name="closing">Bezárás</string>
+    <string name="opened_uppercase">Megnyitva</string>
+    <string name="closed_uppercase">Bezárva</string>
+    <string name="executed">Végrehajtott</string>
 </resources>
 
 

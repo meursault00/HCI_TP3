@@ -121,4 +121,5 @@
     <string name="closing">Closing</string>
     <string name="opened_uppercase">Opened</string>
     <string name="closed_uppercase">Closed</string>
+    <string name="executed">executed</string>
 </resources>
