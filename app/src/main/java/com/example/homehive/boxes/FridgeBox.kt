@@ -102,7 +102,7 @@ fun FridgeBox(
                 contentAlignment = Alignment.TopCenter
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.fridge),
+                    painter = painterResource(id = if ( isDarkTheme.value ) R.drawable.fridge_dark else R.drawable.fridge ),
                     contentDescription = null,
                     contentScale = ContentScale.FillHeight,
                     modifier = Modifier
@@ -121,12 +121,10 @@ fun FridgeBox(
                                 if (FavoritesArray.array.contains(uiState.id)) {
                                     FavoritesArray.array.remove(uiState.id)
                                     isFavorite.value = false
-                                    Log.d("favorite", "removing from fav")
                                     saveList(sharedPrefs, FavoritesArray.array, "FavoritesList" )
                                 } else {
                                     FavoritesArray.array.add(uiState.id)
                                     isFavorite.value = true
-                                    Log.d("favorite", "adding to fav")
                                     saveList(sharedPrefs, FavoritesArray.array, "FavoritesList" )
                                 }
                             },
@@ -149,7 +147,7 @@ fun FridgeBox(
                             text = uiState.name,
                             fontWeight = FontWeight.Bold,
                             style = MaterialTheme.typography.headlineMedium,
-                            color = MaterialTheme.colorScheme.onTertiary,
+                            color = if ( isDarkTheme.value )  Color(0xFFcce3ff) else MaterialTheme.colorScheme.onTertiary,
                         )
                     }
                 }
@@ -158,13 +156,15 @@ fun FridgeBox(
                     Column(
                         modifier = Modifier
                             .padding(start = 10.dp, end = 10.dp)
-                            .align(Alignment.Center)
+                            .align(Alignment.Center),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
                     ) {
                         Text(
                             text = "${uiState.freezerTemperature}°C",
                             fontWeight = FontWeight.Bold,
                             style = MaterialTheme.typography.bodyLarge,
-                            color = Color(0xFF4BACC4),
+                            color = if ( isDarkTheme.value ) Color(0xFF4CA5BB) else Color(0xFF4BACC4),
                             modifier = Modifier.padding(top = 15.dp)
                         )
                         Text(
@@ -192,7 +192,7 @@ fun FridgeBox(
                         Text(
                             text =  stringResource(id = R.string.fridge_at ) + " ${auxTemperature.value}ºC",
                             style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onTertiary,
+                            color = if ( isDarkTheme.value )  Color(0xFFcce3ff) else MaterialTheme.colorScheme.onTertiary,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier
                         )
@@ -216,7 +216,7 @@ fun FridgeBox(
                         Text(
                             text =  stringResource(id = R.string.freezer_at) + " ${auxFreezerTemperature.value}ºC",
                             style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onTertiary,
+                            color = if ( isDarkTheme.value )  Color(0xFFcce3ff) else MaterialTheme.colorScheme.onTertiary,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier
                         )
@@ -241,7 +241,7 @@ fun FridgeBox(
                         Text(
                             text = stringResource(id = R.string.mode),
                             style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onTertiary,
+                            color = if ( isDarkTheme.value )  Color(0xFFcce3ff) else MaterialTheme.colorScheme.onTertiary,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(bottom = 10.dp)
                         )

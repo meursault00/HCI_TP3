@@ -117,4 +117,8 @@
     <string name="edit">Edit</string>
     <string name="max_position">Max</string>
     <string name="current">Currently</string>
+    <string name="opening">Opening</string>
+    <string name="closing">Closing</string>
+    <string name="opened_uppercase">Opened</string>
+    <string name="closed_uppercase">Closed</string>
 </resources>

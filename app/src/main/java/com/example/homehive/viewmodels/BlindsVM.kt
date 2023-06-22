@@ -45,7 +45,6 @@ class BlindsVM(
     }
 
     fun closeBlinds() {
-        Log.d("Putaku", "closeBlinds called")
         _uiState.update { currentState ->
             currentState.copy(status = "closing")
         }
@@ -55,7 +54,6 @@ class BlindsVM(
     }
 
     fun openBlinds() {
-        Log.d("Putaku", "openBlinds called")
         _uiState.update { currentState ->
             currentState.copy(status = "opening")
         }
@@ -65,13 +63,11 @@ class BlindsVM(
     }
 
     fun toggleBlinds() {
-        Log.d("Putaku before change", uiState.value.status)
         if (uiState.value.status == "opening" || uiState.value.status == "opened") {
             closeBlinds()
         } else {
             openBlinds()
         }
-        Log.d("Putaku after change", uiState.value.status)
     }
 
 

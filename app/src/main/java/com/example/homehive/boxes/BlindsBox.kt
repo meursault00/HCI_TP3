@@ -78,7 +78,7 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
     var isOpen = remember { mutableStateOf(false) }
 
     val blindsHeight: Dp by animateDpAsState(
-        targetValue = if (isOpen.value) 300.dp else 200.dp,
+        targetValue = if (isOpen.value) 320.dp else 200.dp,
         animationSpec = tween(durationMillis = 100)
     )
 
@@ -136,12 +136,10 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                                     if (FavoritesArray.array.contains(blindState.id)) {
                                         FavoritesArray.array.remove(blindState.id)
                                         isFavorite.value = false
-                                        Log.d("favorite", "removing from fav")
                                         saveList(sharedPrefs, FavoritesArray.array, "FavoritesList" )
                                     } else {
                                         FavoritesArray.array.add(blindState.id)
                                         isFavorite.value = true
-                                        Log.d("favorite", "adding to fav")
                                         saveList(sharedPrefs, FavoritesArray.array, "FavoritesList" )
                                     }
                                 },
@@ -173,13 +171,12 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
 
 
 
-                if (blindState.position == 100) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(Color.Black.copy(alpha = 0.3f))
-                    )
-                }
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = (blindState.position.toFloat() / 100).toFloat() * 0.3f))
+                )
+
                 Button(
                     onClick = { isOpen.value = !isOpen.value },
                     elevation = ButtonDefaults.buttonElevation(
@@ -210,9 +207,18 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                     verticalArrangement = Arrangement.spacedBy(10.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
-                        .padding(top = 20.dp)
+                        .padding(top = if(isOpen.value) 0.dp else 20.dp)
                         .fillMaxWidth()
                 ){
+                    if(isOpen.value){
+                        Text(
+                                text = getStatusString(context, blindState.status),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onPrimary,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier
+                        )
+                    }
                     Button( // CHECKEAR CONDICIONES DE ESTADO
                         onClick = {
 
@@ -225,17 +231,17 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                             pressedElevation = 0.0.dp,
                         ),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = if(!(blindState.status == "closing" || blindState.status == "closed")) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.background,
+                            containerColor = if(blindState.status == "closed") MaterialTheme.colorScheme.background  else MaterialTheme.colorScheme.secondary,
                         )
                     ) {
                         Text(
-                            text = if(state.value == "opening") "STOP" else "OPEN",
-                            color = if(state.value == "opening") MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.secondary
+                            text = if(blindState.status == "opened" || blindState.status == "opening") stringResource(id = R.string.close) else stringResource(id = R.string.open),
+                            color = if(blindState.status == "closed") MaterialTheme.colorScheme.secondary  else  MaterialTheme.colorScheme.background
 
                         )
                     }
                     Text(
-                        text = stringResource(id = R.string.current)+" ${blindState.position}" + " ${blindState.status}",
+                        text = stringResource(id = R.string.current)+" ${blindState.position}%",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onPrimary,
                         fontWeight = FontWeight.Bold,
@@ -276,5 +282,16 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                 }
             }
         }
+    }
+}
+
+
+private fun getStatusString( context : Context, status: String): String {
+    return when(status){
+        "opened" -> context.getString(R.string.opened_uppercase)
+        "opening" -> context.getString( R.string.opening)
+        "closed" -> context.getString(R.string.closed_uppercase)
+        "closing" -> context.getString(R.string.closing)
+        else -> "Opened"
     }
 }
