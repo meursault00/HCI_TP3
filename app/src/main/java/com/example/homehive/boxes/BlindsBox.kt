@@ -31,6 +31,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -76,7 +77,10 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
         animationSpec = tween(durationMillis = 100)
     )
 
-    blindsVM.conditionalRecomposition()
+    SideEffect{
+        blindsVM.conditionalRecomposition()
+
+    }
 
     // Perform your logic here
     blindsVM.checkPolling()

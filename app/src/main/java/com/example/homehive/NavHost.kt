@@ -8,9 +8,11 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -52,7 +54,6 @@ fun NavHost(
     
     val devicesVM = remember { DevicesVM() }
     val devicesState by devicesVM.uiState.collectAsState()
-    devicesVM.fetchDevices()
     UpdateMap.map.replaceAll { _, _ -> true }
     
     val devices = devicesState.devices
@@ -62,10 +63,20 @@ fun NavHost(
     
     val routinesVM = remember { RoutinesVM( devicesVM ) }
     val routinesState by routinesVM.uiState.collectAsState()
-        routinesVM.fetchRoutines()
 
     val routines = routinesState.routines
+
+    var firstTime = remember { mutableStateOf(true) }
+    LaunchedEffect(true){
+        try{
+            devicesVM.fetchDevices()
+            firstTime.value = false
+        }catch (e: Exception){
+            Log.d("demo", "Error fetching devices")
+        }
+    }
     SideEffect {
+
         println("List of devices: $routines")
     }
 

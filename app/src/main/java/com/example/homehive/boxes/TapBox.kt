@@ -44,6 +44,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -111,10 +112,8 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
 
     tapVM.conditionalRecomposition()
 
-    LaunchedEffect(isOpen.value) {
-        if(isOpen.value){
-            tapVM.checkPolling()
-        }
+    SideEffect{
+        tapVM.checkPolling()
     }
 
     Box(
@@ -143,8 +142,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                 )
-                if(tapState.status == "opened" ){
-                    Log.d("dispensing", "dispensing")
+                if(isOn.value ){
                     RippleAnimation(
                         circleColor = Color(0x23C3F6FF),
                         animationDelay = 2500,
@@ -200,9 +198,10 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                         }
                     }
                 }
-                if(isDispensing.value && !isOpen.value && tapState.status == "opened"){
+                if( !isOpen.value && isOn.value){
                     Text(
-                        text = stringResource(id = R.string.dispensing)+ " ${ dispenseValue.value } ${ dispenseUnit.value }",
+                        text = stringResource(id = R.string.dispensing)
+                                + if(isDispensing.value) {" ${ dispenseValue.value } ${ dispenseUnit.value }"} else {""},
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onTertiary,
                         modifier = Modifier
@@ -210,7 +209,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                     )
                 }
 
-                if (tapState.status == "closed") {
+                if (!isOn.value) {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -246,7 +245,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                 }
 
 
-                if(isDispensing.value && isOpen.value && tapState.status == "opened"){
+                if(isDispensing.value && isOpen.value && isOn.value){
 
                     Column(
                         modifier = Modifier
@@ -262,7 +261,7 @@ fun TapBox(onClick: () -> Unit, tapVM : TapVM = viewModel()) {
                                 .align(Alignment.CenterHorizontally)
                         )
                     }
-                }else if(isOpen.value && tapState.status == "opened"){
+                }else if(isOpen.value && isOn.value){
                     Text(
                         text = stringResource(id = R.string.dispensing),
                         style = MaterialTheme.typography.bodySmall,
