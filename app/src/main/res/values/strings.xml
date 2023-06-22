@@ -115,4 +115,6 @@
     <string name="notification_text2">"Much longer text that cannot fit one line…"</string>
     <string name="message">Notification selected for device id %1$s</string>
     <string name="edit">Edit</string>
+    <string name="max_position">Max</string>
+    <string name="current">Currently</string>
 </resources>

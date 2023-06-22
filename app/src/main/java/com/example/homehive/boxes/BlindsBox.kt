@@ -66,7 +66,10 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
 
     var isBlindOpen = remember { mutableStateOf(blindState.status == "opened")}
     var isBlindClosed = remember { mutableStateOf(blindState.status == "closed") }
-    var isClosing = remember { mutableStateOf(blindState.status == "closing" || blindState.status == "closed")}
+    var isClosing = remember { mutableStateOf(blindState.status == "closing")}
+    var state = remember { mutableStateOf(blindState.status) }
+
+
     var auxBlindsPosition = remember { mutableStateOf(blindState.position) }
     var isFavorite = remember { mutableStateOf(FavoritesArray.array.contains(blindState.id)) }
 
@@ -79,7 +82,6 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
 
     SideEffect{
         blindsVM.conditionalRecomposition()
-
     }
 
     // Perform your logic here
@@ -97,7 +99,7 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
             shadowElevation = 5.dp,
             modifier = Modifier
                 .width(200.dp)
-                .clickable{ isOpen.value = !isOpen.value },
+                .clickable { isOpen.value = !isOpen.value },
 
             shape = RoundedCornerShape(15.dp),
             color = MaterialTheme.colorScheme.tertiary
@@ -122,7 +124,8 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                     Column(verticalArrangement = Arrangement.Top){
                         Row(
                             horizontalArrangement = Arrangement.End,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
                                 .height(30.dp)
                                 .padding(top = 10.dp)
                         ){
@@ -152,7 +155,8 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
 
                         Row(
                             horizontalArrangement = Arrangement.Center,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
                                 .height(40.dp)
                         ){
                             Text(
@@ -165,17 +169,9 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                     }
                 }
 
-                Text(
-                    text = "${auxBlindsPosition.value}%",
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .align(Alignment.Center)
-                )
 
-                if (blindState.status == "closed") {
+
+                if (blindState.position == 100) {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -208,32 +204,51 @@ fun BlindsBox(onClick: () -> Unit, blindsVM : BlindsVM = viewModel()) {
                             .size(60.dp)
                     )
                 }
-                Button( // CHECKEAR CONDICIONES DE ESTADO
-                    onClick = { blindsVM.toggleBlinds() },
-                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.background),
-                    elevation = ButtonDefaults.buttonElevation(
-                        defaultElevation = 30.dp,
-                        pressedElevation = 0.0.dp,
-                    ),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = if(!(blindState.status == "closing" || blindState.status == "closed")) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.background,
-                    )
-                ) {
-                    Text(
-                        text = if(!(blindState.status == "closing" || blindState.status == "closed")) stringResource(id = R.string.close) else stringResource(id = R.string.open),
-                        color = if(!(blindState.status == "closing" || blindState.status == "closed")) MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.secondary
-
-                    )
-                }
-                Text(
-                    text = "${blindState.position}%",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    fontWeight = FontWeight.Bold,
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
-                        .align(Alignment.Center)
-                        .padding(top = 70.dp),
-                )
+                        .padding(top = 20.dp)
+                        .fillMaxWidth()
+                ){
+                    Button( // CHECKEAR CONDICIONES DE ESTADO
+                        onClick = {
+
+                            blindsVM.toggleBlinds()
+
+                                  },
+                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.background),
+                        elevation = ButtonDefaults.buttonElevation(
+                            defaultElevation = 30.dp,
+                            pressedElevation = 0.0.dp,
+                        ),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = if(!(blindState.status == "closing" || blindState.status == "closed")) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.background,
+                        )
+                    ) {
+                        Text(
+                            text = if(state.value == "opening") "STOP" else "OPEN",
+                            color = if(state.value == "opening") MaterialTheme.colorScheme.background else MaterialTheme.colorScheme.secondary
+
+                        )
+                    }
+                    Text(
+                        text = stringResource(id = R.string.current)+" ${blindState.position}" + " ${blindState.status}",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                    )
+                    if(isOpen.value){
+                        Text(
+                            text = stringResource(id = R.string.max_position)+" ${auxBlindsPosition.value}",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onPrimary,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                        )
+                    }
+                }
 
                 if(isOpen.value) {
 

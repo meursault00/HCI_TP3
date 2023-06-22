@@ -49,7 +49,7 @@ class BlindsVM(
             val newStatus = if (currentState.status == "opening") "closing" else "opening"
             currentState.copy(status = newStatus)
         }
-        val action = if (uiState.value.status == "opening") "open" else "close"
+        val action = if (uiState.value.status == "opening") "close" else "open"
         devicesVM.editADevice(uiState.value.id, action, listOf())
         polling()
         HistoryStack.push("${uiState.value.name}: toggled to $action")
