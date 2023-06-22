@@ -40,7 +40,7 @@ class EventService : Service() {
                             `package` = MyIntent.PACKAGE
                             putExtra(MyIntent.DEVICE_ID, it.deviceId)
                             putExtra(MyIntent.DEVICE_NAME, getDeviceName(it.deviceId))
-                            putExtra(MyIntent.ACTION, it.event)
+                            putExtra(MyIntent.ACTION, argsToString(map = it.args, event = it.event))
                         }
                         sendOrderedBroadcast(intent2, null)
                     }
@@ -69,7 +69,7 @@ class EventService : Service() {
 
             return newDevice?.name.orEmpty()
         }
-        return "Unknown device"
+        return "HomeHive device"
     }
 
     override fun onDestroy() {
@@ -122,5 +122,55 @@ class EventService : Service() {
             Log.d(TAG, "No new events found")
             null
         }
+    }
+}
+
+fun argsToString(map: Map<String, String>, event: String): String {
+    return when {
+        map.size == 1 -> {
+            val (key, value) = map.entries.first()
+            formatArgument(key, value)
+        }
+        map.size == 2 -> {
+            val concatenatedArgs = map.entries.joinToString(", ") { (key, value) ->
+                formatArgument(key, value)
+            }
+            if (event == "freezerTemperatureChanged") {
+                "Freezer $concatenatedArgs"
+            } else {
+                concatenatedArgs
+            }
+        }
+        else -> {
+            // Handle the case when the map is empty or doesn't match the specified cases
+            ""
+        }
+    }
+}
+
+
+private fun formatArgument(key: String, value: String): String {
+    val actionName = getActionString(key)
+    return "$actionName $value"
+}
+
+fun getActionString(actionName: String): String {
+    return when (actionName) {
+        "newStatus" -> "New Status:"
+        "previousTemperature" -> "Previous Temperature:"
+        "newTemperature" -> "New Temperature:"
+        "previousGenre" -> "Previous genre:"
+        "newGenre" -> "New genre:"
+        "previousVolume" -> "Previous volume:"
+        "newVolume" -> "New volume:"
+        "previousConvection" -> "Previous convection:"
+        "newConvection" -> "New convection:"
+        "previousGrill" -> "Previous grill:"
+        "newGrill" -> "New grill:"
+        "previousHeat" -> "Previous grill:"
+        "newHeat" -> "New heat:"
+        "previousMode" -> "Previous mode:"
+        "newMode" -> "New mode:"
+        else -> "Unknown action"
     }
 }

@@ -46,6 +46,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -121,10 +122,12 @@ fun FridgeBox(
                                 if (FavoritesArray.array.contains(uiState.id)) {
                                     FavoritesArray.array.remove(uiState.id)
                                     isFavorite.value = false
+                                    Log.d("favorite", "removing from fav")
                                     saveList(sharedPrefs, FavoritesArray.array, "FavoritesList" )
                                 } else {
                                     FavoritesArray.array.add(uiState.id)
                                     isFavorite.value = true
+                                    Log.d("favorite", "adding to fav")
                                     saveList(sharedPrefs, FavoritesArray.array, "FavoritesList" )
                                 }
                             },
@@ -147,6 +150,9 @@ fun FridgeBox(
                             text = uiState.name,
                             fontWeight = FontWeight.Bold,
                             style = MaterialTheme.typography.headlineMedium,
+                            overflow = TextOverflow.Ellipsis,
+                            maxLines = 1,
+                            modifier = Modifier.padding(start = 5.dp, end = 5.dp),
                             color = if ( isDarkTheme.value )  Color(0xFFcce3ff) else MaterialTheme.colorScheme.onTertiary,
                         )
                     }
